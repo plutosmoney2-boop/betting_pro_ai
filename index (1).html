@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Футбольные трансляции</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #050814;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 16px 40px;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .match-card {
+            background: linear-gradient(135deg, #111622, #050814);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #262b3a;
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .match-img-wrapper {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .match-img-wrapper img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .match-card:hover .match-img-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .match-content {
+            padding: 16px 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .match-league {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #ffde59;
+        }
+
+        .match-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .match-time {
+            font-size: 14px;
+            color: #b0b3c0;
+        }
+
+        .match-actions {
+            margin-top: 10px;
+        }
+
+        .watch-btn {
+            display: inline-block;
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(90deg, #ff7a00, #ffcc00);
+            color: #111;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 0 16px rgba(255,180,0,0.5);
+        }
+
+        .watch-btn:hover {
+            filter: brightness(1.05);
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 13px;
+            color: #888;
+            margin-top: 24px;
+        }
+
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+    <div class="page-title">Выбери матч и смотри трансляцию</div>
+
+    <div class="cards-grid">
+        <!-- Карточка: Реал Мадрид — Манчестер Сити -->
+        <div class="match-card">
+            <div class="match-img-wrapper">
+                <img src="https://avatars.mds.yandex.net/i?id=2a0000019afe80620e060d5b0e65f6f3df5b-1324586-fast-images&n=13"
+                     alt="Реал Мадрид — Манчестер Сити">
+            </div>
+            <div class="match-content">
+                <div class="match-league">Европейский клубный турнир</div>
+                <div class="match-title">Реал Мадрид — Манчестер Сити</div>
+                <div class="match-time">Прямая трансляция онлайн</div>
+                <div class="match-actions">
+                    <a class="watch-btn"
+                       href="https://plutosmoney2-boop.github.io/gb.github.io/"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        Смотреть трансляцию
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Карточка: Атлетик Б — ПСЖ -->
+        <div class="match-card">
+            <div class="match-img-wrapper">
+                <img src="https://avatars.mds.yandex.net/i?id=2a0000019afe80620e060d5b0e65f6f3df5b-1324586-fast-images&n=13"
+                     alt="Атлетик Б — ПСЖ">
+            </div>
+            <div class="match-content">
+                <div class="match-league">Европейский клубный турнир</div>
+                <div class="match-title">Атлетик Б — ПСЖ</div>
+                <div class="match-time">Прямая трансляция онлайн</div>
+                <div class="match-actions">
+                    <a class="watch-btn"
+                       href="https://plutosmoney2-boop.github.io/gb2/"
+                       target="_blank"
+                       rel="noopener noreferrer">
+                        Смотреть трансляцию
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        Нажми на кнопку «Смотреть трансляцию», чтобы открыть матч в новой вкладке.
+    </div>
+</div>
+</body>
+</html>
