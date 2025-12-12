@@ -182,8 +182,6 @@
             margin-top: 12px;
         }
 
-        /* Экран 2 */
-
         .step-two {
             display: none;
         }
@@ -267,7 +265,7 @@
     <main>
         <div class="screen">
 
-            <!-- ШАГ 1: ВВОД ID / РЕГИСТРАЦИЯ -->
+            <!-- ШАГ 1: ID -->
             <div class="step-one" id="step-one">
                 <h1 class="screen-title">Введите ваш ID от Melbet</h1>
                 <p class="screen-sub">
@@ -288,7 +286,7 @@
                     >
                     <div class="error" id="id-error"></div>
                     <p class="form-hint">
-                        После проверки ID откроется список стран, лиг и матчей по футболу с календарём.
+                        После проверки ID вы сначала выберете дату матчей, а затем конкретный матч из линии.
                     </p>
                 </div>
 
@@ -300,22 +298,34 @@
                 </div>
             </div>
 
-            <!-- ШАГ 2: СТРАНА / ЛИГА / МАТЧ + ПРОГНОЗ -->
+            <!-- ШАГ 2: ДАТА → СТРАНА / ЛИГА / МАТЧ + ПРОГНОЗ -->
             <div class="step-two" id="step-two">
-                <h2 class="screen-title">Выберите матч для прогноза</h2>
+                <h2 class="screen-title">Выберите дату и матч</h2>
                 <p class="screen-sub">
-                    Выберите страну, лигу и матч по футболу, затем дату в календаре. AI найдёт свежую аналитику по выбранному событию
-                    и соберёт краткий прогноз с вероятными исходами. Лимит — 5 прогнозов в сутки.
+                    Сначала выберите дату в календаре. По этой дате подгрузятся страны, лиги и футбольные матчи по линии.
+                    После выбора матча AI найдёт свежие прогнозы в интернете и соберёт короткий аналитический абзац.
+                    Лимит — 5 прогнозов в сутки.
                 </p>
 
                 <div class="step-two-grid">
-                    <!-- ЛЕВАЯ ЧАСТЬ: ВЫБОР МАТЧА -->
                     <div class="form-card" id="form-card">
                         <div class="form-group">
+                            <label for="match-date">Дата матчей</label>
+                            <input
+                                type="date"
+                                id="match-date"
+                                class="input"
+                            >
+                            <div class="error" id="date-error"></div>
+                            <p class="form-hint">
+                                Выберите дату в календаре. По этой дате будут загружены футбольные матчи с линии.
+                            </p>
+                        </div>
+
+                        <div class="form-group">
                             <label for="country-select">Страна</label>
-                            <select id="country-select" class="select">
-                                <option value="">Выберите страну</option>
-                                <!-- сюда подставите реальные страны из футбольного API -->
+                            <select id="country-select" class="select" disabled>
+                                <option value="">Сначала выберите дату</option>
                             </select>
                             <div class="error" id="country-error"></div>
                         </div>
@@ -336,19 +346,6 @@
                             <div class="error" id="match-error"></div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="match-date">Дата матча</label>
-                            <input
-                                type="date"
-                                id="match-date"
-                                class="input"
-                            >
-                            <div class="error" id="date-error"></div>
-                            <p class="form-hint">
-                                Выберите дату в календаре. Матч будет сопоставлен с линией букмекеров на эту дату.
-                            </p>
-                        </div>
-
                         <button class="btn btn-primary" id="get-prediction-btn">
                             Получить прогноз
                         </button>
@@ -358,11 +355,10 @@
                         </p>
                     </div>
 
-                    <!-- ПРАВАЯ ЧАСТЬ: ПРОГНОЗ / ЛИМИТ -->
                     <div class="result-card" id="result-card">
                         <div class="result-status">Прогноз от AI</div>
                         <div class="result-main" id="result-title">
-                            Выберите страну, лигу, матч и дату, затем нажмите «Получить прогноз».
+                            Выберите дату, затем страну, лигу и матч. После этого нажмите «Получить прогноз».
                         </div>
                         <div class="result-meta" id="result-text">
                             AI использует актуальные футбольные данные и открытые источники с прогнозами,
@@ -384,110 +380,26 @@ document.addEventListener('DOMContentLoaded', function () {
     const idInput = document.getElementById('melbet-id');
     const idErrorEl = document.getElementById('id-error');
 
+    const matchDateInput = document.getElementById('match-date');
+    const dateErrorEl = document.getElementById('date-error');
+
     const countrySelect = document.getElementById('country-select');
     const leagueSelect = document.getElementById('league-select');
     const matchSelect = document.getElementById('match-select');
-    const matchDateInput = document.getElementById('match-date');
 
     const countryErrorEl = document.getElementById('country-error');
     const leagueErrorEl = document.getElementById('league-error');
     const matchErrorEl = document.getElementById('match-error');
-    const dateErrorEl = document.getElementById('date-error');
 
     const getPredictionBtn = document.getElementById('get-prediction-btn');
     const resultCard = document.getElementById('result-card');
-    const resultTitle = document.getElementById('result-title');
-    const resultText = document.getElementById('result-text');
     const formCard = document.getElementById('form-card');
-
     const limitInfoEl = document.getElementById('limit-info');
     const usedCountEl = document.getElementById('used-count');
 
     const DAILY_LIMIT = 5;
 
-    // ===== ВРЕМЕННЫЕ ТЕСТОВЫЕ ДАННЫЕ =====
-    // В реальном проекте здесь нужно подгружать страны / лиги / матчи с футбольного API
-    // (например, API-Football, Football-Data.org, Sportmonks и т.п.).
-    const data = {
-        "Испания": {
-            "Ла Лига": [
-                { id: "spain-laliga-1", home: "Реал Мадрид", away: "Барселона" },
-                { id: "spain-laliga-2", home: "Атлетико Мадрид", away: "Севилья" }
-            ]
-        },
-        "Англия": {
-            "АПЛ": [
-                { id: "england-epl-1", home: "Манчестер Сити", away: "Ливерпуль" },
-                { id: "england-epl-2", home: "Челси", away: "Арсенал" }
-            ]
-        }
-    };
-
-    function populateCountries() {
-        Object.keys(data).forEach(country => {
-            const opt = document.createElement('option');
-            opt.value = country;
-            opt.textContent = country;
-            countrySelect.appendChild(opt);
-        });
-    }
-
-    function populateLeagues(country) {
-        leagueSelect.innerHTML = '<option value="">Выберите лигу</option>';
-        matchSelect.innerHTML = '<option value="">Сначала выберите лигу</option>';
-        leagueSelect.disabled = true;
-        matchSelect.disabled = true;
-
-        if (!country || !data[country]) return;
-
-        Object.keys(data[country]).forEach(league => {
-            const opt = document.createElement('option');
-            opt.value = league;
-            opt.textContent = league;
-            leagueSelect.appendChild(opt);
-        });
-
-        leagueSelect.disabled = false;
-    }
-
-    function populateMatches(country, league) {
-        matchSelect.innerHTML = '<option value="">Выберите матч</option>';
-        matchSelect.disabled = true;
-
-        if (!country || !league || !data[country] || !data[country][league]) return;
-
-        data[country][league].forEach(match => {
-            const opt = document.createElement('option');
-            opt.value = match.id;
-            opt.textContent = match.home + ' - ' + match.away;
-            opt.dataset.home = match.home;
-            opt.dataset.away = match.away;
-            matchSelect.appendChild(opt);
-        });
-
-        matchSelect.disabled = false;
-    }
-
-    populateCountries();
-
-    countrySelect.addEventListener('change', function () {
-        countryErrorEl.textContent = '';
-        const country = this.value;
-        populateLeagues(country);
-    });
-
-    leagueSelect.addEventListener('change', function () {
-        leagueErrorEl.textContent = '';
-        const country = countrySelect.value;
-        const league = this.value;
-        populateMatches(country, league);
-    });
-
-    matchSelect.addEventListener('change', function () {
-        matchErrorEl.textContent = '';
-    });
-
-    // ===== ЛИМИТ 5 ПРОГНОЗОВ В СУТКИ (localStorage) =====
+    // ===== ЛИМИТ 5 ПРОГНОЗОВ В СУТКИ =====
     function getTodayKey() {
         const today = new Date();
         const y = today.getFullYear();
@@ -546,7 +458,6 @@ document.addEventListener('DOMContentLoaded', function () {
         const subscribeBtn = document.getElementById('subscribe-btn');
         if (!subscribeBtn) return;
 
-        // Ссылка на Telegram менеджера с готовым сообщением
         const managerUsername = "YourManagerUsername"; // TODO: заменить на реальный @username
         const text = encodeURIComponent("Добрый день, хочу оплатить подписку на бота.");
         const tgLink = `https://t.me/${managerUsername}?text=${text}`;
@@ -558,12 +469,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     updateLimitUI();
 
-    // Валидация ID — только цифры, максимум 9
+    // ===== Валидация ID =====
     idInput.addEventListener('input', function () {
         this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9);
     });
 
-    // Шаг 1 — подтверждение ID (ровно 9 цифр)
     confirmIdBtn.addEventListener('click', function () {
         idErrorEl.textContent = '';
         const value = idInput.value.trim();
@@ -574,13 +484,132 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // TODO: здесь вы добавляете реальную проверку ID через ваш backend
+        // TODO: реальная проверка ID через backend
 
         stepOne.style.display = 'none';
         stepTwo.style.display = 'block';
     });
 
-    // Получение прогноза
+    // ===== ЛОГИКА ПО ДАТЕ → МАТЧИ =====
+    function resetSelectors() {
+        countrySelect.innerHTML = '<option value="">Сначала выберите дату</option>';
+        leagueSelect.innerHTML = '<option value="">Сначала выберите страну</option>';
+        matchSelect.innerHTML = '<option value="">Сначала выберите лигу</option>';
+
+        countrySelect.disabled = true;
+        leagueSelect.disabled = true;
+        matchSelect.disabled = true;
+    }
+
+    resetSelectors();
+
+    matchDateInput.addEventListener('change', function () {
+        dateErrorEl.textContent = '';
+        const date = this.value;
+
+        resetSelectors();
+
+        if (!date) return;
+
+        // TODO: здесь вы дергаете ваш backend, который по дате идёт на Melbet
+        // или футбольный API и возвращает структуру:
+        // { country: { league: [ {id, home, away}, ... ] }, ... }
+
+        // Имитация ответа по дате
+        const fixtures = {
+            "Испания": {
+                "Ла Лига": [
+                    { id: "spain-laliga-1", home: "Реал Мадрид", away: "Барселона" },
+                    { id: "spain-laliga-2", home: "Атлетико Мадрид", away: "Севилья" }
+                ]
+            },
+            "Англия": {
+                "АПЛ": [
+                    { id: "england-epl-1", home: "Манчестер Сити", away: "Ливерпуль" },
+                    { id: "england-epl-2", home: "Челси", away: "Арсенал" }
+                ]
+            }
+        };
+
+        const hasAny = Object.keys(fixtures).length > 0;
+
+        if (!hasAny) {
+            resultCard.innerHTML = `
+                <div class="result-status">Матчей не найдено</div>
+                <div class="result-main">
+                    На выбранную дату футбольных матчей в линии не найдено.
+                </div>
+                <div class="result-meta">
+                    Попробуйте выбрать другую дату.
+                </div>
+            `;
+            return;
+        }
+
+        // Заполняем страны
+        countrySelect.innerHTML = '<option value="">Выберите страну</option>';
+        Object.keys(fixtures).forEach(country => {
+            const opt = document.createElement('option');
+            opt.value = country;
+            opt.textContent = country;
+            countrySelect.appendChild(opt);
+        });
+        countrySelect.disabled = false;
+
+        // Сохраняем фикстуры в замыкании
+        countrySelect._fixturesByDate = fixtures;
+    });
+
+    countrySelect.addEventListener('change', function () {
+        countryErrorEl.textContent = '';
+        leagueSelect.innerHTML = '<option value="">Выберите лигу</option>';
+        matchSelect.innerHTML = '<option value="">Сначала выберите лигу</option>';
+        leagueSelect.disabled = true;
+        matchSelect.disabled = true;
+
+        const country = this.value;
+        const fixtures = countrySelect._fixturesByDate || {};
+
+        if (!country || !fixtures[country]) return;
+
+        Object.keys(fixtures[country]).forEach(league => {
+            const opt = document.createElement('option');
+            opt.value = league;
+            opt.textContent = league;
+            leagueSelect.appendChild(opt);
+        });
+
+        leagueSelect.disabled = false;
+    });
+
+    leagueSelect.addEventListener('change', function () {
+        leagueErrorEl.textContent = '';
+        matchSelect.innerHTML = '<option value="">Выберите матч</option>';
+        matchSelect.disabled = true;
+
+        const country = countrySelect.value;
+        const league = this.value;
+        const fixtures = countrySelect._fixturesByDate || {};
+
+        if (!country || !league || !fixtures[country] || !fixtures[country][league]) return;
+
+        fixtures[country][league].forEach(match => {
+            const opt = document.createElement('option');
+            opt.value = match.id;
+            opt.textContent = match.home + ' - ' + match.away;
+            opt.dataset.home = match.home;
+            opt.dataset.away = match.away;
+            matchSelect.appendChild(opt);
+        });
+
+        matchSelect.disabled = false;
+    });
+
+    matchSelect.addEventListener('change', function () {
+        matchErrorEl.textContent = '';
+    });
+
+    // ===== ПОЛУЧИТЬ ПРОГНОЗ =====
     getPredictionBtn.addEventListener('click', function () {
         const used = loadUsage();
         if (used >= DAILY_LIMIT) {
@@ -593,13 +622,17 @@ document.addEventListener('DOMContentLoaded', function () {
         matchErrorEl.textContent = '';
         dateErrorEl.textContent = '';
 
+        const date = matchDateInput.value;
         const country = countrySelect.value;
         const league = leagueSelect.value;
         const matchId = matchSelect.value;
-        const matchDate = matchDateInput.value;
 
         let valid = true;
 
+        if (!date) {
+            dateErrorEl.textContent = 'Сначала выберите дату.';
+            valid = false;
+        }
         if (!country) {
             countryErrorEl.textContent = 'Выберите страну.';
             valid = false;
@@ -612,10 +645,6 @@ document.addEventListener('DOMContentLoaded', function () {
             matchErrorEl.textContent = 'Выберите матч.';
             valid = false;
         }
-        if (!matchDate) {
-            dateErrorEl.textContent = 'Выберите дату матча.';
-            valid = false;
-        }
 
         if (!valid) return;
 
@@ -623,46 +652,44 @@ document.addEventListener('DOMContentLoaded', function () {
         const homeTeam = selectedOption.dataset.home;
         const awayTeam = selectedOption.dataset.away;
 
-        // Здесь вы на backend проверяете, что матч реально существует в этот день по линии
+        // TODO: backend проверяет матч по линии Melbet именно на эту дату;
+        // если матча нет — вернуть "такой игры в этот день нет".
+
         resultCard.classList.remove('limit-reached');
         resultCard.innerHTML = `
-            <div class="result-status">Проверка матча и поиск прогноза…</div>
+            <div class="result-status">Поиск прогнозов и аналитики…</div>
             <div class="result-main">
-                ${homeTeam} — ${awayTeam}, дата: ${matchDate}
+                ${homeTeam} — ${awayTeam}, дата: ${date}
             </div>
             <div class="result-meta">
-                AI сопоставляет выбранный матч с линией футбольных лиг и выходит в интернет, чтобы найти свежие прогнозы
-                и краткие аналитические разборы конкретно под это событие.
+                AI формирует запрос по данным матча и дате, ищет свежие прогнозы в интернете и объединяет их
+                в короткий аналитический абзац с основными вероятными исходами.
             </div>
         `;
 
-        // TODO: здесь должен быть fetch на ваш backend:
-        // 1) проверка наличия матча по данным футбольного API / Melbet;
-        // 2) если матч есть — AI собирает прогнозы из интернета и возвращает сжатый абзац.
-
-        // Имитация: считаем, что матч всегда есть и AI вернул 1 абзац
+        // Имитация ответа от AI
         setTimeout(function () {
             const newUsed = used + 1;
             saveUsage(newUsed);
             updateLimitUI();
 
-            const winProb = 62;   // пример процента на П1
-            const drawProb = 20;  // пример на ничью
-            const loseProb = 18;  // пример на П2
+            const winProb = 58;
+            const drawProb = 24;
+            const loseProb = 18;
 
             resultCard.classList.remove('limit-reached');
             resultCard.innerHTML = `
                 <div class="result-status">Прогноз AI (${newUsed} из ${DAILY_LIMIT} за сегодня)</div>
                 <div class="result-main">
-                    ${homeTeam} — ${awayTeam}, матч от ${matchDate}
+                    ${homeTeam} — ${awayTeam}, матч от ${date}
                 </div>
                 <div class="result-meta">
-                    По совокупности открытых прогнозов и статистических моделей небольшое преимущество отдаётся ${homeTeam}:
-                    вероятность П1 оценивается около ${winProb}%, ничья — ${drawProb}%, победа ${awayTeam} — ${loseProb}%.
-                    Рынок ожидает активный футбол с упором хозяев на владение и давление на чужой половине поля, поэтому
-                    базовой идеей выглядит ставка в сторону ${homeTeam} (П1 или осторожный вариант 1Х) с рассмотрением
-                    тотала 2.5 больше как дополнительного сценария, если коэффициенты остаются приемлемыми.
-                    Прогноз носит аналитический характер и не является финансовой рекомендацией.
+                    На основании текущей формы команд, статистики очных встреч и обзора открытых прогнозов лёгкое преимущество
+                    отдаётся ${homeTeam}: вероятность П1 оценивается примерно в ${winProb}%, ничья — около ${drawProb}%,
+                    успех ${awayTeam} — порядка ${loseProb}%. Линия в таких случаях обычно располагается ближе к
+                    сценариям П1/1Х с возможным упором на тотал больше 2.5 при агрессивной игре, поэтому разумно
+                    рассматривать варианты в сторону ${homeTeam} (чистая победа или более аккуратный 1Х) и внимательно следить
+                    за коэффициентами по тоталам. Этот прогноз носит аналитический характер и не является финансовой рекомендацией.
                 </div>
             `;
         }, 2000);
