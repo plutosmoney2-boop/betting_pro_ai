@@ -2,9 +2,8 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Grandbetting_ai — ИИ прогнозы по футболу</title>
+  <title>Grandbetting_ai — ИИ прогнозы по футболу (SStats)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <style>
     :root {
       --accent: #ffcc00;
@@ -263,16 +262,15 @@
   <main>
     <div class="screen">
 
-      <!-- ШАГ 1: ID -->
+      <!-- ШАГ 1: ID (можешь убрать, если не нужен) -->
       <div class="step-one" id="step-one">
-        <h1 class="screen-title">Введите ваш ID от Melbet</h1>
+        <h1 class="screen-title">Введите ваш ID</h1>
         <p class="screen-sub">
-          Чтобы пользоваться ботом и получать прогнозы, нужен подтверждённый ID аккаунта Melbet.
-          ID должен состоять ровно из 9 цифр. Если ID ещё нет — пройдите регистрацию по нашей ссылке.
+          Чтобы пользоваться ботом и получать прогнозы, введите ID (9 цифр).
         </p>
 
         <div class="form-group">
-          <label for="melbet-id">ID Melbet (9 цифр)</label>
+          <label for="melbet-id">ID (9 цифр)</label>
           <input
             type="text"
             id="melbet-id"
@@ -284,46 +282,24 @@
           >
           <div class="error" id="id-error"></div>
           <p class="form-hint">
-            После проверки ID вы сначала выберете дату, а затем конкретный футбольный матч.
+            После проверки ID вы выберете дату и футбольный матч из базы SStats.
           </p>
         </div>
 
         <div class="screen-actions">
           <button class="btn btn-primary" id="confirm-id-btn">Подтвердить ID</button>
-          <a href="https://clck.ru/3Mo7a2" target="_blank" rel="noopener" class="btn btn-ghost">
-            Нет ID — зарегистрироваться
-          </a>
         </div>
       </div>
 
-      <!-- ШАГ 2: ДАТА → ИСТОЧНИК → СТРАНА / ЛИГА / МАТЧ + ПРОГНОЗ -->
+      <!-- ШАГ 2: ДАТА → СТРАНА / ЛИГА / МАТЧ + ПРОГНОЗ -->
       <div class="step-two" id="step-two">
         <h2 class="screen-title">Выберите дату и матч</h2>
         <p class="screen-sub">
-          Сначала выберите дату в календаре и источник матчей. По этой дате подгрузятся страны, лиги и футбольные матчи.
-          После выбора матча AI найдёт свежие прогнозы и сформирует короткий абзац с вероятными исходами.
-          Лимит — 5 прогнозов в сутки.
+          Матчи подтягиваются из SStats по выбранной дате. После выбора матча AI соберёт краткий прогноз.
         </p>
 
         <div class="step-two-grid">
           <div class="form-card" id="form-card">
-
-            <!-- Источник матчей -->
-            <div class="form-group">
-              <label>Источник матчей</label>
-              <div class="screen-actions" style="gap: 8px; margin-top: 4px;">
-                <button type="button" class="btn btn-primary" id="source-melbet-btn" data-source="melbet">
-                  Линия Melbet
-                </button>
-                <button type="button" class="btn btn-ghost" id="source-top-btn" data-source="top">
-                  Топ‑лиги (SStats)
-                </button>
-              </div>
-              <p class="form-hint">
-                «Линия Melbet» — матчи из Melbet. «Топ‑лиги» — популярные чемпионаты по данным SStats.
-              </p>
-            </div>
-
             <div class="form-group">
               <label for="match-date">Дата матчей</label>
               <input
@@ -333,7 +309,7 @@
               >
               <div class="error" id="date-error"></div>
               <p class="form-hint">
-                Выберите дату. По этой дате будут загружены футбольные матчи выбранного источника.
+                Выберите дату. По этой дате будут загружены футбольные матчи из SStats.
               </p>
             </div>
 
@@ -373,11 +349,10 @@
           <div class="result-card" id="result-card">
             <div class="result-status">Прогноз от AI</div>
             <div class="result-main" id="result-title">
-              Выберите источник, дату, затем страну, лигу и матч. После этого нажмите «Получить прогноз».
+              Выберите дату, затем страну, лигу и матч. После этого нажмите «Получить прогноз».
             </div>
             <div class="result-meta" id="result-text">
-              AI использует актуальные футбольные данные и открытые источники,
-              чтобы сформировать короткий профессиональный абзац с вероятными исходами.
+              Матчи берутся из API SStats, а AI использует открытые источники для формирования короткого прогноза.[web:2][web:14]
             </div>
           </div>
         </div>
@@ -409,14 +384,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const getPredictionBtn = document.getElementById('get-prediction-btn');
   const resultCard = document.getElementById('result-card');
   const formCard = document.getElementById('form-card');
-  const limitInfoEl = document.getElementById('limit-info');
   const usedCountEl = document.getElementById('used-count');
 
-  const sourceMelbetBtn = document.getElementById('source-melbet-btn');
-  const sourceTopBtn = document.getElementById('source-top-btn');
-
   const DAILY_LIMIT = 5;
-  let currentSource = 'melbet'; // 'melbet' | 'top'
 
   function getTodayKey() {
     const today = new Date();
@@ -459,30 +429,9 @@ document.addEventListener('DOMContentLoaded', function () {
         Лимит бесплатных прогнозов на сегодня достигнут: 5 из 5.
       </div>
       <div class="result-meta">
-        Возвращайтесь через 24 часа, чтобы получить новые прогнозы, или оформите подписку на безлимитный доступ:
-        290 ₽ в месяц или 2590 ₽ на год.
-      </div>
-      <div class="limit-info">
-        <button class="btn btn-primary" id="subscribe-btn">
-          Оплатить подписку у менеджера
-        </button>
+        Возвращайтесь через 24 часа, чтобы получить новые прогнозы.
       </div>
     `;
-
-    attachSubscribeHandler();
-  }
-
-  function attachSubscribeHandler() {
-    const subscribeBtn = document.getElementById('subscribe-btn');
-    if (!subscribeBtn) return;
-
-    const managerUsername = "YourManagerUsername"; // TODO: заменить на реальный @username
-    const text = encodeURIComponent("Добрый день, хочу оплатить подписку на бота.");
-    const tgLink = `https://t.me/${managerUsername}?text=${text}`;
-
-    subscribeBtn.addEventListener('click', function () {
-      window.open(tgLink, '_blank');
-    });
   }
 
   function resetSelectors() {
@@ -499,57 +448,10 @@ document.addEventListener('DOMContentLoaded', function () {
     matchErrorEl.textContent = '';
   }
 
-  function updateSourceButtons() {
-    if (currentSource === 'melbet') {
-      sourceMelbetBtn.classList.add('btn-primary');
-      sourceMelbetBtn.classList.remove('btn-ghost');
-      sourceTopBtn.classList.add('btn-ghost');
-      sourceTopBtn.classList.remove('btn-primary');
-    } else {
-      sourceTopBtn.classList.add('btn-primary');
-      sourceTopBtn.classList.remove('btn-ghost');
-      sourceMelbetBtn.classList.add('btn-ghost');
-      sourceMelbetBtn.classList.remove('btn-primary');
-    }
-  }
-
-  sourceMelbetBtn.addEventListener('click', function () {
-    currentSource = 'melbet';
-    updateSourceButtons();
-    resetSelectors();
-    resultCard.classList.remove('limit-reached');
-    resultCard.innerHTML = `
-      <div class="result-status">Источник: линия Melbet</div>
-      <div class="result-main">
-        Выберите дату, затем страну, лигу и матч из линии Melbet.
-      </div>
-      <div class="result-meta">
-        После выбора матча нажмите «Получить прогноз».
-      </div>
-    `;
-  });
-
-  sourceTopBtn.addEventListener('click', function () {
-    currentSource = 'top';
-    updateSourceButtons();
-    resetSelectors();
-    resultCard.classList.remove('limit-reached');
-    resultCard.innerHTML = `
-      <div class="result-status">Источник: топ‑лиги SStats</div>
-      <div class="result-main">
-        Выберите дату, затем страну, лигу и матч из списка топ‑лиг.
-      </div>
-      <div class="result-meta">
-        После выбора матча нажмите «Получить прогноз».
-      </div>
-    `;
-  });
-
-  updateSourceButtons();
   updateLimitUI();
   resetSelectors();
 
-  // Валидация ID
+  // Валидация ID (можешь отключить, если не нужен)
   idInput.addEventListener('input', function () {
     this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9);
   });
@@ -564,13 +466,11 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // TODO: реальная проверка ID через backend, если нужно
-
     stepOne.style.display = 'none';
     stepTwo.style.display = 'block';
   });
 
-  // Дата → подтягиваем матчи из нужного источника
+  // Дата → подтягиваем матчи из твоего бэка (который ходит в SStats)
   matchDateInput.addEventListener('change', function () {
     dateErrorEl.textContent = '';
     const date = this.value;
@@ -589,14 +489,8 @@ document.addEventListener('DOMContentLoaded', function () {
       </div>
     `;
 
-    let url;
-    if (currentSource === 'melbet') {
-      url = `/api/matches?date=${encodeURIComponent(date)}`;
-    } else {
-      url = `/api/top-matches?date=${encodeURIComponent(date)}`;
-    }
-
-    fetch(url)
+    // ВАЖНО: этот URL должен быть реализован на сервере и внутри обращаться к SStats
+    fetch(`/api/matches?date=${encodeURIComponent(date)}`)
       .then(res => {
         if (!res.ok) throw new Error('Ошибка загрузки матчей');
         return res.json();
@@ -611,7 +505,7 @@ document.addEventListener('DOMContentLoaded', function () {
               На выбранную дату футбольные матчи не найдены.
             </div>
             <div class="result-meta">
-              Попробуйте выбрать другую дату или переключить источник.
+              Попробуйте выбрать другую дату.
             </div>
           `;
           return;
@@ -633,7 +527,7 @@ document.addEventListener('DOMContentLoaded', function () {
             Выберите страну, лигу и матч для даты ${date}.
           </div>
           <div class="result-meta">
-            Источник: ${currentSource === 'melbet' ? 'линия Melbet' : 'топ‑лиги SStats'}.
+            Матчи загружаются из SStats по выбранной дате.
           </div>
         `;
       })
@@ -645,7 +539,7 @@ document.addEventListener('DOMContentLoaded', function () {
             Не удалось загрузить матчи на выбранную дату.
           </div>
           <div class="result-meta">
-            Попробуйте обновить страницу, выбрать другую дату или переключить источник.
+            Проверь, что эндпоинт /api/matches существует и корректно отдаёт JSON.
           </div>
         `;
       });
@@ -750,8 +644,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ${homeTeam} — ${awayTeam}, дата: ${date}
       </div>
       <div class="result-meta">
-        AI проверяет матч в выбранном источнике, формирует запрос по названию и дате,
-        ищет свежие прогнозы в интернете и собирает короткий аналитический абзац.
+        AI формирует запрос по названию матча и дате, собирает инфу в интернете и делает краткий прогноз.
       </div>
     `;
 
@@ -764,8 +657,7 @@ document.addEventListener('DOMContentLoaded', function () {
         league,
         matchId,
         homeTeam,
-        awayTeam,
-        source: currentSource
+        awayTeam
       })
     })
       .then(res => {
@@ -804,7 +696,7 @@ document.addEventListener('DOMContentLoaded', function () {
           <div class="result-meta">
             ${
               err.message === 'Матч не найден на эту дату'
-                ? 'Такой игры в этот день нет в выбранном источнике. Проверьте дату или выберите другой матч.'
+                ? 'Такой игры в этот день нет в данных SStats. Проверь дату или выберите другой матч.'
                 : 'Не удалось получить прогноз. Попробуйте снова чуть позже.'
             }
           </div>
