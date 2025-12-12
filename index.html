@@ -1,692 +1,737 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Grandbetting_ai — ИИ прогнозы по футболу</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        :root {
-            --accent: #ffcc00;
-            --accent-soft: #ffe766;
-            --danger: #ef4444;
-            --text-main: #111111;
-            --text-muted: #6b7280;
-            --card-bg: #ffffff;
-            --border-soft: rgba(0,0,0,0.08);
-            --bg-page: #f5f5f7;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: var(--bg-page);
-            color: var(--text-main);
-            line-height: 1.6;
-        }
-        a { color: #2563eb; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .page {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        header {
-            padding: 18px 32px;
-            border-bottom: 1px solid var(--border-soft);
-            background: #ffffff;
-        }
-        .nav {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            font-size: 18px;
-            text-transform: uppercase;
-        }
-        .logo-mark {
-            width: 32px;
-            height: 32px;
-            border-radius: 10px;
-            background: radial-gradient(circle at 30% 20%, #ffffff 0, #ffcc00 30%, #ff9100 55%, #d400ff 100%);
-            box-shadow: 0 0 24px rgba(255, 204, 0, 0.8);
-        }
-        main {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 32px 16px;
-        }
-        .screen {
-            width: 100%;
-            max-width: 1200px;
-            background: #ffffff;
-            border-radius: 24px;
-            border: 1px solid var(--border-soft);
-            padding: 28px 32px;
-            box-shadow: 0 18px 45px rgba(15,23,42,0.08);
-        }
-        .screen-title {
-            font-size: 26px;
-            margin-bottom: 8px;
-        }
-        .screen-sub {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 22px;
-            font-size: 14px;
-            border-radius: 999px;
-            border: 1px solid transparent;
-            cursor: pointer;
-            transition: all 0.18s ease-out;
-            white-space: nowrap;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #ffcc00, #ff9100);
-            color: #111111;
-            font-weight: 600;
-            box-shadow: 0 0 18px rgba(255, 204, 0, 0.5);
-        }
-        .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 0 26px rgba(255, 204, 0, 0.75);
-        }
-        .btn-ghost {
-            background: transparent;
-            border-color: var(--border-soft);
-            color: #111111;
-        }
-        .btn-ghost:hover {
-            border-color: #9ca3af;
-        }
-        .btn-disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        .form-group { margin-bottom: 14px; }
-        label {
-            display: block;
-            font-size: 14px;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-        .input, .select {
-            width: 100%;
-            padding: 10px 12px;
-            border-radius: 10px;
-            border: 1px solid var(--border-soft);
-            background: #f9fafb;
-            color: var(--text-main);
-            font-size: 14px;
-        }
-        .input:focus, .select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 1px rgba(255,204,0,0.5);
-            background: #ffffff;
-        }
-        .error {
-            font-size: 12px;
-            color: var(--danger);
-            margin-top: 3px;
-        }
-        .form-hint {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 6px;
-        }
-        .screen-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 12px;
-        }
-        .step-two {
-            display: none;
-        }
-        .step-two-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-            gap: 24px;
-            margin-top: 10px;
-        }
-        .form-card,
-        .result-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 14px 16px;
-            border: 1px solid var(--border-soft);
-            font-size: 14px;
-        }
-        .result-status {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            color: #6b7280;
-            margin-bottom: 6px;
-        }
-        .result-main {
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        .result-meta {
-            font-size: 13px;
-            color: var(--text-muted);
-        }
-        .limit-info {
-            font-size: 13px;
-            margin-top: 8px;
-            color: var(--text-muted);
-        }
-        .limit-info strong {
-            color: #111111;
-        }
-        .limit-reached {
-            border-color: #fecaca;
-            background: #fef2f2;
-        }
-        .limit-reached .result-status {
-            color: #b91c1c;
-        }
-        @media (max-width: 992px) {
-            header { padding: 14px 16px; }
-            .screen { padding: 20px 16px; }
-        }
-        @media (max-width: 768px) {
-            .step-two-grid { grid-template-columns: 1fr; }
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Grandbetting_ai — ИИ прогнозы по футболу</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+--accent: #ffcc00;
+--accent-soft: #ffe766;
+--danger: #ef4444;
+--text-main: #111111;
+--text-muted: #6b7280;
+--card-bg: #ffffff;
+--border-soft: rgba(0,0,0,0.08);
+--bg-page: #f5f5f7;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+background: var(--bg-page);
+color: var(--text-main);
+line-height: 1.6;
+}
+
+a { color: #2563eb; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+.page {
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+}
+
+header {
+padding: 18px 32px;
+border-bottom: 1px solid var(--border-soft);
+background: #ffffff;
+}
+
+.nav {
+max-width: 1200px;
+margin: 0 auto;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 16px;
+}
+
+.logo {
+display: flex;
+align-items: center;
+gap: 12px;
+font-weight: 700;
+letter-spacing: 0.06em;
+font-size: 18px;
+text-transform: uppercase;
+}
+
+.logo-mark {
+width: 32px;
+height: 32px;
+border-radius: 10px;
+background: radial-gradient(circle at 30% 20%, #ffffff 0, #ffcc00 30%, #ff9100 55%, #d400ff 100%);
+box-shadow: 0 0 24px rgba(255, 204, 0, 0.8);
+}
+
+main {
+flex: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 32px 16px;
+}
+
+.screen {
+width: 100%;
+max-width: 1200px;
+background: #ffffff;
+border-radius: 24px;
+border: 1px solid var(--border-soft);
+padding: 28px 32px;
+box-shadow: 0 18px 45px rgba(15,23,42,0.08);
+}
+
+.screen-title {
+font-size: 26px;
+margin-bottom: 8px;
+}
+
+.screen-sub {
+font-size: 14px;
+color: var(--text-muted);
+margin-bottom: 20px;
+}
+
+.btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+padding: 12px 22px;
+font-size: 14px;
+border-radius: 999px;
+border: 1px solid transparent;
+cursor: pointer;
+transition: all 0.18s ease-out;
+white-space: nowrap;
+}
+
+.btn-primary {
+background: linear-gradient(135deg, #ffcc00, #ff9100);
+color: #111111;
+font-weight: 600;
+box-shadow: 0 0 18px rgba(255, 204, 0, 0.5);
+}
+
+.btn-primary:hover {
+transform: translateY(-1px);
+box-shadow: 0 0 26px rgba(255, 204, 0, 0.75);
+}
+
+.btn-ghost {
+background: transparent;
+border-color: var(--border-soft);
+color: #111111;
+}
+
+.btn-ghost:hover {
+border-color: #9ca3af;
+}
+
+.btn-disabled {
+opacity: 0.6;
+cursor: not-allowed;
+}
+
+.form-group { margin-bottom: 14px; }
+
+label {
+display: block;
+font-size: 14px;
+margin-bottom: 5px;
+font-weight: 500;
+}
+
+.input, .select {
+width: 100%;
+padding: 10px 12px;
+border-radius: 10px;
+border: 1px solid var(--border-soft);
+background: #f9fafb;
+color: var(--text-main);
+font-size: 14px;
+}
+
+.input:focus, .select:focus {
+outline: none;
+border-color: var(--accent);
+box-shadow: 0 0 0 1px rgba(255,204,0,0.5);
+background: #ffffff;
+}
+
+.error {
+font-size: 12px;
+color: var(--danger);
+margin-top: 3px;
+}
+
+.form-hint {
+font-size: 12px;
+color: var(--text-muted);
+margin-top: 6px;
+}
+
+.screen-actions {
+display: flex;
+flex-wrap: wrap;
+gap: 12px;
+margin-top: 12px;
+}
+
+.step-two {
+display: none;
+}
+
+.step-two-grid {
+display: grid;
+grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+gap: 24px;
+margin-top: 10px;
+}
+
+.form-card,
+.result-card {
+background: var(--card-bg);
+border-radius: 16px;
+padding: 14px 16px;
+border: 1px solid var(--border-soft);
+font-size: 14px;
+}
+
+.result-status {
+font-size: 11px;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+color: #6b7280;
+margin-bottom: 6px;
+}
+
+.result-main {
+font-weight: 600;
+margin-bottom: 8px;
+}
+
+.result-meta {
+font-size: 13px;
+color: var(--text-muted);
+}
+
+.limit-info {
+font-size: 13px;
+margin-top: 8px;
+color: var(--text-muted);
+}
+
+.limit-info strong {
+color: #111111;
+}
+
+.limit-reached {
+border-color: #fecaca;
+background: #fef2f2;
+}
+
+.limit-reached .result-status {
+color: #b91c1c;
+}
+
+@media (max-width: 992px) {
+header { padding: 14px 16px; }
+.screen { padding: 20px 16px; }
+}
+
+@media (max-width: 768px) {
+.step-two-grid { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body>
 <div class="page">
-    <header>
-        <div class="nav">
-            <div class="logo">
-                <div class="logo-mark"></div>
-                <span>Grandbetting_ai</span>
-            </div>
-        </div>
-    </header>
+<header>
+<div class="nav">
+<div class="logo">
+<div class="logo-mark"></div>
+<span>Grandbetting_ai</span>
+</div>
+</div>
+</header>
 
-    <main>
-        <div class="screen">
+<main>
+<div class="screen">
 
-            <!-- ШАГ 1: ID -->
-            <div class="step-one" id="step-one">
-                <h1 class="screen-title">Введите ваш ID от Melbet</h1>
-                <p class="screen-sub">
-                    Чтобы пользоваться ботом и получать прогнозы, нужен подтверждённый ID аккаунта Melbet.
-                    ID должен состоять ровно из 9 цифр. Если ID ещё нет — пройдите регистрацию по нашей ссылке.
-                </p>
+<!-- ШАГ 1: ID -->
+<div class="step-one" id="step-one">
+<h1 class="screen-title">Введите ваш ID от Melbet</h1>
+<p class="screen-sub">
+Чтобы пользоваться ботом и получать прогнозы, нужен подтверждённый ID аккаунта Melbet.
+ID должен состоять ровно из 9 цифр. Если ID ещё нет — пройдите регистрацию по нашей ссылке.
+</p>
 
-                <div class="form-group">
-                    <label for="melbet-id">ID Melbet (9 цифр)</label>
-                    <input
-                        type="text"
-                        id="melbet-id"
-                        class="input"
-                        inputmode="numeric"
-                        maxlength="9"
-                        placeholder="Например: 123456789"
-                        autocomplete="off"
-                    >
-                    <div class="error" id="id-error"></div>
-                    <p class="form-hint">
-                        После проверки ID вы сначала выберете дату, а затем конкретный футбольный матч из линии.
-                    </p>
-                </div>
+<div class="form-group">
+<label for="melbet-id">ID Melbet (9 цифр)</label>
+<input
+type="text"
+id="melbet-id"
+class="input"
+inputmode="numeric"
+maxlength="9"
+placeholder="Например: 123456789"
+autocomplete="off"
+>
+<div class="error" id="id-error"></div>
+<p class="form-hint">
+После проверки ID вы сначала выберете дату, а затем конкретный футбольный матч из линии.
+</p>
+</div>
 
-                <div class="screen-actions">
-                    <button class="btn btn-primary" id="confirm-id-btn">Подтвердить ID</button>
-                    <a href="https://clck.ru/3Mo7a2" target="_blank" rel="noopener" class="btn btn-ghost">
-                        Нет ID — зарегистрироваться
-                    </a>
-                </div>
-            </div>
+<div class="screen-actions">
+<button class="btn btn-primary" id="confirm-id-btn">Подтвердить ID</button>
+<a href="https://clck.ru/3Mo7a2" target="_blank" rel="noopener" class="btn btn-ghost">
+Нет ID — зарегистрироваться
+</a>
+</div>
+</div>
 
-            <!-- ШАГ 2: ДАТА → СТРАНА / ЛИГА / МАТЧ + ПРОГНОЗ -->
-            <div class="step-two" id="step-two">
-                <h2 class="screen-title">Выберите дату и матч</h2>
-                <p class="screen-sub">
-                    Сначала выберите дату в календаре. По этой дате подгрузятся страны, лиги и футбольные матчи.
-                    После выбора матча AI найдёт свежие прогнозы в интернете и соберёт короткий абзац с вероятными исходами.
-                    Лимит — 5 прогнозов в сутки.
-                </p>
+<!-- ШАГ 2: ДАТА → СТРАНА / ЛИГА / МАТЧ + ПРОГНОЗ -->
+<div class="step-two" id="step-two">
+<h2 class="screen-title">Выберите дату и матч</h2>
+<p class="screen-sub">
+Сначала выберите дату в календаре. По этой дате подгрузятся страны, лиги и футбольные матчи по линии Melbet.
+После выбора матча AI найдёт свежие прогнозы в интернете и соберёт короткий абзац с вероятными исходами.
+Лимит — 5 прогнозов в сутки.
+</p>
 
-                <div class="step-two-grid">
-                    <div class="form-card" id="form-card">
-                        <div class="form-group">
-                            <label for="match-date">Дата матчей</label>
-                            <input
-                                type="date"
-                                id="match-date"
-                                class="input"
-                            >
-                            <div class="error" id="date-error"></div>
-                            <p class="form-hint">
-                                Выберите дату в календаре. По этой дате будут загружены футбольные матчи.
-                            </p>
-                        </div>
+<div class="step-two-grid">
+<div class="form-card" id="form-card">
+<div class="form-group">
+<label for="match-date">Дата матчей</label>
+<input
+type="date"
+id="match-date"
+class="input"
+>
+<div class="error" id="date-error"></div>
+<p class="form-hint">
+Выберите дату в календаре. По этой дате будут загружены футбольные матчи с линии Melbet.
+</p>
+</div>
 
-                        <div class="form-group">
-                            <label for="country-select">Страна</label>
-                            <select id="country-select" class="select" disabled>
-                                <option value="">Сначала выберите дату</option>
-                            </select>
-                            <div class="error" id="country-error"></div>
-                        </div>
+<div class="form-group">
+<label for="country-select">Страна</label>
+<select id="country-select" class="select" disabled>
+<option value="">Сначала выберите дату</option>
+</select>
+<div class="error" id="country-error"></div>
+</div>
 
-                        <div class="form-group">
-                            <label for="league-select">Лига</label>
-                            <select id="league-select" class="select" disabled>
-                                <option value="">Сначала выберите страну</option>
-                            </select>
-                            <div class="error" id="league-error"></div>
-                        </div>
+<div class="form-group">
+<label for="league-select">Лига</label>
+<select id="league-select" class="select" disabled>
+<option value="">Сначала выберите страну</option>
+</select>
+<div class="error" id="league-error"></div>
+</div>
 
-                        <div class="form-group">
-                            <label for="match-select">Матч</label>
-                            <select id="match-select" class="select" disabled>
-                                <option value="">Сначала выберите лигу</option>
-                            </select>
-                            <div class="error" id="match-error"></div>
-                        </div>
+<div class="form-group">
+<label for="match-select">Матч</label>
+<select id="match-select" class="select" disabled>
+<option value="">Сначала выберите лигу</option>
+</select>
+<div class="error" id="match-error"></div>
+</div>
 
-                        <button class="btn btn-primary" id="get-prediction-btn">
-                            Получить прогноз
-                        </button>
+<button class="btn btn-primary" id="get-prediction-btn">
+Получить прогноз
+</button>
 
-                        <p class="limit-info" id="limit-info">
-                            Доступно прогнозов сегодня: <strong id="used-count">0</strong> из <strong>5</strong>.
-                        </p>
-                    </div>
+<p class="limit-info" id="limit-info">
+Доступно прогнозов сегодня: <strong id="used-count">0</strong> из <strong>5</strong>.
+</p>
+</div>
 
-                    <div class="result-card" id="result-card">
-                        <div class="result-status">Прогноз от AI</div>
-                        <div class="result-main" id="result-title">
-                            Выберите дату, затем страну, лигу и матч. После этого нажмите «Получить прогноз».
-                        </div>
-                        <div class="result-meta" id="result-text">
-                            AI использует актуальные футбольные данные и открытые источники с прогнозами,
-                            чтобы сформировать короткий профессиональный абзац с вероятными исходами.
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="result-card" id="result-card">
+<div class="result-status">Прогноз от AI</div>
+<div class="result-main" id="result-title">
+Выберите дату, затем страну, лигу и матч. После этого нажмите «Получить прогноз».
+</div>
+<div class="result-meta" id="result-text">
+AI использует актуальные футбольные данные и открытые источники с прогнозами,
+чтобы сформировать короткий профессиональный абзац с вероятными исходами (П1/Х/П2, тоталы и т.д.).
+</div>
+</div>
+</div>
+</div>
 
-        </div>
-    </main>
+</div>
+</main>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const stepOne = document.getElementById('step-one');
-    const stepTwo = document.getElementById('step-two');
-    const confirmIdBtn = document.getElementById('confirm-id-btn');
-    const idInput = document.getElementById('melbet-id');
-    const idErrorEl = document.getElementById('id-error');
+const stepOne = document.getElementById('step-one');
+const stepTwo = document.getElementById('step-two');
+const confirmIdBtn = document.getElementById('confirm-id-btn');
+const idInput = document.getElementById('melbet-id');
+const idErrorEl = document.getElementById('id-error');
 
-    const matchDateInput = document.getElementById('match-date');
-    const dateErrorEl = document.getElementById('date-error');
+const matchDateInput = document.getElementById('match-date');
+const dateErrorEl = document.getElementById('date-error');
 
-    const countrySelect = document.getElementById('country-select');
-    const leagueSelect = document.getElementById('league-select');
-    const matchSelect = document.getElementById('match-select');
+const countrySelect = document.getElementById('country-select');
+const leagueSelect = document.getElementById('league-select');
+const matchSelect = document.getElementById('match-select');
 
-    const countryErrorEl = document.getElementById('country-error');
-    const leagueErrorEl = document.getElementById('league-error');
-    const matchErrorEl = document.getElementById('match-error');
+const countryErrorEl = document.getElementById('country-error');
+const leagueErrorEl = document.getElementById('league-error');
+const matchErrorEl = document.getElementById('match-error');
 
-    const getPredictionBtn = document.getElementById('get-prediction-btn');
-    const resultCard = document.getElementById('result-card');
-    const formCard = document.getElementById('form-card');
-    const limitInfoEl = document.getElementById('limit-info');
-    const usedCountEl = document.getElementById('used-count');
+const getPredictionBtn = document.getElementById('get-prediction-btn');
+const resultCard = document.getElementById('result-card');
+const formCard = document.getElementById('form-card');
+const limitInfoEl = document.getElementById('limit-info');
+const usedCountEl = document.getElementById('used-count');
 
-    const DAILY_LIMIT = 5;
+const DAILY_LIMIT = 5;
 
-    function getTodayKey() {
-        const today = new Date();
-        const y = today.getFullYear();
-        const m = String(today.getMonth() + 1).padStart(2, '0');
-        const d = String(today.getDate()).padStart(2, '0');
-        return `gb_ai_limit_${y}-${m}-${d}`;
-    }
+// ==== ЛИМИТ 5 ПРОГНОЗОВ В СУТКИ (localStorage) ====
+function getTodayKey() {
+const today = new Date();
+const y = today.getFullYear();
+const m = String(today.getMonth() + 1).padStart(2, '0');
+const d = String(today.getDate()).padStart(2, '0');
+return `gb_ai_limit_${y}-${m}-${d}`;
+}
 
-    function loadUsage() {
-        const key = getTodayKey();
-        const raw = localStorage.getItem(key);
-        const used = raw ? parseInt(raw, 10) : 0;
-        return used || 0;
-    }
+function loadUsage() {
+const key = getTodayKey();
+const raw = localStorage.getItem(key);
+const used = raw ? parseInt(raw, 10) : 0;
+return used || 0;
+}
 
-    function saveUsage(count) {
-        const key = getTodayKey();
-        localStorage.setItem(key, String(count));
-    }
+function saveUsage(count) {
+const key = getTodayKey();
+localStorage.setItem(key, String(count));
+}
 
-    function updateLimitUI() {
-        const used = loadUsage();
-        usedCountEl.textContent = used;
-        if (used >= DAILY_LIMIT) {
-            lockInterface();
-        }
-    }
+function updateLimitUI() {
+const used = loadUsage();
+usedCountEl.textContent = used;
 
-    function lockInterface() {
-        formCard.classList.add('limit-reached');
-        getPredictionBtn.classList.add('btn-disabled');
-        getPredictionBtn.disabled = true;
+if (used >= DAILY_LIMIT) {
+lockInterface();
+}
+}
 
-        resultCard.classList.add('limit-reached');
-        resultCard.innerHTML = `
-            <div class="result-status">Лимит прогнозов исчерпан</div>
-            <div class="result-main">
-                Лимит бесплатных прогнозов на сегодня достигнут: 5 из 5.
-            </div>
-            <div class="result-meta">
-                Возвращайтесь через 24 часа, чтобы получить новые прогнозы, или оформите подписку на безлимитный доступ:
-                290 ₽ в месяц или 2590 ₽ на год.
-            </div>
-            <div class="limit-info">
-                <button class="btn btn-primary" id="subscribe-btn">
-                    Оплатить подписку у менеджера
-                </button>
-            </div>
-        `;
+function lockInterface() {
+formCard.classList.add('limit-reached');
+getPredictionBtn.classList.add('btn-disabled');
+getPredictionBtn.disabled = true;
 
-        attachSubscribeHandler();
-    }
+resultCard.classList.add('limit-reached');
+resultCard.innerHTML = `
+<div class="result-status">Лимит прогнозов исчерпан</div>
+<div class="result-main">
+Лимит бесплатных прогнозов на сегодня достигнут: 5 из 5.
+</div>
+<div class="result-meta">
+Возвращайтесь через 24 часа, чтобы получить новые прогнозы, или оформите подписку на безлимитный доступ:
+290 ₽ в месяц или 2590 ₽ на год.
+</div>
+<div class="limit-info">
+<button class="btn btn-primary" id="subscribe-btn">
+Оплатить подписку у менеджера
+</button>
+</div>
+`;
 
-    function attachSubscribeHandler() {
-        const subscribeBtn = document.getElementById('subscribe-btn');
-        if (!subscribeBtn) return;
+attachSubscribeHandler();
+}
 
-        const managerUsername = "YourManagerUsername";
-        const text = encodeURIComponent("Добрый день, хочу оплатить подписку на бота.");
-        const tgLink = `https://t.me/${managerUsername}?text=${text}`;
+function attachSubscribeHandler() {
+const subscribeBtn = document.getElementById('subscribe-btn');
+if (!subscribeBtn) return;
 
-        subscribeBtn.addEventListener('click', function () {
-            window.open(tgLink, '_blank');
-        });
-    }
+const managerUsername = "YourManagerUsername"; // TODO: заменить на реальный @username
+const text = encodeURIComponent("Добрый день, хочу оплатить подписку на бота.");
+const tgLink = `https://t.me/${managerUsername}?text=${text}`;
 
-    updateLimitUI();
+subscribeBtn.addEventListener('click', function () {
+window.open(tgLink, '_blank');
+});
+}
 
-    idInput.addEventListener('input', function () {
-        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9);
-    });
+updateLimitUI();
 
-    confirmIdBtn.addEventListener('click', function () {
-        idErrorEl.textContent = '';
-        const value = idInput.value.trim();
-        const isNineDigits = /^[0-9]{9}$/.test(value);
+// ==== Валидация ID ====
+idInput.addEventListener('input', function () {
+this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9);
+});
 
-        if (!isNineDigits) {
-            idErrorEl.textContent = 'ID должен состоять ровно из 9 цифр.';
-            return;
-        }
+confirmIdBtn.addEventListener('click', function () {
+idErrorEl.textContent = '';
+const value = idInput.value.trim();
+const isNineDigits = /^[0-9]{9}$/.test(value);
 
-        stepOne.style.display = 'none';
-        stepTwo.style.display = 'block';
-    });
+if (!isNineDigits) {
+idErrorEl.textContent = 'ID должен состоять ровно из 9 цифр.';
+return;
+}
 
-    function resetSelectors() {
-        countrySelect.innerHTML = '<option value="">Сначала выберите дату</option>';
-        leagueSelect.innerHTML = '<option value="">Сначала выберите страну</option>';
-        matchSelect.innerHTML = '<option value="">Сначала выберите лигу</option>';
+// TODO: реальная проверка ID через backend, если нужно
 
-        countrySelect.disabled = true;
-        leagueSelect.disabled = true;
-        matchSelect.disabled = true;
-        countrySelect._fixturesByDate = {};
-    }
+stepOne.style.display = 'none';
+stepTwo.style.display = 'block';
+});
 
-    resetSelectors();
+// ==== Дата → подтягиваем матчи с backend ====
+function resetSelectors() {
+countrySelect.innerHTML = '<option value="">Сначала выберите дату</option>';
+leagueSelect.innerHTML = '<option value="">Сначала выберите страну</option>';
+matchSelect.innerHTML = '<option value="">Сначала выберите лигу</option>';
 
-    matchDateInput.addEventListener('change', function () {
-        dateErrorEl.textContent = '';
-        const date = this.value;
-        resetSelectors();
+countrySelect.disabled = true;
+leagueSelect.disabled = true;
+matchSelect.disabled = true;
+}
 
-        if (!date) return;
+resetSelectors();
 
-        resultCard.classList.remove('limit-reached');
-        resultCard.innerHTML = `
-            <div class="result-status">Загрузка матчей…</div>
-            <div class="result-main">
-                Ищем футбольные матчи на ${date}.
-            </div>
-            <div class="result-meta">
-                Пожалуйста, подождите несколько секунд.
-            </div>
-        `;
+matchDateInput.addEventListener('change', function () {
+dateErrorEl.textContent = '';
+const date = this.value;
+resetSelectors();
 
-        fetch(`/api/matches?date=${encodeURIComponent(date)}`)
-            .then(res => {
-                if (!res.ok) throw new Error('Ошибка загрузки матчей');
-                return res.json();
-            })
-            .then(fixtures => {
-                const hasAny = fixtures && Object.keys(fixtures).length > 0;
-                if (!hasAny) {
-                    resetSelectors();
-                    resultCard.innerHTML = `
-                        <div class="result-status">Матчей не найдено</div>
-                        <div class="result-main">
-                            На выбранную дату футбольных матчей не найдено.
-                        </div>
-                        <div class="result-meta">
-                            Попробуйте выбрать другую дату.
-                        </div>
-                    `;
-                    return;
-                }
+if (!date) return;
 
-                countrySelect.innerHTML = '<option value="">Выберите страну</option>';
-                Object.keys(fixtures).forEach(country => {
-                    const opt = document.createElement('option');
-                    opt.value = country;
-                    opt.textContent = country;
-                    countrySelect.appendChild(opt);
-                });
-                countrySelect.disabled = false;
-                countrySelect._fixturesByDate = fixtures;
+resultCard.classList.remove('limit-reached');
+resultCard.innerHTML = `
+<div class="result-status">Загрузка матчей…</div>
+<div class="result-main">
+Ищем футбольные матчи на ${date} по линии Melbet.
+</div>
+<div class="result-meta">
+Пожалуйста, подождите несколько секунд.
+</div>
+`;
 
-                resultCard.innerHTML = `
-                    <div class="result-status">Матчи загружены</div>
-                    <div class="result-main">
-                        Выберите страну, лигу и матч для даты ${date}.
-                    </div>
-                    <div class="result-meta">
-                        После выбора матча нажмите «Получить прогноз».
-                    </div>
-                `;
-            })
-            .catch(err => {
-                console.error(err);
-                resetSelectors();
-                resultCard.innerHTML = `
-                    <div class="result-status">Ошибка</div>
-                    <div class="result-main">
-                        Не удалось загрузить матчи на выбранную дату.
-                    </div>
-                    <div class="result-meta">
-                        Попробуйте обновить страницу или выбрать другую дату.
-                    </div>
-                `;
-            });
-    });
+fetch(`/api/matches?date=${encodeURIComponent(date)}`)
+.then(res => {
+if (!res.ok) throw new Error('Ошибка загрузки матчей');
+return res.json();
+})
+.then(fixtures => {
+const hasAny = fixtures && Object.keys(fixtures).length > 0;
+if (!hasAny) {
+resetSelectors();
+resultCard.innerHTML = `
+<div class="result-status">Матчей не найдено</div>
+<div class="result-main">
+На выбранную дату футбольных матчей в линии Melbet не найдено.
+</div>
+<div class="result-meta">
+Попробуйте выбрать другую дату.
+</div>
+`;
+return;
+}
 
-    countrySelect.addEventListener('change', function () {
-        countryErrorEl.textContent = '';
-        leagueSelect.innerHTML = '<option value="">Выберите лигу</option>';
-        matchSelect.innerHTML = '<option value="">Сначала выберите лигу</option>';
-        leagueSelect.disabled = true;
-        matchSelect.disabled = true;
+countrySelect.innerHTML = '<option value="">Выберите страну</option>';
+Object.keys(fixtures).forEach(country => {
+const opt = document.createElement('option');
+opt.value = country;
+opt.textContent = country;
+countrySelect.appendChild(opt);
+});
+countrySelect.disabled = false;
+countrySelect._fixturesByDate = fixtures;
 
-        const country = this.value;
-        const fixtures = countrySelect._fixturesByDate || {};
+resultCard.innerHTML = `
+<div class="result-status">Матчи загружены</div>
+<div class="result-main">
+Выберите страну, лигу и матч для даты ${date}.
+</div>
+<div class="result-meta">
+После выбора матча нажмите «Получить прогноз».
+</div>
+`;
+})
+.catch(err => {
+resetSelectors();
+resultCard.innerHTML = `
+<div class="result-status">Ошибка</div>
+<div class="result-main">
+Не удалось загрузить матчи на выбранную дату.
+</div>
+<div class="result-meta">
+Попробуйте обновить страницу или выбрать другую дату.
+</div>
+`;
+});
+});
 
-        if (!country || !fixtures[country]) return;
+countrySelect.addEventListener('change', function () {
+countryErrorEl.textContent = '';
+leagueSelect.innerHTML = '<option value="">Выберите лигу</option>';
+matchSelect.innerHTML = '<option value="">Сначала выберите лигу</option>';
+leagueSelect.disabled = true;
+matchSelect.disabled = true;
 
-        Object.keys(fixtures[country]).forEach(league => {
-            const opt = document.createElement('option');
-            opt.value = league;
-            opt.textContent = league;
-            leagueSelect.appendChild(opt);
-        });
+const country = this.value;
+const fixtures = countrySelect._fixturesByDate || {};
 
-        leagueSelect.disabled = false;
-    });
+if (!country || !fixtures[country]) return;
 
-    leagueSelect.addEventListener('change', function () {
-        leagueErrorEl.textContent = '';
-        matchSelect.innerHTML = '<option value="">Выберите матч</option>';
-        matchSelect.disabled = true;
+Object.keys(fixtures[country]).forEach(league => {
+const opt = document.createElement('option');
+opt.value = league;
+opt.textContent = league;
+leagueSelect.appendChild(opt);
+});
 
-        const country = countrySelect.value;
-        const league = this.value;
-        const fixtures = countrySelect._fixturesByDate || {};
+leagueSelect.disabled = false;
+});
 
-        if (!country || !league || !fixtures[country] || !fixtures[country][league]) return;
+leagueSelect.addEventListener('change', function () {
+leagueErrorEl.textContent = '';
+matchSelect.innerHTML = '<option value="">Выберите матч</option>';
+matchSelect.disabled = true;
 
-        fixtures[country][league].forEach(match => {
-            const opt = document.createElement('option');
-            opt.value = match.id;
-            opt.textContent = match.home + ' - ' + match.away;
-            opt.dataset.home = match.home;
-            opt.dataset.away = match.away;
-            matchSelect.appendChild(opt);
-        });
+const country = countrySelect.value;
+const league = this.value;
+const fixtures = countrySelect._fixturesByDate || {};
 
-        matchSelect.disabled = false;
-    });
+if (!country || !league || !fixtures[country] || !fixtures[country][league]) return;
 
-    matchSelect.addEventListener('change', function () {
-        matchErrorEl.textContent = '';
-    });
+fixtures[country][league].forEach(match => {
+const opt = document.createElement('option');
+opt.value = match.id;
+opt.textContent = match.home + ' - ' + match.away;
+opt.dataset.home = match.home;
+opt.dataset.away = match.away;
+matchSelect.appendChild(opt);
+});
 
-    getPredictionBtn.addEventListener('click', function () {
-        const used = loadUsage();
-        if (used >= DAILY_LIMIT) {
-            updateLimitUI();
-            return;
-        }
+matchSelect.disabled = false;
+});
 
-        countryErrorEl.textContent = '';
-        leagueErrorEl.textContent = '';
-        matchErrorEl.textContent = '';
-        dateErrorEl.textContent = '';
+matchSelect.addEventListener('change', function () {
+matchErrorEl.textContent = '';
+});
 
-        const date = matchDateInput.value;
-        const country = countrySelect.value;
-        const league = leagueSelect.value;
-        const matchId = matchSelect.value;
+// ==== Получить прогноз ====
+getPredictionBtn.addEventListener('click', function () {
+const used = loadUsage();
+if (used >= DAILY_LIMIT) {
+updateLimitUI();
+return;
+}
 
-        let valid = true;
+countryErrorEl.textContent = '';
+leagueErrorEl.textContent = '';
+matchErrorEl.textContent = '';
+dateErrorEl.textContent = '';
 
-        if (!date) {
-            dateErrorEl.textContent = 'Сначала выберите дату.';
-            valid = false;
-        }
-        if (!country) {
-            countryErrorEl.textContent = 'Выберите страну.';
-            valid = false;
-        }
-        if (!league) {
-            leagueErrorEl.textContent = 'Выберите лигу.';
-            valid = false;
-        }
-        if (!matchId) {
-            matchErrorEl.textContent = 'Выберите матч.';
-            valid = false;
-        }
+const date = matchDateInput.value;
+const country = countrySelect.value;
+const league = leagueSelect.value;
+const matchId = matchSelect.value;
 
-        if (!valid) return;
+let valid = true;
 
-        const selectedOption = matchSelect.options[matchSelect.selectedIndex];
-        const homeTeam = selectedOption.dataset.home;
-        const awayTeam = selectedOption.dataset.away;
+if (!date) {
+dateErrorEl.textContent = 'Сначала выберите дату.';
+valid = false;
+}
+if (!country) {
+countryErrorEl.textContent = 'Выберите страну.';
+valid = false;
+}
+if (!league) {
+leagueErrorEl.textContent = 'Выберите лигу.';
+valid = false;
+}
+if (!matchId) {
+matchErrorEl.textContent = 'Выберите матч.';
+valid = false;
+}
 
-        resultCard.classList.remove('limit-reached');
-        resultCard.innerHTML = `
-            <div class="result-status">Формирование прогноза…</div>
-            <div class="result-main">
-                ${homeTeam} — ${awayTeam}, дата: ${date}
-            </div>
-            <div class="result-meta">
-                AI проверяет, что матч есть в линии, ищет открытые прогнозы и собирает короткий аналитический абзац.
-            </div>
-        `;
+if (!valid) return;
 
-        fetch('/api/prediction', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                date,
-                country,
-                league,
-                matchId,
-                homeTeam,
-                awayTeam
-            })
-        })
-        .then(res => {
-            if (res.status === 404) {
-                return res.json().then(data => {
-                    throw new Error(data.message || 'Матч не найден на эту дату');
-                });
-            }
-            if (!res.ok) throw new Error('Ошибка формирования прогноза');
-            return res.json();
-        })
-        .then(data => {
-            const newUsed = used + 1;
-            saveUsage(newUsed);
-            updateLimitUI();
+const selectedOption = matchSelect.options[matchSelect.selectedIndex];
+const homeTeam = selectedOption.dataset.home;
+const awayTeam = selectedOption.dataset.away;
 
-            const paragraph = data.paragraph || 'Прогноз недоступен. Попробуйте позже.';
+resultCard.classList.remove('limit-reached');
+resultCard.innerHTML = `
+<div class="result-status">Формирование прогноза…</div>
+<div class="result-main">
+${homeTeam} — ${awayTeam}, дата: ${date}
+</div>
+<div class="result-meta">
+AI проверяет, что матч есть в линии Melbet на эту дату, формирует запрос по названию матча и дате,
+ищет свежие прогнозы в интернете и собирает короткий аналитический абзац.
+</div>
+`;
 
-            resultCard.classList.remove('limit-reached');
-            resultCard.innerHTML = `
-                <div class="result-status">Прогноз AI (${newUsed} из ${DAILY_LIMIT} за сегодня)</div>
-                <div class="result-main">
-                    ${homeTeam} — ${awayTeam}, матч от ${date}
-                </div>
-                <div class="result-meta">
-                    ${paragraph}
-                </div>
-            `;
-        })
-        .catch(err => {
-            resultCard.innerHTML = `
-                <div class="result-status">Ошибка</div>
-                <div class="result-main">
-                    ${homeTeam} — ${awayTeam}, матч от ${date}
-                </div>
-                <div class="result-meta">
-                    ${err.message === 'Матч не найден на эту дату'
-                        ? 'Такой игры в этот день нет в линии. Проверьте дату или выберите другой матч.'
-                        : 'Не удалось получить прогноз. Попробуйте снова чуть позже.'}
-                </div>
-            `;
-        });
-    });
+fetch('/api/prediction', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({
+date,
+country,
+league,
+matchId,
+homeTeam,
+awayTeam
+})
+})
+.then(res => {
+if (res.status === 404) {
+// матч на эту дату не найден на линии
+return res.json().then(data => {
+throw new Error(data.message || 'Матч не найден на эту дату');
+});
+}
+if (!res.ok) throw new Error('Ошибка формирования прогноза');
+return res.json();
+})
+.then(data => {
+const newUsed = used + 1;
+saveUsage(newUsed);
+updateLimitUI();
+
+const paragraph = data.paragraph || 'Прогноз недоступен. Попробуйте позже.';
+
+resultCard.classList.remove('limit-reached');
+resultCard.innerHTML = `
+<div class="result-status">Прогноз AI (${newUsed} из ${DAILY_LIMIT} за сегодня)</div>
+<div class="result-main">
+${homeTeam} — ${awayTeam}, матч от ${date}
+</div>
+<div class="result-meta">
+${paragraph}
+</div>
+`;
+})
+.catch(err => {
+resultCard.innerHTML = `
+<div class="result-status">Ошибка</div>
+<div class="result-main">
+${homeTeam} — ${awayTeam}, матч от ${date}
+</div>
+<div class="result-meta">
+${err.message === 'Матч не найден на эту дату'
+? 'Такой игры в этот день нет по линии Melbet. Проверьте дату или выберите другой матч.'
+: 'Не удалось получить прогноз. Попробуйте снова чуть позже.'}
+</div>
+`;
+});
+});
 });
 </script>
 </body>
