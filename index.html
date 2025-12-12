@@ -245,9 +245,7 @@
         }
 
         @media (max-width: 768px) {
-            .step-two-grid {
-                grid-template-columns: 1fr;
-            }
+            .step-two-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -286,7 +284,7 @@
                     >
                     <div class="error" id="id-error"></div>
                     <p class="form-hint">
-                        После проверки ID вы сначала выберете дату матчей, а затем конкретный матч из линии.
+                        После проверки ID вы сначала выберете дату, а затем конкретный футбольный матч из линии.
                     </p>
                 </div>
 
@@ -302,8 +300,8 @@
             <div class="step-two" id="step-two">
                 <h2 class="screen-title">Выберите дату и матч</h2>
                 <p class="screen-sub">
-                    Сначала выберите дату в календаре. По этой дате подгрузятся страны, лиги и футбольные матчи по линии.
-                    После выбора матча AI найдёт свежие прогнозы в интернете и соберёт короткий аналитический абзац.
+                    Сначала выберите дату в календаре. По этой дате подгрузятся страны, лиги и футбольные матчи по линии Melbet.
+                    После выбора матча AI найдёт свежие прогнозы в интернете и соберёт короткий абзац с вероятными исходами.
                     Лимит — 5 прогнозов в сутки.
                 </p>
 
@@ -318,7 +316,7 @@
                             >
                             <div class="error" id="date-error"></div>
                             <p class="form-hint">
-                                Выберите дату в календаре. По этой дате будут загружены футбольные матчи с линии.
+                                Выберите дату в календаре. По этой дате будут загружены футбольные матчи с линии Melbet.
                             </p>
                         </div>
 
@@ -399,7 +397,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const DAILY_LIMIT = 5;
 
-    // ===== ЛИМИТ 5 ПРОГНОЗОВ В СУТКИ =====
+    // ==== ЛИМИТ 5 ПРОГНОЗОВ В СУТКИ (localStorage) ====
     function getTodayKey() {
         const today = new Date();
         const y = today.getFullYear();
@@ -469,7 +467,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     updateLimitUI();
 
-    // ===== Валидация ID =====
+    // ==== Валидация ID ====
     idInput.addEventListener('input', function () {
         this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9);
     });
@@ -484,13 +482,13 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // TODO: реальная проверка ID через backend
+        // TODO: реальная проверка ID через backend, если нужно
 
         stepOne.style.display = 'none';
         stepTwo.style.display = 'block';
     });
 
-    // ===== ЛОГИКА ПО ДАТЕ → МАТЧИ =====
+    // ==== Дата → подтягиваем матчи с backend ====
     function resetSelectors() {
         countrySelect.innerHTML = '<option value="">Сначала выберите дату</option>';
         leagueSelect.innerHTML = '<option value="">Сначала выберите страну</option>';
@@ -506,58 +504,74 @@ document.addEventListener('DOMContentLoaded', function () {
     matchDateInput.addEventListener('change', function () {
         dateErrorEl.textContent = '';
         const date = this.value;
-
         resetSelectors();
 
         if (!date) return;
 
-        // TODO: здесь вы дергаете ваш backend, который по дате идёт на Melbet
-        // или футбольный API и возвращает структуру:
-        // { country: { league: [ {id, home, away}, ... ] }, ... }
+        resultCard.classList.remove('limit-reached');
+        resultCard.innerHTML = `
+            <div class="result-status">Загрузка матчей…</div>
+            <div class="result-main">
+                Ищем футбольные матчи на ${date} по линии Melbet.
+            </div>
+            <div class="result-meta">
+                Пожалуйста, подождите несколько секунд.
+            </div>
+        `;
 
-        // Имитация ответа по дате
-        const fixtures = {
-            "Испания": {
-                "Ла Лига": [
-                    { id: "spain-laliga-1", home: "Реал Мадрид", away: "Барселона" },
-                    { id: "spain-laliga-2", home: "Атлетико Мадрид", away: "Севилья" }
-                ]
-            },
-            "Англия": {
-                "АПЛ": [
-                    { id: "england-epl-1", home: "Манчестер Сити", away: "Ливерпуль" },
-                    { id: "england-epl-2", home: "Челси", away: "Арсенал" }
-                ]
-            }
-        };
+        fetch(`/api/matches?date=${encodeURIComponent(date)}`)
+            .then(res => {
+                if (!res.ok) throw new Error('Ошибка загрузки матчей');
+                return res.json();
+            })
+            .then(fixtures => {
+                const hasAny = fixtures && Object.keys(fixtures).length > 0;
+                if (!hasAny) {
+                    resetSelectors();
+                    resultCard.innerHTML = `
+                        <div class="result-status">Матчей не найдено</div>
+                        <div class="result-main">
+                            На выбранную дату футбольных матчей в линии Melbet не найдено.
+                        </div>
+                        <div class="result-meta">
+                            Попробуйте выбрать другую дату.
+                        </div>
+                    `;
+                    return;
+                }
 
-        const hasAny = Object.keys(fixtures).length > 0;
+                countrySelect.innerHTML = '<option value="">Выберите страну</option>';
+                Object.keys(fixtures).forEach(country => {
+                    const opt = document.createElement('option');
+                    opt.value = country;
+                    opt.textContent = country;
+                    countrySelect.appendChild(opt);
+                });
+                countrySelect.disabled = false;
+                countrySelect._fixturesByDate = fixtures;
 
-        if (!hasAny) {
-            resultCard.innerHTML = `
-                <div class="result-status">Матчей не найдено</div>
-                <div class="result-main">
-                    На выбранную дату футбольных матчей в линии не найдено.
-                </div>
-                <div class="result-meta">
-                    Попробуйте выбрать другую дату.
-                </div>
-            `;
-            return;
-        }
-
-        // Заполняем страны
-        countrySelect.innerHTML = '<option value="">Выберите страну</option>';
-        Object.keys(fixtures).forEach(country => {
-            const opt = document.createElement('option');
-            opt.value = country;
-            opt.textContent = country;
-            countrySelect.appendChild(opt);
-        });
-        countrySelect.disabled = false;
-
-        // Сохраняем фикстуры в замыкании
-        countrySelect._fixturesByDate = fixtures;
+                resultCard.innerHTML = `
+                    <div class="result-status">Матчи загружены</div>
+                    <div class="result-main">
+                        Выберите страну, лигу и матч для даты ${date}.
+                    </div>
+                    <div class="result-meta">
+                        После выбора матча нажмите «Получить прогноз».
+                    </div>
+                `;
+            })
+            .catch(err => {
+                resetSelectors();
+                resultCard.innerHTML = `
+                    <div class="result-status">Ошибка</div>
+                    <div class="result-main">
+                        Не удалось загрузить матчи на выбранную дату.
+                    </div>
+                    <div class="result-meta">
+                        Попробуйте обновить страницу или выбрать другую дату.
+                    </div>
+                `;
+            });
     });
 
     countrySelect.addEventListener('change', function () {
@@ -609,7 +623,7 @@ document.addEventListener('DOMContentLoaded', function () {
         matchErrorEl.textContent = '';
     });
 
-    // ===== ПОЛУЧИТЬ ПРОГНОЗ =====
+    // ==== Получить прогноз ====
     getPredictionBtn.addEventListener('click', function () {
         const used = loadUsage();
         if (used >= DAILY_LIMIT) {
@@ -652,30 +666,46 @@ document.addEventListener('DOMContentLoaded', function () {
         const homeTeam = selectedOption.dataset.home;
         const awayTeam = selectedOption.dataset.away;
 
-        // TODO: backend проверяет матч по линии Melbet именно на эту дату;
-        // если матча нет — вернуть "такой игры в этот день нет".
-
         resultCard.classList.remove('limit-reached');
         resultCard.innerHTML = `
-            <div class="result-status">Поиск прогнозов и аналитики…</div>
+            <div class="result-status">Формирование прогноза…</div>
             <div class="result-main">
                 ${homeTeam} — ${awayTeam}, дата: ${date}
             </div>
             <div class="result-meta">
-                AI формирует запрос по данным матча и дате, ищет свежие прогнозы в интернете и объединяет их
-                в короткий аналитический абзац с основными вероятными исходами.
+                AI проверяет, что матч есть в линии Melbet на эту дату, формирует запрос по названию матча и дате,
+                ищет свежие прогнозы в интернете и собирает короткий аналитический абзац.
             </div>
         `;
 
-        // Имитация ответа от AI
-        setTimeout(function () {
+        fetch('/api/prediction', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                date,
+                country,
+                league,
+                matchId,
+                homeTeam,
+                awayTeam
+            })
+        })
+        .then(res => {
+            if (res.status === 404) {
+                // матч на эту дату не найден на линии
+                return res.json().then(data => {
+                    throw new Error(data.message || 'Матч не найден на эту дату');
+                });
+            }
+            if (!res.ok) throw new Error('Ошибка формирования прогноза');
+            return res.json();
+        })
+        .then(data => {
             const newUsed = used + 1;
             saveUsage(newUsed);
             updateLimitUI();
 
-            const winProb = 58;
-            const drawProb = 24;
-            const loseProb = 18;
+            const paragraph = data.paragraph || 'Прогноз недоступен. Попробуйте позже.';
 
             resultCard.classList.remove('limit-reached');
             resultCard.innerHTML = `
@@ -684,15 +714,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     ${homeTeam} — ${awayTeam}, матч от ${date}
                 </div>
                 <div class="result-meta">
-                    На основании текущей формы команд, статистики очных встреч и обзора открытых прогнозов лёгкое преимущество
-                    отдаётся ${homeTeam}: вероятность П1 оценивается примерно в ${winProb}%, ничья — около ${drawProb}%,
-                    успех ${awayTeam} — порядка ${loseProb}%. Линия в таких случаях обычно располагается ближе к
-                    сценариям П1/1Х с возможным упором на тотал больше 2.5 при агрессивной игре, поэтому разумно
-                    рассматривать варианты в сторону ${homeTeam} (чистая победа или более аккуратный 1Х) и внимательно следить
-                    за коэффициентами по тоталам. Этот прогноз носит аналитический характер и не является финансовой рекомендацией.
+                    ${paragraph}
                 </div>
             `;
-        }, 2000);
+        })
+        .catch(err => {
+            resultCard.innerHTML = `
+                <div class="result-status">Ошибка</div>
+                <div class="result-main">
+                    ${homeTeam} — ${awayTeam}, матч от ${date}
+                </div>
+                <div class="result-meta">
+                    ${err.message === 'Матч не найден на эту дату'
+                        ? 'Такой игры в этот день нет по линии Melbet. Проверьте дату или выберите другой матч.'
+                        : 'Не удалось получить прогноз. Попробуйте снова чуть позже.'}
+                </div>
+            `;
+        });
     });
 });
 </script>
