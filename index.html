@@ -2,14 +2,14 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Grandbetting_ai — ИИ прогноз по матчу</title>
+    <title>Grandbetting_ai — ИИ прогнозы по футболу</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
         :root {
             --accent: #ffcc00;
             --accent-soft: #ffe766;
-            --danger: #ff4d4d;
+            --danger: #ef4444;
             --text-main: #111111;
             --text-muted: #6b7280;
             --card-bg: #ffffff;
@@ -125,12 +125,16 @@
         .btn-ghost {
             background: transparent;
             border-color: var(--border-soft);
-            color: var(--text-main);
+            color: #111111;
         }
 
         .btn-ghost:hover {
             border-color: #9ca3af;
-            color: #111111;
+        }
+
+        .btn-disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .form-group { margin-bottom: 14px; }
@@ -142,7 +146,7 @@
             font-weight: 500;
         }
 
-        .input {
+        .input, .select {
             width: 100%;
             padding: 10px 12px;
             border-radius: 10px;
@@ -152,7 +156,7 @@
             font-size: 14px;
         }
 
-        .input:focus {
+        .input:focus, .select:focus {
             outline: none;
             border-color: var(--accent);
             box-shadow: 0 0 0 1px rgba(255,204,0,0.5);
@@ -218,21 +222,23 @@
             color: var(--text-muted);
         }
 
-        .result-block-title {
-            font-weight: 600;
-            margin-top: 10px;
-            margin-bottom: 4px;
-        }
-
-        .result-list {
-            margin: 0;
-            padding-left: 20px;
+        .limit-info {
             font-size: 13px;
+            margin-top: 8px;
             color: var(--text-muted);
         }
 
-        .result-list li {
-            margin-bottom: 4px;
+        .limit-info strong {
+            color: #111111;
+        }
+
+        .limit-reached {
+            border-color: #fecaca;
+            background: #fef2f2;
+        }
+
+        .limit-reached .result-status {
+            color: #b91c1c;
         }
 
         @media (max-width: 992px) {
@@ -282,7 +288,7 @@
                     >
                     <div class="error" id="id-error"></div>
                     <p class="form-hint">
-                        После проверки ID откроется форма матча: команды + дата, а затем детальный прогноз от AI.
+                        После проверки ID откроется список стран, лиг и матчей по футболу с календарём.
                     </p>
                 </div>
 
@@ -294,29 +300,40 @@
                 </div>
             </div>
 
-            <!-- ШАГ 2: МАТЧ + ДАТА + ПРОВЕРКА НА MELBET + ПРОГНОЗ -->
+            <!-- ШАГ 2: СТРАНА / ЛИГА / МАТЧ + ПРОГНОЗ -->
             <div class="step-two" id="step-two">
-                <h2 class="screen-title">Укажите матч и дату</h2>
+                <h2 class="screen-title">Выберите матч для прогноза</h2>
                 <p class="screen-sub">
-                    Введите команды в формате «Реал Мадрид - Барселона» и выберите дату матча в календаре.
-                    Сначала проверяется наличие матча по линии Melbet, затем AI ищет и собирает прогноз по этому событию.
+                    Выберите страну, лигу и матч по футболу, затем дату в календаре. AI найдёт свежую аналитику по выбранному событию
+                    и соберёт краткий прогноз с вероятными исходами. Лимит — 5 прогнозов в сутки.
                 </p>
 
                 <div class="step-two-grid">
-                    <!-- ЛЕВАЯ ЧАСТЬ: ФОРМА МАТЧА -->
-                    <div class="form-card">
+                    <!-- ЛЕВАЯ ЧАСТЬ: ВЫБОР МАТЧА -->
+                    <div class="form-card" id="form-card">
                         <div class="form-group">
-                            <label for="match-title">Матч (формат: Команда A - Команда B)</label>
-                            <input
-                                type="text"
-                                id="match-title"
-                                class="input"
-                                placeholder="Например: Реал Мадрид - Барселона"
-                            >
+                            <label for="country-select">Страна</label>
+                            <select id="country-select" class="select">
+                                <option value="">Выберите страну</option>
+                                <!-- сюда подставите реальные страны из футбольного API -->
+                            </select>
+                            <div class="error" id="country-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="league-select">Лига</label>
+                            <select id="league-select" class="select" disabled>
+                                <option value="">Сначала выберите страну</option>
+                            </select>
+                            <div class="error" id="league-error"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="match-select">Матч</label>
+                            <select id="match-select" class="select" disabled>
+                                <option value="">Сначала выберите лигу</option>
+                            </select>
                             <div class="error" id="match-error"></div>
-                            <p class="form-hint">
-                                Формат строго через дефис: «Хозяева - Гости». Названия можно вводить по-русски или на латинице.
-                            </p>
                         </div>
 
                         <div class="form-group">
@@ -328,29 +345,28 @@
                             >
                             <div class="error" id="date-error"></div>
                             <p class="form-hint">
-                                Выберите дату в календаре. Матч будет проверен по линии Melbet на эту дату.
+                                Выберите дату в календаре. Матч будет сопоставлен с линией букмекеров на эту дату.
                             </p>
                         </div>
 
-                        <button class="btn btn-primary" id="analyze-btn">
-                            Найти матч и прогноз
+                        <button class="btn btn-primary" id="get-prediction-btn">
+                            Получить прогноз
                         </button>
 
-                        <p class="form-hint" style="margin-top: 10px;">
-                            Если по этой дате и парам команд нет футбольного матча на линии Melbet, вы увидите сообщение,
-                            что такой игры в этот день нет. В остальных случаях AI выйдет в интернет и соберёт прогноз.
+                        <p class="limit-info" id="limit-info">
+                            Доступно прогнозов сегодня: <strong id="used-count">0</strong> из <strong>5</strong>.
                         </p>
                     </div>
 
-                    <!-- ПРАВАЯ ЧАСТЬ: ПРОГНОЗ / ОШИБКИ -->
+                    <!-- ПРАВАЯ ЧАСТЬ: ПРОГНОЗ / ЛИМИТ -->
                     <div class="result-card" id="result-card">
                         <div class="result-status">Прогноз от AI</div>
-                        <div class="result-main">
-                            Заполните название команд и выберите дату, затем нажмите «Найти матч и прогноз».
+                        <div class="result-main" id="result-title">
+                            Выберите страну, лигу, матч и дату, затем нажмите «Получить прогноз».
                         </div>
-                        <div class="result-meta">
-                            В ответ вы получите структурированный разбор по матчу: исходы (П1/Х/П2), тоталы, примерные коэффициенты
-                            и пояснение логики. AI использует данные из открытых источников и линию букмекеров.
+                        <div class="result-meta" id="result-text">
+                            AI использует актуальные футбольные данные и открытые источники с прогнозами,
+                            чтобы сформировать короткий профессиональный абзац с вероятными исходами (П1/Х/П2, тоталы и т.д.).
                         </div>
                     </div>
                 </div>
@@ -368,14 +384,181 @@ document.addEventListener('DOMContentLoaded', function () {
     const idInput = document.getElementById('melbet-id');
     const idErrorEl = document.getElementById('id-error');
 
-    const matchTitleInput = document.getElementById('match-title');
+    const countrySelect = document.getElementById('country-select');
+    const leagueSelect = document.getElementById('league-select');
+    const matchSelect = document.getElementById('match-select');
     const matchDateInput = document.getElementById('match-date');
+
+    const countryErrorEl = document.getElementById('country-error');
+    const leagueErrorEl = document.getElementById('league-error');
     const matchErrorEl = document.getElementById('match-error');
     const dateErrorEl = document.getElementById('date-error');
-    const analyzeBtn = document.getElementById('analyze-btn');
-    const resultCard = document.getElementById('result-card');
 
-    // Валидация: только цифры для ID, максимум 9
+    const getPredictionBtn = document.getElementById('get-prediction-btn');
+    const resultCard = document.getElementById('result-card');
+    const resultTitle = document.getElementById('result-title');
+    const resultText = document.getElementById('result-text');
+    const formCard = document.getElementById('form-card');
+
+    const limitInfoEl = document.getElementById('limit-info');
+    const usedCountEl = document.getElementById('used-count');
+
+    const DAILY_LIMIT = 5;
+
+    // ===== ВРЕМЕННЫЕ ТЕСТОВЫЕ ДАННЫЕ =====
+    // В реальном проекте здесь нужно подгружать страны / лиги / матчи с футбольного API
+    // (например, API-Football, Football-Data.org, Sportmonks и т.п.).
+    const data = {
+        "Испания": {
+            "Ла Лига": [
+                { id: "spain-laliga-1", home: "Реал Мадрид", away: "Барселона" },
+                { id: "spain-laliga-2", home: "Атлетико Мадрид", away: "Севилья" }
+            ]
+        },
+        "Англия": {
+            "АПЛ": [
+                { id: "england-epl-1", home: "Манчестер Сити", away: "Ливерпуль" },
+                { id: "england-epl-2", home: "Челси", away: "Арсенал" }
+            ]
+        }
+    };
+
+    function populateCountries() {
+        Object.keys(data).forEach(country => {
+            const opt = document.createElement('option');
+            opt.value = country;
+            opt.textContent = country;
+            countrySelect.appendChild(opt);
+        });
+    }
+
+    function populateLeagues(country) {
+        leagueSelect.innerHTML = '<option value="">Выберите лигу</option>';
+        matchSelect.innerHTML = '<option value="">Сначала выберите лигу</option>';
+        leagueSelect.disabled = true;
+        matchSelect.disabled = true;
+
+        if (!country || !data[country]) return;
+
+        Object.keys(data[country]).forEach(league => {
+            const opt = document.createElement('option');
+            opt.value = league;
+            opt.textContent = league;
+            leagueSelect.appendChild(opt);
+        });
+
+        leagueSelect.disabled = false;
+    }
+
+    function populateMatches(country, league) {
+        matchSelect.innerHTML = '<option value="">Выберите матч</option>';
+        matchSelect.disabled = true;
+
+        if (!country || !league || !data[country] || !data[country][league]) return;
+
+        data[country][league].forEach(match => {
+            const opt = document.createElement('option');
+            opt.value = match.id;
+            opt.textContent = match.home + ' - ' + match.away;
+            opt.dataset.home = match.home;
+            opt.dataset.away = match.away;
+            matchSelect.appendChild(opt);
+        });
+
+        matchSelect.disabled = false;
+    }
+
+    populateCountries();
+
+    countrySelect.addEventListener('change', function () {
+        countryErrorEl.textContent = '';
+        const country = this.value;
+        populateLeagues(country);
+    });
+
+    leagueSelect.addEventListener('change', function () {
+        leagueErrorEl.textContent = '';
+        const country = countrySelect.value;
+        const league = this.value;
+        populateMatches(country, league);
+    });
+
+    matchSelect.addEventListener('change', function () {
+        matchErrorEl.textContent = '';
+    });
+
+    // ===== ЛИМИТ 5 ПРОГНОЗОВ В СУТКИ (localStorage) =====
+    function getTodayKey() {
+        const today = new Date();
+        const y = today.getFullYear();
+        const m = String(today.getMonth() + 1).padStart(2, '0');
+        const d = String(today.getDate()).padStart(2, '0');
+        return `gb_ai_limit_${y}-${m}-${d}`;
+    }
+
+    function loadUsage() {
+        const key = getTodayKey();
+        const raw = localStorage.getItem(key);
+        const used = raw ? parseInt(raw, 10) : 0;
+        return used || 0;
+    }
+
+    function saveUsage(count) {
+        const key = getTodayKey();
+        localStorage.setItem(key, String(count));
+    }
+
+    function updateLimitUI() {
+        const used = loadUsage();
+        usedCountEl.textContent = used;
+
+        if (used >= DAILY_LIMIT) {
+            lockInterface();
+        }
+    }
+
+    function lockInterface() {
+        formCard.classList.add('limit-reached');
+        getPredictionBtn.classList.add('btn-disabled');
+        getPredictionBtn.disabled = true;
+
+        resultCard.classList.add('limit-reached');
+        resultCard.innerHTML = `
+            <div class="result-status">Лимит прогнозов исчерпан</div>
+            <div class="result-main">
+                Лимит бесплатных прогнозов на сегодня достигнут: 5 из 5.
+            </div>
+            <div class="result-meta">
+                Возвращайтесь через 24 часа, чтобы получить новые прогнозы, или оформите подписку на безлимитный доступ:
+                290 ₽ в месяц или 2590 ₽ на год.
+            </div>
+            <div class="limit-info">
+                <button class="btn btn-primary" id="subscribe-btn">
+                    Оплатить подписку у менеджера
+                </button>
+            </div>
+        `;
+
+        attachSubscribeHandler();
+    }
+
+    function attachSubscribeHandler() {
+        const subscribeBtn = document.getElementById('subscribe-btn');
+        if (!subscribeBtn) return;
+
+        // Ссылка на Telegram менеджера с готовым сообщением
+        const managerUsername = "YourManagerUsername"; // TODO: заменить на реальный @username
+        const text = encodeURIComponent("Добрый день, хочу оплатить подписку на бота.");
+        const tgLink = `https://t.me/${managerUsername}?text=${text}`;
+
+        subscribeBtn.addEventListener('click', function () {
+            window.open(tgLink, '_blank');
+        });
+    }
+
+    updateLimitUI();
+
+    // Валидация ID — только цифры, максимум 9
     idInput.addEventListener('input', function () {
         this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9);
     });
@@ -397,149 +580,92 @@ document.addEventListener('DOMContentLoaded', function () {
         stepTwo.style.display = 'block';
     });
 
-    // Шаг 2 — поиск матча и прогноз
-    analyzeBtn.addEventListener('click', function () {
+    // Получение прогноза
+    getPredictionBtn.addEventListener('click', function () {
+        const used = loadUsage();
+        if (used >= DAILY_LIMIT) {
+            updateLimitUI();
+            return;
+        }
+
+        countryErrorEl.textContent = '';
+        leagueErrorEl.textContent = '';
         matchErrorEl.textContent = '';
         dateErrorEl.textContent = '';
 
-        const matchTitleRaw = matchTitleInput.value.trim();
+        const country = countrySelect.value;
+        const league = leagueSelect.value;
+        const matchId = matchSelect.value;
         const matchDate = matchDateInput.value;
 
         let valid = true;
 
-        const parts = matchTitleRaw.split('-').map(p => p.trim()).filter(Boolean);
-        if (parts.length !== 2) {
-            matchErrorEl.textContent = 'Введите команды в формате: Команда A - Команда B.';
+        if (!country) {
+            countryErrorEl.textContent = 'Выберите страну.';
             valid = false;
         }
-
+        if (!league) {
+            leagueErrorEl.textContent = 'Выберите лигу.';
+            valid = false;
+        }
+        if (!matchId) {
+            matchErrorEl.textContent = 'Выберите матч.';
+            valid = false;
+        }
         if (!matchDate) {
-            dateErrorEl.textContent = 'Выберите дату матча в календаре.';
+            dateErrorEl.textContent = 'Выберите дату матча.';
             valid = false;
         }
 
         if (!valid) return;
 
-        const homeTeam = parts[0];
-        const awayTeam = parts[1];
+        const selectedOption = matchSelect.options[matchSelect.selectedIndex];
+        const homeTeam = selectedOption.dataset.home;
+        const awayTeam = selectedOption.dataset.away;
 
-        // Шаг 2.1 — проверка матча по линии Melbet (реально через backend)
+        // Здесь вы на backend проверяете, что матч реально существует в этот день по линии
+        resultCard.classList.remove('limit-reached');
         resultCard.innerHTML = `
-            <div class="result-status">Проверка матча по линии Melbet…</div>
+            <div class="result-status">Проверка матча и поиск прогноза…</div>
             <div class="result-main">
                 ${homeTeam} — ${awayTeam}, дата: ${matchDate}
             </div>
             <div class="result-meta">
-                Идёт проверка наличия футбольного матча на выбранную дату по линии Melbet.
-                Пожалуйста, подождите несколько секунд.
+                AI сопоставляет выбранный матч с линией футбольных лиг и выходит в интернет, чтобы найти свежие прогнозы
+                и краткие аналитические разборы конкретно под это событие.
             </div>
         `;
 
-        // В реальном приложении здесь делаете fetch на ваш API, который ходит на Melbet:
-        // fetch('/api/check-match', { method: 'POST', body: JSON.stringify({ homeTeam, awayTeam, date: matchDate }) })
-        //   .then(...) и т.д.
-        //
-        // Ниже — только имитация логики:
+        // TODO: здесь должен быть fetch на ваш backend:
+        // 1) проверка наличия матча по данным футбольного API / Melbet;
+        // 2) если матч есть — AI собирает прогнозы из интернета и возвращает сжатый абзац.
+
+        // Имитация: считаем, что матч всегда есть и AI вернул 1 абзац
         setTimeout(function () {
-            const matchExistsOnMelbet = true; // TODO: заменить на реальный ответ backend
+            const newUsed = used + 1;
+            saveUsage(newUsed);
+            updateLimitUI();
 
-            if (!matchExistsOnMelbet) {
-                resultCard.innerHTML = `
-                    <div class="result-status">Матч не найден на линии Melbet</div>
-                    <div class="result-main">
-                        ${homeTeam} — ${awayTeam}, дата: ${matchDate}
-                    </div>
-                    <div class="result-meta">
-                        По указанной дате на линии Melbet не найден футбольный матч с такими командами.
-                        Проверьте правильность написания и дату. Такой игры в этот день нет.
-                    </div>
-                `;
-                return;
-            }
+            const winProb = 62;   // пример процента на П1
+            const drawProb = 20;  // пример на ничью
+            const loseProb = 18;  // пример на П2
 
-            // Шаг 2.2 — AI выходит в интернет, ищет прогноз и собирает разбор
+            resultCard.classList.remove('limit-reached');
             resultCard.innerHTML = `
-                <div class="result-status">AI ищет прогноз и аналитику…</div>
+                <div class="result-status">Прогноз AI (${newUsed} из ${DAILY_LIMIT} за сегодня)</div>
                 <div class="result-main">
-                    ${homeTeam} — ${awayTeam}, дата: ${matchDate}
+                    ${homeTeam} — ${awayTeam}, матч от ${matchDate}
                 </div>
                 <div class="result-meta">
-                    AI формирует запрос по названию команд и дате, анализирует открытые источники с прогнозами и статистикой,
-                    включая профильные ресурсы с разбором матчей. Скоро появится структурированный прогноз.
+                    По совокупности открытых прогнозов и статистических моделей небольшое преимущество отдаётся ${homeTeam}:
+                    вероятность П1 оценивается около ${winProb}%, ничья — ${drawProb}%, победа ${awayTeam} — ${loseProb}%.
+                    Рынок ожидает активный футбол с упором хозяев на владение и давление на чужой половине поля, поэтому
+                    базовой идеей выглядит ставка в сторону ${homeTeam} (П1 или осторожный вариант 1Х) с рассмотрением
+                    тотала 2.5 больше как дополнительного сценария, если коэффициенты остаются приемлемыми.
+                    Прогноз носит аналитический характер и не является финансовой рекомендацией.
                 </div>
             `;
-
-            // Имитация ответа от AI
-            setTimeout(function () {
-                resultCard.innerHTML = `
-                    <div class="result-status">Расширенный прогноз AI</div>
-
-                    <div class="result-main">
-                        ${homeTeam} — ${awayTeam}, матч от ${matchDate}
-                    </div>
-
-                    <div class="result-meta">
-                        <div class="result-block-title">1. Контекст матча</div>
-                        <ul class="result-list">
-                            <li>Матч ${homeTeam} — ${awayTeam} относится к категории принципиальных: команды регулярно борются за высокие места и привлекают
-                                большой объём ставок со стороны игроков.</li>
-                            <li>При анализе учитываются форма команд, статистика очных встреч, серия домашних и выездных матчей,
-                                а также ориентировочные составы и возможная ротация.</li>
-                        </ul>
-
-                        <div class="result-block-title">2. Основной исход (П1 / Х / П2)</div>
-                        <ul class="result-list">
-                            <li><strong>Базовый вариант: П1 (победа ${homeTeam})</strong>, если хозяева стабильно набирают очки дома и создают больше моментов по xG.</li>
-                            <li>Примерный диапазон коэффициента по линии на П1 в подобных матчах: ~1.70–2.20
-                                в зависимости от конкретного состояния команд и движения рынка.</li>
-                            <li>Аргументация: ${homeTeam} лучше контролирует мяч, чаще бьёт по воротам и выглядит более сбалансированной по линиям,
-                                тогда как у ${awayTeam} есть провалы в обороне, особенно на выезде против сильных соперников.</li>
-                        </ul>
-
-                        <div class="result-block-title">3. Альтернативные исходы</div>
-                        <ul class="result-list">
-                            <li><strong>Более осторожный вариант: 1Х</strong> — хозяева не проиграют. Подходит для тех, кто снижает риск просадки банка.</li>
-                            <li><strong>Фора 0 на ${homeTeam}</strong> — ставка с возвратом при ничьей, если есть уважение к атакующему потенциалу ${awayTeam},
-                                но перевес по игре и мотивации всё равно на стороне хозяев.</li>
-                        </ul>
-
-                        <div class="result-block-title">4. Тоталы</div>
-                        <ul class="result-list">
-                            <li><strong>Тотал больше 2.5</strong> выглядит логичным, если обе команды играют в атакующей манере и регулярно пробивают
-                                линию 3+ голов в очных встречах и последних турах.</li>
-                            <li>Примерный диапазон коэффициентов на ТБ(2.5): ~1.70–2.20 в зависимости от ожиданий рынка и новостей по составам.</li>
-                            <li>Для более аккуратной стратегии можно рассмотреть индивидуальный тотал ${homeTeam} больше 1.0 или 1.5 —
-                                ставка на то, что хозяева забьют минимум один–два мяча.</li>
-                        </ul>
-
-                        <div class="result-block-title">5. Что можно рассматривать по линии</div>
-                        <ul class="result-list">
-                            <li>Основная идея: <strong>П1 или 1Х + тотал больше (комбинированные рынки)</strong>, если коэффициент остаётся приемлемым.</li>
-                            <li>Для умеренного риска подойдут фора 0 на ${homeTeam} или индивидуальный тотал хозяев больше 1.0
-                                с возможным возвратом при минимальном исходе.</li>
-                            <li>При агрессивном подходе можно смотреть в сторону ТБ(2.5) или “обе забьют”, если статистика подтверждает результативность обеих сторон.</li>
-                        </ul>
-
-                        <div class="result-block-title">6. Риски и управление банком</div>
-                        <ul class="result-list">
-                            <li>На исход сильное влияние оказывают поздние новости: травмы лидеров,
-                                изменения стартовых составов, погодные условия и мотивация в турнирной таблице.</li>
-                            <li>Рынок коэффициентов может заметно двигаться в день матча, особенно на топовые игры,
-                                поэтому важно не заходить по явно просевшему коэффициенту.</li>
-                            <li><strong>Рекомендуется не превышать 3–5% от игрового банка</strong> на одну идею и воспринимать прогноз как аналитическую подсказку,
-                                а не гарантию результата.</li>
-                        </ul>
-
-                        <div class="result-block-title">Важно</div>
-                        <p class="result-meta">
-                            Прогноз сформирован AI на основе анализа открытых источников с прогнозами и статистикой,
-                            а также логики движения линии на подобные матчи. Это не является финансовой рекомендацией.
-                            Окончательное решение по ставкам всегда остаётся за вами.
-                        </p>
-                    </div>
-                `;
-            }, 2000);
-        }, 1500);
+        }, 2000);
     });
 });
 </script>
