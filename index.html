@@ -2,9 +2,9 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Grandbetting_ai — ИИ прогнозы по фото матча</title>
+    <title>Grandbetting_ai — ИИ прогноз по матчу</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Grandbetting_ai — сервис ИИ-прогнозов на спорт по фото матча. Загрузи снимок игры, зарегистрируйся в Melbet по партнерской ссылке и получи прогноз.">
+
     <style>
         :root {
             --bg-dark: #050815;
@@ -30,21 +30,21 @@
         a { color: var(--accent); text-decoration: none; }
         a:hover { text-decoration: underline; }
 
-        .page { min-height: 100vh; display: flex; flex-direction: column; }
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
         header {
-            position: sticky;
-            top: 0;
-            z-index: 20;
-            backdrop-filter: blur(18px);
-            background: linear-gradient(to bottom, rgba(5,8,21,0.95), rgba(5,8,21,0.75));
+            padding: 14px 20px;
             border-bottom: 1px solid var(--border-soft);
+            background: rgba(5,8,21,0.95);
         }
 
         .nav {
-            max-width: 1100px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 14px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -69,20 +69,33 @@
             box-shadow: 0 0 24px rgba(255, 204, 0, 0.8);
         }
 
-        .nav-links {
+        main {
+            flex: 1;
             display: flex;
-            gap: 18px;
-            font-size: 14px;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .nav-links a {
+        .screen {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(5,8,21,0.96);
+            border-radius: 20px;
+            border: 1px solid var(--border-soft);
+            padding: 20px;
+        }
+
+        .screen-title {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .screen-sub {
+            font-size: 13px;
             color: var(--text-muted);
-            padding: 4px 0;
+            margin-bottom: 16px;
         }
-
-        .nav-links a:hover { color: var(--accent); }
-
-        .nav-cta { display: flex; gap: 10px; }
 
         .btn {
             display: inline-flex;
@@ -120,260 +133,6 @@
             color: var(--accent-soft);
         }
 
-        main { flex: 1; }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 24px 20px 40px;
-        }
-
-        /* HERO */
-
-        .hero {
-            display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-            gap: 32px;
-            align-items: center;
-            padding: 32px 0 40px;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            border: 1px solid rgba(255,255,255,0.15);
-            background: rgba(17,22,40,0.85);
-            color: var(--accent-soft);
-            font-size: 12px;
-            margin-bottom: 16px;
-        }
-
-        .badge-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 999px;
-            background: radial-gradient(circle, #00ff9d 0, #0affc7 60%, #00d4ff 100%);
-            box-shadow: 0 0 10px rgba(0,255,157,0.9);
-        }
-
-        h1 {
-            font-size: clamp(28px, 4vw, 36px);
-            line-height: 1.18;
-            margin-bottom: 14px;
-        }
-
-        .hero-highlight {
-            background: linear-gradient(120deg, #ffcc00, #ff9100, #ff00ff);
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-
-        .hero-subtitle {
-            color: var(--text-muted);
-            font-size: 14px;
-            max-width: 430px;
-            margin-bottom: 18px;
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-
-        .hero-note {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .hero-card {
-            position: relative;
-            border-radius: 20px;
-            border: 1px solid var(--border-soft);
-            background: radial-gradient(circle at 0 0, rgba(255,255,255,0.1) 0, rgba(5,8,21,1) 55%);
-            padding: 18px 18px 16px;
-            overflow: hidden;
-        }
-
-        .hero-chip-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 18px;
-            font-size: 11px;
-        }
-
-        .hero-chip {
-            padding: 4px 9px;
-            border-radius: 999px;
-            background: rgba(5,8,21,0.8);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: var(--text-muted);
-        }
-
-        .hero-screen {
-            border-radius: 16px;
-            padding: 12px;
-            background: linear-gradient(135deg, #090d1e, #151b33);
-            border: 1px solid rgba(255,255,255,0.12);
-        }
-
-        .hero-screen-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .hero-dots {
-            display: flex;
-            gap: 5px;
-        }
-
-        .hero-dot { width: 6px; height: 6px; border-radius: 50%; }
-        .hero-dot.red { background: #ff5f57; }
-        .hero-dot.yellow { background: #febc2e; }
-        .hero-dot.green { background: #28c840; }
-
-        .hero-screen-main {
-            background: radial-gradient(circle at top, rgba(255,255,255,0.08) 0, transparent 55%);
-            border-radius: 12px;
-            padding: 10px 10px 12px;
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-
-        .hero-teams {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 13px;
-            margin-bottom: 6px;
-        }
-
-        .hero-team {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .team-badge {
-            width: 18px;
-            height: 18px;
-            border-radius: 7px;
-            background: linear-gradient(135deg, #00d4ff, #007bff);
-        }
-
-        .hero-score { font-weight: 700; }
-
-        .hero-meta {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-bottom: 7px;
-        }
-
-        .hero-prob {
-            font-size: 11px;
-            border-radius: 999px;
-            padding: 3px 7px;
-            background: rgba(5,8,21,0.9);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .hero-prob-bar {
-            flex: 1;
-            height: 4px;
-            border-radius: 999px;
-            background: rgba(255,255,255,0.08);
-            overflow: hidden;
-        }
-
-        .hero-prob-fill {
-            height: 100%;
-            width: 72%;
-            background: linear-gradient(90deg, #ffcc00, #ff9100);
-        }
-
-        .hero-footnote {
-            font-size: 10px;
-            color: var(--text-muted);
-            margin-top: 8px;
-        }
-
-        /* Sections */
-
-        section {
-            margin-bottom: 32px;
-            padding: 20px;
-            border-radius: 18px;
-            background: rgba(5,8,21,0.92);
-            border: 1px solid var(--border-soft);
-        }
-
-        section:nth-of-type(2n) {
-            background: rgba(11,16,32,0.96);
-        }
-
-        .section-title {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .section-sub {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 14px;
-        }
-
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-            gap: 12px;
-            font-size: 13px;
-        }
-
-        .step-card {
-            background: var(--card-bg);
-            border-radius: 14px;
-            padding: 10px 12px;
-            border: 1px solid var(--border-soft);
-        }
-
-        .step-label {
-            font-size: 11px;
-            color: var(--accent-soft);
-            margin-bottom: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-        }
-
-        .step-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .step-text {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        /* Form */
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-            gap: 18px;
-        }
-
         .form-group { margin-bottom: 12px; }
 
         label {
@@ -382,7 +141,7 @@
             margin-bottom: 4px;
         }
 
-        .input, .file-input {
+        .input {
             width: 100%;
             padding: 9px 10px;
             border-radius: 10px;
@@ -392,39 +151,10 @@
             font-size: 13px;
         }
 
-        .input:focus, .file-input:focus {
+        .input:focus {
             outline: none;
             border-color: var(--accent-soft);
             box-shadow: 0 0 0 1px rgba(255,204,0,0.4);
-        }
-
-        .file-wrapper { position: relative; }
-
-        .file-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 10px;
-            border-radius: 10px;
-            border: 1px dashed var(--border-soft);
-            background: rgba(11,16,32,0.9);
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .file-label span { color: var(--text-muted); }
-
-        .file-input {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .file-name {
-            margin-top: 4px;
-            font-size: 11px;
-            color: var(--text-muted);
         }
 
         .error {
@@ -436,23 +166,36 @@
         .form-hint {
             font-size: 11px;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 6px;
         }
 
-        .disclaimer {
-            font-size: 11px;
-            color: var(--text-muted);
+        .screen-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
             margin-top: 10px;
         }
 
-        /* Result */
+        /* Экран 2 */
 
+        .step-two {
+            display: none;
+        }
+
+        .step-two-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+            gap: 18px;
+            margin-top: 8px;
+        }
+
+        .form-card,
         .result-card {
+            background: var(--card-bg);
             border-radius: 14px;
-            padding: 10px 12px;
-            background: radial-gradient(circle at top, rgba(255,255,255,0.08) 0, rgba(5,8,21,1) 55%);
+            padding: 12px;
             border: 1px solid var(--border-soft);
-            font-size: 12px;
+            font-size: 13px;
         }
 
         .result-status {
@@ -465,122 +208,35 @@
 
         .result-main {
             font-weight: 600;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .result-meta {
+            font-size: 12px;
             color: var(--text-muted);
+        }
+
+        .result-block-title {
+            font-weight: 600;
+            margin-top: 8px;
             margin-bottom: 4px;
         }
 
-        .result-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-
-        .tag {
-            font-size: 11px;
-            padding: 3px 7px;
-            border-radius: 999px;
-            background: rgba(5,8,21,0.9);
-            border: 1px solid rgba(255,255,255,0.08);
-            color: var(--text-muted);
-        }
-
-        /* Pricing */
-
-        .pricing-note {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-
-        th, td {
-            padding: 8px 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-
-        th {
-            text-align: left;
-            color: var(--accent-soft);
-            font-weight: 600;
-            background: rgba(5,8,21,0.9);
-        }
-
-        tr:nth-child(even) td {
-            background: rgba(11,16,32,0.7);
-        }
-
-        /* Benefits */
-
-        .benefits {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            gap: 12px;
-            font-size: 13px;
-        }
-
-        .benefit {
-            background: var(--card-bg);
-            border-radius: 14px;
-            padding: 10px 12px;
-            border: 1px solid var(--border-soft);
-        }
-
-        .benefit-title {
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .benefit-text {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        /* Important */
-
-        .important-text {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
-
-        .important-text ul {
-            margin: 6px 0 0;
+        .result-list {
+            margin: 0;
             padding-left: 18px;
-        }
-
-        .important-text li {
-            margin-bottom: 4px;
-        }
-
-        footer {
-            border-top: 1px solid var(--border-soft);
-            padding: 14px 20px 18px;
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
-            text-align: center;
         }
 
-        .footer-links {
-            margin-top: 4px;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
+        .result-list li {
+            margin-bottom: 4px;
         }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero, .form-grid { grid-template-columns: 1fr; }
-            .hero { padding-top: 20px; }
-            section { padding: 16px; }
+            .step-two-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -592,435 +248,258 @@
                 <div class="logo-mark"></div>
                 <span>Grandbetting_ai</span>
             </div>
-            <nav class="nav-links">
-                <a href="#how">Как работает</a>
-                <a href="#form">Начать</a>
-                <a href="#pricing">Тарифы</a>
-                <a href="#important">Важно</a>
-            </nav>
-            <div class="nav-cta">
-                <a href="https://clck.ru/3Mo7a2" target="_blank" rel="noopener" class="btn btn-ghost">Melbet</a>
-                <a href="#form" class="btn btn-primary">Загрузить фото</a>
-            </div>
         </div>
     </header>
 
     <main>
-        <div class="container">
+        <div class="screen">
 
-            <!-- HERO -->
-            <section class="hero" id="top">
-                <div>
-                    <div class="badge">
-                        <div class="badge-dot"></div>
-                        <span>ИИ‑прогнозы по фото матча</span>
-                    </div>
-                    <h1>
-                        Grandbetting_ai — твой ИИ для
-                        <span class="hero-highlight">быстрых спортивных прогнозов</span>
-                    </h1>
-                    <p class="hero-subtitle">
-                        Загрузи фото текущего матча, пройди регистрацию в Melbet по партнерской ссылке и
-                        получи прогноз на исход игры с учетом счета, времени и динамики.
-                    </p>
-                    <div class="hero-actions">
-                        <a href="https://clck.ru/3Mo7a2" target="_blank" rel="noopener" class="btn btn-primary">
-                            Регистрация в Melbet
-                        </a>
-                        <a href="#how" class="btn btn-ghost">Как это работает</a>
-                    </div>
-                    <p class="hero-note">
-                        Чтобы пользоваться сервисом, нужна регистрация в Melbet по ссылке выше и проверка ID.
-                        Бесплатно доступно до 10 запросов в день, далее — подписка за 290 ₽ в месяц.
+            <!-- ШАГ 1: ВВОД ID / РЕГИСТРАЦИЯ -->
+            <div class="step-one" id="step-one">
+                <h1 class="screen-title">Введите ваш ID от Melbet</h1>
+                <p class="screen-sub">
+                    Чтобы пользоваться ботом и получать прогнозы, нужен подтверждённый ID аккаунта Melbet.
+                    ID должен состоять ровно из 9 цифр. Если ID ещё нет — пройдите регистрацию.
+                </p>
+
+                <div class="form-group">
+                    <label for="melbet-id">ID Melbet (9 цифр)</label>
+                    <input
+                        type="text"
+                        id="melbet-id"
+                        class="input"
+                        inputmode="numeric"
+                        maxlength="9"
+                        placeholder="Например: 123456789"
+                        autocomplete="off"
+                    >
+                    <div class="error" id="id-error"></div>
+                    <p class="form-hint">
+                        После проверки ID откроется форма матча: команды + дата и детальный прогноз от AI.
                     </p>
                 </div>
 
-                <div class="hero-card">
-                    <div class="hero-chip-row">
-                        <div class="hero-chip">Live‑матч: футбол</div>
-                        <div class="hero-chip">Фото с экрана</div>
-                        <div class="hero-chip">ИИ‑оценка исхода</div>
-                    </div>
-                    <div class="hero-screen">
-                        <div class="hero-screen-header">
-                            <div class="hero-dots">
-                                <div class="hero-dot red"></div>
-                                <div class="hero-dot yellow"></div>
-                                <div class="hero-dot green"></div>
-                            </div>
-                            <span>Grandbetting_ai</span>
-                        </div>
-                        <div class="hero-screen-main">
-                            <div class="hero-teams">
-                                <div class="hero-team">
-                                    <div class="team-badge"></div>
-                                    <span>Team A</span>
-                                </div>
-                                <div class="hero-score">1 : 0</div>
-                                <div class="hero-team">
-                                    <div class="team-badge" style="background: linear-gradient(135deg,#ff00ff,#ff6a00)"></div>
-                                    <span>Team B</span>
-                                </div>
-                            </div>
-                            <div class="hero-meta">
-                                <span>62’ минута</span>
-                                <span>2‑й тайм • прессинг Team B</span>
-                            </div>
-                            <div class="hero-prob">
-                                <span>Победа Team A:</span>
-                                <div class="hero-prob-bar">
-                                    <div class="hero-prob-fill"></div>
-                                </div>
-                                <span>72%</span>
-                            </div>
-                            <p class="hero-footnote">
-                                Прогноз не гарантирует исход. Ставки — только на твой риск.
-                            </p>
-                        </div>
-                    </div>
+                <div class="screen-actions">
+                    <button class="btn btn-primary" id="confirm-id-btn">Подтвердить ID</button>
+                    <a href="https://clck.ru/3Mo7a2" target="_blank" rel="noopener" class="btn btn-ghost">
+                        Нет ID — зарегистрироваться
+                    </a>
                 </div>
-            </section>
+            </div>
 
-            <!-- HOW IT WORKS -->
-            <section id="how">
-                <h2 class="section-title">Как работает Grandbetting_ai</h2>
-                <p class="section-sub">
-                    Простой процесс в несколько шагов: регистрация, проверка ID, загрузка фото и получение ИИ‑прогноза.
+            <!-- ШАГ 2: МАТЧ + ДАТА + ПРОГНОЗ -->
+            <div class="step-two" id="step-two">
+                <h2 class="screen-title">Укажите матч и дату</h2>
+                <p class="screen-sub">
+                    Введите команды в формате «Реал Мадрид - Барселона» и выберите дату матча. AI найдёт и соберёт прогноз.
                 </p>
-                <div class="steps">
-                    <div class="step-card">
-                        <div class="step-label">Шаг 1</div>
-                        <div class="step-title">Зарегистрируйся в Melbet</div>
-                        <p class="step-text">
-                            Перейди по партнерской ссылке и создай аккаунт в Melbet. Понадобится базовая регистрация и
-                            подтверждение данных согласно правилам букмекера.
-                        </p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-label">Шаг 2</div>
-                        <div class="step-title">Отправь свой ID</div>
-                        <p class="step-text">
-                            Укажи ID аккаунта Melbet в форме ниже. После проверки ID сервис откроет тебе доступ
-                            к ИИ‑прогнозам.
-                        </p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-label">Шаг 3</div>
-                        <div class="step-title">Загрузи фото матча</div>
-                        <p class="step-text">
-                            Сделай снимок экрана трансляции или сфотографируй матч, загрузи изображение и дождись
-                            анализа.
-                        </p>
-                    </div>
-                    <div class="step-card">
-                        <div class="step-label">Шаг 4</div>
-                        <div class="step-title">Получай ИИ‑прогноз</div>
-                        <p class="step-text">
-                            Нейросеть оценит ситуацию в игре и предложит вероятный исход. Можно использовать как подсказку
-                            при принятии решений по ставкам.
-                        </p>
-                    </div>
-                </div>
-            </section>
 
-            <!-- FORM + RESULT -->
-            <section id="form">
-                <h2 class="section-title">Начни сейчас: проверка ID и фото матча</h2>
-                <p class="section-sub">
-                    Введи ID Melbet и загрузи фото матча. Ниже появится пример результата ИИ‑прогноза.
-                </p>
-                <div class="form-grid">
-                    <div>
-                        <form id="ai-form" novalidate>
-                            <div class="form-group">
-                                <label for="melbet-id">ID Melbet *</label>
-                                <input
-                                    type="text"
-                                    id="melbet-id"
-                                    name="melbet_id"
-                                    class="input"
-                                    placeholder="Например: 123456789"
-                                    autocomplete="off"
-                                >
-                                <div class="error" id="id-error"></div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Фото матча *</label>
-                                <div class="file-wrapper">
-                                    <div class="file-label">
-                                        <strong>Выбрать файл</strong>
-                                        <span id="file-label-text">JPG / PNG, до 10 МБ</span>
-                                    </div>
-                                    <input
-                                        type="file"
-                                        id="match-photo"
-                                        name="match_photo"
-                                        class="file-input"
-                                        accept="image/*"
-                                    >
-                                </div>
-                                <div class="file-name" id="file-name"></div>
-                                <div class="error" id="file-error"></div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="contact">Контакт для связи (опционально)</label>
-                                <input
-                                    type="text"
-                                    id="contact"
-                                    name="contact"
-                                    class="input"
-                                    placeholder="@username или email"
-                                >
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">
-                                Отправить на анализ
-                            </button>
+                <div class="step-two-grid">
+                    <!-- ЛЕВАЯ ЧАСТЬ: ФОРМА МАТЧА -->
+                    <div class="form-card">
+                        <div class="form-group">
+                            <label for="match-title">Матч (формат: Команда A - Команда B)</label>
+                            <input
+                                type="text"
+                                id="match-title"
+                                class="input"
+                                placeholder="Например: Реал Мадрид - Барселона"
+                            >
+                            <div class="error" id="match-error"></div>
                             <p class="form-hint">
-                                Максимум 10 запросов в день на один подтвержденный ID. Для увеличения лимита потребуется
-                                активировать месячную подписку за 290 ₽.
+                                Формат строго через дефис: «Хозяева - Гости». Можно использовать русские или латинские названия.
                             </p>
+                        </div>
 
-                            <p class="disclaimer">
-                                Прогноз не является инвестиционной или финансовой рекомендацией. Итоговое решение
-                                о ставках принимаешь только ты.
-                            </p>
-                        </form>
+                        <div class="form-group">
+                            <label for="match-date">Дата матча</label>
+                            <input
+                                type="date"
+                                id="match-date"
+                                class="input"
+                            >
+                            <div class="error" id="date-error"></div>
+                        </div>
+
+                        <button class="btn btn-primary" id="analyze-btn">
+                            Найти прогноз
+                        </button>
+
+                        <p class="form-hint" style="margin-top: 10px;">
+                            AI анализирует открытые источники с прогнозами и статистикой, формирует структурированный разбор:
+                            исходы, тоталы, коэффициенты и риски.
+                        </p>
                     </div>
 
-                    <div id="result-container">
-                        <div class="result-card" id="result-placeholder">
-                            <div class="result-status">Пример ответа ИИ</div>
-                            <div class="result-main">
-                                Загрузите фото матча и отправьте форму, чтобы увидеть пример прогноза.
-                            </div>
-                            <div class="result-meta">
-                                Здесь будет отображаться вероятность исходов (победа, ничья, тотал и т.д.), а также
-                                краткое пояснение на основе анализа игры.
-                            </div>
-                            <div class="result-tags">
-                                <span class="tag">Live‑аналитика</span>
-                                <span class="tag">Фото‑распознавание</span>
-                                <span class="tag">До 10 запросов / день</span>
-                            </div>
+                    <!-- ПРАВАЯ ЧАСТЬ: ПРОГНОЗ ОТ AI -->
+                    <div class="result-card" id="result-card">
+                        <div class="result-status">Прогноз от AI</div>
+                        <div class="result-main">
+                            Заполните название команд и дату, затем нажмите «Найти прогноз».
+                        </div>
+                        <div class="result-meta">
+                            В ответ вы получите текст, похожий на профессиональные разборы: с указанием исходов (П1/Х/П2),
+                            тоталов, примерных коэффициентов и пояснением логики.
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <!-- PRICING -->
-            <section id="pricing">
-                <h2 class="section-title">Лимиты и подписка</h2>
-                <p class="section-sub">
-                    Базовый доступ — бесплатно с ограничением по запросам. Для более активного использования доступна
-                    недорогая подписка.
-                </p>
-                <p class="pricing-note">
-                    После подтверждения ID Melbet аккаунт получает базовый тариф. Переход на подписку можно оформить
-                    через поддержку проекта.
-                </p>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>Параметр</th>
-                            <th>Бесплатно</th>
-                            <th>Подписка 290 ₽ / месяц</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Количество запросов к ИИ</td>
-                            <td>До 10 запросов в день</td>
-                            <td>Расширенный лимит (можно сделать безлимит)</td>
-                        </tr>
-                        <tr>
-                            <td>Тип прогнозов</td>
-                            <td>Базовый прогноз (основной исход матча)</td>
-                            <td>Расширенный прогноз (исход, тоталы, дополнительные сценарии)</td>
-                        </tr>
-                        <tr>
-                            <td>История запросов</td>
-                            <td>Нет</td>
-                            <td>Доступ к истории и статистике точности</td>
-                        </tr>
-                        <tr>
-                            <td>Поддержка</td>
-                            <td>Базовая</td>
-                            <td>Приоритетные ответы и индивидуальные рекомендации по использованию сервиса</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- BENEFITS -->
-            <section>
-                <h2 class="section-title">Почему Grandbetting_ai удобен</h2>
-                <p class="section-sub">
-                    Сервис создан как быстрый помощник по принятию решений на основе реальной картины матча,
-                    а не только сухой статистики.
-                </p>
-                <div class="benefits">
-                    <div class="benefit">
-                        <div class="benefit-title">Анализ по фото в пару кликов</div>
-                        <p class="benefit-text">
-                            Не нужно вручную забивать статистику и искать модели. Сделал снимок игры, загрузил —
-                            система сама извлекает ключевые детали.
-                        </p>
-                    </div>
-                    <div class="benefit">
-                        <div class="benefit-title">Учет контекста матча</div>
-                        <p class="benefit-text">
-                            В расчет берутся счет, время, давление одной из команд и другие визуальные признаки,
-                            которые помогают лучше оценить риски.
-                        </p>
-                    </div>
-                    <div class="benefit">
-                        <div class="benefit-title">Адаптировано под смартфон</div>
-                        <p class="benefit-text">
-                            Интерфейс оптимизирован для мобильных устройств, чтобы ты мог пользоваться сервисом
-                            прямо во время просмотра матча.
-                        </p>
-                    </div>
-                    <div class="benefit">
-                        <div class="benefit-title">Простой вход через Melbet</div>
-                        <p class="benefit-text">
-                            Достаточно зарегистрироваться по партнерской ссылке, пройти проверку ID — и можно
-                            сразу тестировать ИИ‑прогнозы в действии.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- IMPORTANT -->
-            <section id="important">
-                <h2 class="section-title">Важно помнить</h2>
-                <div class="important-text">
-                    <p>
-                        Grandbetting_ai — это инструмент статистического анализа и подсказок. Он не гарантирует
-                        исход матча и не устраняет риски потерь.
-                    </p>
-                    <ul>
-                        <li>Используй сервис ответственно и не ставь больше, чем готов потерять.</li>
-                        <li>Убедись, что онлайн‑ставки разрешены законодательством твоей страны.</li>
-                        <li>Сервис предназначен только для пользователей 18+.</li>
-                        <li>Рекомендуется рассматривать прогнозы как дополнительный источник информации, а не
-                            единственную опору для решения.</li>
-                    </ul>
-                </div>
-            </section>
         </div>
     </main>
-
-    <footer>
-        <div>© <span id="year"></span> Grandbetting_ai. Все права защищены.</div>
-        <div class="footer-links">
-            <a href="#" onclick="return false;">Политика конфиденциальности</a>
-            <a href="#" onclick="return false;">Пользовательское соглашение</a>
-            <a href="https://clck.ru/3Mo7a2" target="_blank" rel="noopener">Партнерская ссылка Melbet</a>
-        </div>
-    </footer>
 </div>
 
 <script>
-    // Код запускается после полной загрузки DOM
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('year').textContent = new Date().getFullYear();
+document.addEventListener('DOMContentLoaded', function () {
+    const stepOne = document.getElementById('step-one');
+    const stepTwo = document.getElementById('step-two');
+    const confirmIdBtn = document.getElementById('confirm-id-btn');
+    const idInput = document.getElementById('melbet-id');
+    const idErrorEl = document.getElementById('id-error');
 
-        const fileInput = document.getElementById('match-photo');
-        const fileNameEl = document.getElementById('file-name');
-        const fileErrorEl = document.getElementById('file-error');
-        const idErrorEl = document.getElementById('id-error');
-        const form = document.getElementById('ai-form');
-        const resultContainer = document.getElementById('result-container');
+    const matchTitleInput = document.getElementById('match-title');
+    const matchDateInput = document.getElementById('match-date');
+    const matchErrorEl = document.getElementById('match-error');
+    const dateErrorEl = document.getElementById('date-error');
+    const analyzeBtn = document.getElementById('analyze-btn');
+    const resultCard = document.getElementById('result-card');
 
-        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
-
-        if (fileInput) {
-            fileInput.addEventListener('change', function () {
-                fileErrorEl.textContent = '';
-                fileNameEl.textContent = '';
-                if (this.files && this.files[0]) {
-                    const file = this.files[0];
-                    fileNameEl.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' КБ)';
-                    if (!file.type.startsWith('image/')) {
-                        fileErrorEl.textContent = 'Разрешены только изображения (JPG, PNG и т.п.).';
-                        this.value = '';
-                        fileNameEl.textContent = '';
-                        return;
-                    }
-                    if (file.size > MAX_FILE_SIZE) {
-                        fileErrorEl.textContent = 'Файл слишком большой. Максимальный размер — 10 МБ.';
-                        this.value = '';
-                        fileNameEl.textContent = '';
-                    }
-                }
-            });
-        }
-
-        if (form) {
-            form.addEventListener('submit', function (e) {
-                e.preventDefault();
-                idErrorEl.textContent = '';
-                fileErrorEl.textContent = '';
-
-                const idValue = document.getElementById('melbet-id').value.trim();
-                const file = fileInput.files[0];
-
-                let valid = true;
-
-                if (!idValue) {
-                    idErrorEl.textContent = 'Укажи ID аккаунта Melbet.';
-                    valid = false;
-                }
-
-                if (!file) {
-                    fileErrorEl.textContent = 'Пожалуйста, загрузи фото матча.';
-                    valid = false;
-                }
-
-                if (!valid) {
-                    return;
-                }
-
-                // Имитируем анализ ИИ
-                resultContainer.innerHTML = `
-                    <div class="result-card">
-                        <div class="result-status">Анализ фото…</div>
-                        <div class="result-main">
-                            ИИ обрабатывает изображение матча и оценивает вероятный исход.
-                        </div>
-                        <div class="result-meta">
-                            Это займет несколько секунд. Пожалуйста, не закрывай страницу.
-                        </div>
-                    </div>
-                `;
-
-                setTimeout(function () {
-                    resultContainer.innerHTML = `
-                        <div class="result-card">
-                            <div class="result-status">Пример прогноза ИИ</div>
-                            <div class="result-main">
-                                С учетом текущего счета и хода матча вероятность победы фаворита — 71%.
-                            </div>
-                            <div class="result-meta">
-                                Модель видит, что команда доминирует по моментам и владению мячом, а защита соперника проседает.
-                                Рекомендуется рассматривать ставки, связанные с сохранением преимущества или осторожными тоталами.
-                            </div>
-                            <div class="result-tags">
-                                <span class="tag">Live‑оценка</span>
-                                <span class="tag">Статистическая модель</span>
-                                <span class="tag">Не является рекомендацией</span>
-                            </div>
-                        </div>
-                    `;
-                }, 2000);
-            });
-        }
+    // Валидация: только цифры для ID
+    idInput.addEventListener('input', function () {
+        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9);
     });
+
+    // Шаг 1 — подтверждение ID (ровно 9 цифр)
+    confirmIdBtn.addEventListener('click', function () {
+        idErrorEl.textContent = '';
+        const value = idInput.value.trim();
+
+        const isNineDigits = /^[0-9]{9}$/.test(value);
+
+        if (!isNineDigits) {
+            idErrorEl.textContent = 'ID должен состоять ровно из 9 цифр.';
+            return;
+        }
+
+        // TODO: здесь вы добавляете реальную проверку ID через backend
+        stepOne.style.display = 'none';
+        stepTwo.style.display = 'block';
+    });
+
+    // Нажатие "Найти прогноз"
+    analyzeBtn.addEventListener('click', function () {
+        matchErrorEl.textContent = '';
+        dateErrorEl.textContent = '';
+
+        const matchTitleRaw = matchTitleInput.value.trim();
+        const matchDate = matchDateInput.value;
+
+        let valid = true;
+
+        // Проверяем формат "Команда A - Команда B"
+        const parts = matchTitleRaw.split('-').map(p => p.trim()).filter(Boolean);
+        if (parts.length !== 2) {
+            matchErrorEl.textContent = 'Введите команды в формате: Команда A - Команда B.';
+            valid = false;
+        }
+
+        if (!matchDate) {
+            dateErrorEl.textContent = 'Выберите дату матча.';
+            valid = false;
+        }
+
+        if (!valid) return;
+
+        const homeTeam = parts[0];
+        const awayTeam = parts[1];
+
+        // Заглушка поиска прогноза — здесь будет запрос к вашему backend / AI
+        resultCard.innerHTML = `
+            <div class="result-status">Идёт поиск и анализ прогнозов…</div>
+            <div class="result-main">
+                ${homeTeam} - ${awayTeam}, дата матча: ${matchDate}.
+            </div>
+            <div class="result-meta">
+                AI анализирует открытые источники с прогнозами и статистикой по этому матчу,
+                формирует суммарный разбор по исходам и тоталам. Пожалуйста, подождите несколько секунд.
+            </div>
+        `;
+
+        // Имитация ответа от AI
+        setTimeout(function () {
+            // В реальном приложении сюда подставляется текст, который вернёт backend
+            resultCard.innerHTML = `
+                <div class="result-status">Расширенный прогноз AI</div>
+
+                <div class="result-main">
+                    ${homeTeam} — ${awayTeam}, матч от ${matchDate}
+                </div>
+
+                <div class="result-meta">
+                    <div class="result-block-title">1. Контекст матча</div>
+                    <ul class="result-list">
+                        <li>Матч между ${homeTeam} и ${awayTeam} привлекает повышенное внимание рынка:
+                            команды регулярно играют на верхних позициях и показывают результативный футбол.</li>
+                        <li>Перед игрой анализируются форма, статистика head-to-head, ожидаемые составы,
+                            возможная ротация и мотивация сторон.</li>
+                    </ul>
+
+                    <div class="result-block-title">2. Основной исход (П1 / Х / П2)</div>
+                    <ul class="result-list">
+                        <li><strong>Базовый вариант: П1 (победа ${homeTeam})</strong> при условии, что дома команда
+                            играет агрессивно и стабильно набирает очки.</li>
+                        <li>Пример диапазона коэффициента по линии на П1 в подобных матчах: ~1.70–2.10
+                            в зависимости от конкретного рынка и текущей формы соперников.</li>
+                        <li>Логика: ${homeTeam} чаще контролирует мяч, создаёт больше моментов и лучше использует стандартные положения,
+                            тогда как у ${awayTeam} возникают проблемы в обороне против топ-соперников на выезде.</li>
+                    </ul>
+
+                    <div class="result-block-title">3. Альтернативные исходы</div>
+                    <ul class="result-list">
+                        <li><strong>Более аккуратный вариант: 1Х</strong> — хозяева не проиграют; коэффициент обычно ниже, но риск тоже ниже,
+                            что подходит для консервативных стратегий.</li>
+                        <li><strong>Фора 0 на ${homeTeam}</strong> — ставка с возвратом при ничьей, когда есть опасения, что ${awayTeam}
+                            может зацепиться за результат за счёт контратак.</li>
+                    </ul>
+
+                    <div class="result-block-title">4. Тоталы</div>
+                    <ul class="result-list">
+                        <li><strong>Тотал больше 2.5</strong> — логичный вариант, если обе команды играют в атакующий футбол и статистически
+                            часто пробивают линию 3+ гола в очных встречах.</li>
+                        <li>Примерный диапазон коэффициентов на ТБ(2.5) в таких матчах: ~1.70–2.20
+                            в зависимости от ожиданий рынка и новостей по составам.</li>
+                        <li>Если предпочтительнее аккуратный подход, можно рассмотреть индивидуальный тотал
+                            ${homeTeam} больше 1.0 или 1.5 — ставка на то, что хозяева забьют как минимум один-два мяча.</li>
+                    </ul>
+
+                    <div class="result-block-title">5. Что можно рассматривать по линии</div>
+                    <ul class="result-list">
+                        <li>Основная идея: <strong>П1 или 1Х + ТБ(1.5)</strong> в комбинированных рынках, если коэффициент остаётся приемлемым.</li>
+                        <li>Для игроков с умеренным риском: фора 0 на ${homeTeam} или индивидуальный тотал хозяев больше 1.0
+                            с возможным возвратом при минимальном исходе.</li>
+                        <li>При агрессивном подходе: ТБ(2.5) или обе забьют (ОЗ), если статистика команд подтверждает высокий уровень результативности.</li>
+                    </ul>
+
+                    <div class="result-block-title">6. Риски и управление банком</div>
+                    <ul class="result-list">
+                        <li>На исход могут повлиять поздние новости по составам, травмы ключевых игроков и погодные условия.</li>
+                        <li>Рынок может сильно двигаться в день матча, поэтому важно следить за изменениями коэффициентов и не входить по заведомо
+                            “просаженным” значениям.</li>
+                        <li><strong>Рекомендуется не превышать 3–5% от игрового банка</strong> на одну идею и рассматривать данную аналитику
+                            как подсказку, а не гарантию выигрыша.</li>
+                    </ul>
+
+                    <div class="result-block-title">Важно</div>
+                    <p class="result-meta">
+                        Прогноз сформирован AI на основе анализа открытых источников с прогнозами и статистикой,
+                        а также типовой логики движения линии на подобные матчи. Это не является финансовой рекомендацией.
+                        Окончательное решение по ставкам всегда остаётся за вами.
+                    </p>
+                </div>
+            `;
+        }, 2000);
+    });
+});
 </script>
 </body>
 </html>
