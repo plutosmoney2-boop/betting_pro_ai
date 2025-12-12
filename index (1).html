@@ -18,11 +18,7 @@
             --border-soft: rgba(255,255,255,0.06);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -31,20 +27,10 @@
             line-height: 1.6;
         }
 
-        a {
-            color: var(--accent);
-            text-decoration: none;
-        }
+        a { color: var(--accent); text-decoration: none; }
+        a:hover { text-decoration: underline; }
 
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .page {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+        .page { min-height: 100vh; display: flex; flex-direction: column; }
 
         header {
             position: sticky;
@@ -94,14 +80,9 @@
             padding: 4px 0;
         }
 
-        .nav-links a:hover {
-            color: var(--accent);
-        }
+        .nav-links a:hover { color: var(--accent); }
 
-        .nav-cta {
-            display: flex;
-            gap: 10px;
-        }
+        .nav-cta { display: flex; gap: 10px; }
 
         .btn {
             display: inline-flex;
@@ -139,9 +120,7 @@
             color: var(--accent-soft);
         }
 
-        main {
-            flex: 1;
-        }
+        main { flex: 1; }
 
         .container {
             max-width: 1100px;
@@ -149,7 +128,7 @@
             padding: 24px 20px 40px;
         }
 
-        /* Hero */
+        /* HERO */
 
         .hero {
             display: grid;
@@ -257,12 +236,7 @@
             gap: 5px;
         }
 
-        .hero-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-        }
-
+        .hero-dot { width: 6px; height: 6px; border-radius: 50%; }
         .hero-dot.red { background: #ff5f57; }
         .hero-dot.yellow { background: #febc2e; }
         .hero-dot.green { background: #28c840; }
@@ -295,9 +269,7 @@
             background: linear-gradient(135deg, #00d4ff, #007bff);
         }
 
-        .hero-score {
-            font-weight: 700;
-        }
+        .hero-score { font-weight: 700; }
 
         .hero-meta {
             display: flex;
@@ -402,9 +374,7 @@
             gap: 18px;
         }
 
-        .form-group {
-            margin-bottom: 12px;
-        }
+        .form-group { margin-bottom: 12px; }
 
         label {
             display: block;
@@ -428,9 +398,7 @@
             box-shadow: 0 0 0 1px rgba(255,204,0,0.4);
         }
 
-        .file-wrapper {
-            position: relative;
-        }
+        .file-wrapper { position: relative; }
 
         .file-label {
             display: inline-flex;
@@ -444,9 +412,7 @@
             cursor: pointer;
         }
 
-        .file-label span {
-            color: var(--text-muted);
-        }
+        .file-label span { color: var(--text-muted); }
 
         .file-input {
             position: absolute;
@@ -611,21 +577,10 @@
         }
 
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero, .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero {
-                padding-top: 20px;
-            }
-
-            section {
-                padding: 16px;
-            }
+            .nav-links { display: none; }
+            .hero, .form-grid { grid-template-columns: 1fr; }
+            .hero { padding-top: 20px; }
+            section { padding: 16px; }
         }
     </style>
 </head>
@@ -772,8 +727,7 @@
             <section id="form">
                 <h2 class="section-title">Начни сейчас: проверка ID и фото матча</h2>
                 <p class="section-sub">
-                    Введи ID Melbet и загрузи фото матча. Ниже появится пример результата ИИ‑прогноза. 
-                    Реальный расчет будет подключен на сервере.
+                    Введи ID Melbet и загрузи фото матча. Ниже появится пример результата ИИ‑прогноза.
                 </p>
                 <div class="form-grid">
                     <div>
@@ -972,98 +926,100 @@
 </div>
 
 <script>
-    // Текущий год в футере
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Код запускается после полной загрузки DOM
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('year').textContent = new Date().getFullYear();
 
-    const fileInput = document.getElementById('match-photo');
-    const fileNameEl = document.getElementById('file-name');
-    const fileErrorEl = document.getElementById('file-error');
-    const idErrorEl = document.getElementById('id-error');
-    const form = document.getElementById('ai-form');
-    const resultContainer = document.getElementById('result-container');
+        const fileInput = document.getElementById('match-photo');
+        const fileNameEl = document.getElementById('file-name');
+        const fileErrorEl = document.getElementById('file-error');
+        const idErrorEl = document.getElementById('id-error');
+        const form = document.getElementById('ai-form');
+        const resultContainer = document.getElementById('result-container');
 
-    const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
+        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
-    if (fileInput) {
-        fileInput.addEventListener('change', function () {
-            fileErrorEl.textContent = '';
-            if (this.files && this.files[0]) {
-                const file = this.files[0];
-                fileNameEl.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' КБ)';
-                if (!file.type.startsWith('image/')) {
-                    fileErrorEl.textContent = 'Разрешены только изображения (JPG, PNG и т.п.).';
-                    this.value = '';
-                    fileNameEl.textContent = '';
+        if (fileInput) {
+            fileInput.addEventListener('change', function () {
+                fileErrorEl.textContent = '';
+                fileNameEl.textContent = '';
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    fileNameEl.textContent = file.name + ' (' + Math.round(file.size / 1024) + ' КБ)';
+                    if (!file.type.startsWith('image/')) {
+                        fileErrorEl.textContent = 'Разрешены только изображения (JPG, PNG и т.п.).';
+                        this.value = '';
+                        fileNameEl.textContent = '';
+                        return;
+                    }
+                    if (file.size > MAX_FILE_SIZE) {
+                        fileErrorEl.textContent = 'Файл слишком большой. Максимальный размер — 10 МБ.';
+                        this.value = '';
+                        fileNameEl.textContent = '';
+                    }
+                }
+            });
+        }
+
+        if (form) {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                idErrorEl.textContent = '';
+                fileErrorEl.textContent = '';
+
+                const idValue = document.getElementById('melbet-id').value.trim();
+                const file = fileInput.files[0];
+
+                let valid = true;
+
+                if (!idValue) {
+                    idErrorEl.textContent = 'Укажи ID аккаунта Melbet.';
+                    valid = false;
+                }
+
+                if (!file) {
+                    fileErrorEl.textContent = 'Пожалуйста, загрузи фото матча.';
+                    valid = false;
+                }
+
+                if (!valid) {
                     return;
                 }
-                if (file.size > MAX_FILE_SIZE) {
-                    fileErrorEl.textContent = 'Файл слишком большой. Максимальный размер — 10 МБ.';
-                    this.value = '';
-                    fileNameEl.textContent = '';
-                }
-            } else {
-                fileNameEl.textContent = '';
-            }
-        });
-    }
 
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        idErrorEl.textContent = '';
-        fileErrorEl.textContent = '';
-
-        const idValue = document.getElementById('melbet-id').value.trim();
-        const file = fileInput.files[0];
-
-        let valid = true;
-
-        if (!idValue) {
-            idErrorEl.textContent = 'Укажи ID аккаунта Melbet.';
-            valid = false;
-        }
-
-        if (!file) {
-            fileErrorEl.textContent = 'Пожалуйста, загрузи фото матча.';
-            valid = false;
-        }
-
-        if (!valid) {
-            return;
-        }
-
-        // Имитируем анализ ИИ
-        resultContainer.innerHTML = `
-            <div class="result-card">
-                <div class="result-status">Анализ фото…</div>
-                <div class="result-main">
-                    ИИ обрабатывает изображение матча и оценивает вероятный исход.
-                </div>
-                <div class="result-meta">
-                    Это займет несколько секунд. Пожалуйста, не закрывай страницу.
-                </div>
-            </div>
-        `;
-
-        setTimeout(function () {
-            // Пример фиктивного результата ИИ
-            resultContainer.innerHTML = `
-                <div class="result-card">
-                    <div class="result-status">Пример прогноза ИИ</div>
-                    <div class="result-main">
-                        С учетом текущего счета и хода матча вероятность победы фаворита — 71%.
+                // Имитируем анализ ИИ
+                resultContainer.innerHTML = `
+                    <div class="result-card">
+                        <div class="result-status">Анализ фото…</div>
+                        <div class="result-main">
+                            ИИ обрабатывает изображение матча и оценивает вероятный исход.
+                        </div>
+                        <div class="result-meta">
+                            Это займет несколько секунд. Пожалуйста, не закрывай страницу.
+                        </div>
                     </div>
-                    <div class="result-meta">
-                        Модель видит, что команда доминирует по моментам и владению мячом, а защита соперника проседает.
-                        Рекомендуется рассматривать ставки, связанные с сохранением преимущества или осторожными тоталами.
-                    </div>
-                    <div class="result-tags">
-                        <span class="tag">Live‑оценка</span>
-                        <span class="tag">Статистическая модель</span>
-                        <span class="tag">Не является рекомендацией</span>
-                    </div>
-                </div>
-            `;
-        }, 2200);
+                `;
+
+                setTimeout(function () {
+                    resultContainer.innerHTML = `
+                        <div class="result-card">
+                            <div class="result-status">Пример прогноза ИИ</div>
+                            <div class="result-main">
+                                С учетом текущего счета и хода матча вероятность победы фаворита — 71%.
+                            </div>
+                            <div class="result-meta">
+                                Модель видит, что команда доминирует по моментам и владению мячом, а защита соперника проседает.
+                                Рекомендуется рассматривать ставки, связанные с сохранением преимущества или осторожными тоталами.
+                            </div>
+                            <div class="result-tags">
+                                <span class="tag">Live‑оценка</span>
+                                <span class="tag">Статистическая модель</span>
+                                <span class="tag">Не является рекомендацией</span>
+                            </div>
+                        </div>
+                    `;
+                }, 2000);
+            });
+        }
     });
 </script>
 </body>
