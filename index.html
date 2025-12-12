@@ -7,27 +7,26 @@
 
     <style>
         :root {
-            --bg-dark: #050815;
-            --bg-section: #0b1020;
             --accent: #ffcc00;
             --accent-soft: #ffe766;
             --danger: #ff4d4d;
-            --text-main: #f5f5f7;
-            --text-muted: #9fa4b5;
-            --card-bg: #111628;
-            --border-soft: rgba(255,255,255,0.06);
+            --text-main: #111111;
+            --text-muted: #6b7280;
+            --card-bg: #ffffff;
+            --border-soft: rgba(0,0,0,0.08);
+            --bg-page: #f5f5f7;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background: radial-gradient(circle at top, #192040 0, #050815 55%);
+            background: var(--bg-page);
             color: var(--text-main);
             line-height: 1.6;
         }
 
-        a { color: var(--accent); text-decoration: none; }
+        a { color: #2563eb; text-decoration: none; }
         a:hover { text-decoration: underline; }
 
         .page {
@@ -37,13 +36,13 @@
         }
 
         header {
-            padding: 14px 20px;
+            padding: 18px 32px;
             border-bottom: 1px solid var(--border-soft);
-            background: rgba(5,8,21,0.95);
+            background: #ffffff;
         }
 
         .nav {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             align-items: center;
@@ -54,17 +53,17 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-weight: 700;
             letter-spacing: 0.06em;
-            font-size: 15px;
+            font-size: 18px;
             text-transform: uppercase;
         }
 
         .logo-mark {
-            width: 26px;
-            height: 26px;
-            border-radius: 9px;
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
             background: radial-gradient(circle at 30% 20%, #ffffff 0, #ffcc00 30%, #ff9100 55%, #d400ff 100%);
             box-shadow: 0 0 24px rgba(255, 204, 0, 0.8);
         }
@@ -74,34 +73,35 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 32px 16px;
         }
 
         .screen {
             width: 100%;
-            max-width: 900px;
-            background: rgba(5,8,21,0.96);
-            border-radius: 20px;
+            max-width: 1200px;
+            background: #ffffff;
+            border-radius: 24px;
             border: 1px solid var(--border-soft);
-            padding: 20px;
+            padding: 28px 32px;
+            box-shadow: 0 18px 45px rgba(15,23,42,0.08);
         }
 
         .screen-title {
-            font-size: 22px;
-            margin-bottom: 6px;
+            font-size: 26px;
+            margin-bottom: 8px;
         }
 
         .screen-sub {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-muted);
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 18px;
+            padding: 12px 22px;
             font-size: 14px;
             border-radius: 999px;
             border: 1px solid transparent;
@@ -112,7 +112,7 @@
 
         .btn-primary {
             background: linear-gradient(135deg, #ffcc00, #ff9100);
-            color: #050815;
+            color: #111111;
             font-weight: 600;
             box-shadow: 0 0 18px rgba(255, 204, 0, 0.5);
         }
@@ -129,42 +129,44 @@
         }
 
         .btn-ghost:hover {
-            border-color: var(--accent-soft);
-            color: var(--accent-soft);
+            border-color: #9ca3af;
+            color: #111111;
         }
 
-        .form-group { margin-bottom: 12px; }
+        .form-group { margin-bottom: 14px; }
 
         label {
             display: block;
-            font-size: 13px;
-            margin-bottom: 4px;
+            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: 500;
         }
 
         .input {
             width: 100%;
-            padding: 9px 10px;
+            padding: 10px 12px;
             border-radius: 10px;
             border: 1px solid var(--border-soft);
-            background: rgba(5,8,21,0.9);
+            background: #f9fafb;
             color: var(--text-main);
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .input:focus {
             outline: none;
-            border-color: var(--accent-soft);
-            box-shadow: 0 0 0 1px rgba(255,204,0,0.4);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px rgba(255,204,0,0.5);
+            background: #ffffff;
         }
 
         .error {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--danger);
             margin-top: 3px;
         }
 
         .form-hint {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
             margin-top: 6px;
         }
@@ -172,8 +174,8 @@
         .screen-actions {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 12px;
+            margin-top: 12px;
         }
 
         /* Экран 2 */
@@ -184,53 +186,58 @@
 
         .step-two-grid {
             display: grid;
-            grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-            gap: 18px;
-            margin-top: 8px;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+            gap: 24px;
+            margin-top: 10px;
         }
 
         .form-card,
         .result-card {
             background: var(--card-bg);
-            border-radius: 14px;
-            padding: 12px;
+            border-radius: 16px;
+            padding: 14px 16px;
             border: 1px solid var(--border-soft);
-            font-size: 13px;
+            font-size: 14px;
         }
 
         .result-status {
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            color: var(--accent-soft);
-            margin-bottom: 4px;
+            color: #6b7280;
+            margin-bottom: 6px;
         }
 
         .result-main {
             font-weight: 600;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .result-meta {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-muted);
         }
 
         .result-block-title {
             font-weight: 600;
-            margin-top: 8px;
+            margin-top: 10px;
             margin-bottom: 4px;
         }
 
         .result-list {
             margin: 0;
-            padding-left: 18px;
-            font-size: 12px;
+            padding-left: 20px;
+            font-size: 13px;
             color: var(--text-muted);
         }
 
         .result-list li {
             margin-bottom: 4px;
+        }
+
+        @media (max-width: 992px) {
+            header { padding: 14px 16px; }
+            .screen { padding: 20px 16px; }
         }
 
         @media (max-width: 768px) {
@@ -259,7 +266,7 @@
                 <h1 class="screen-title">Введите ваш ID от Melbet</h1>
                 <p class="screen-sub">
                     Чтобы пользоваться ботом и получать прогнозы, нужен подтверждённый ID аккаунта Melbet.
-                    ID должен состоять ровно из 9 цифр. Если ID ещё нет — пройдите регистрацию.
+                    ID должен состоять ровно из 9 цифр. Если ID ещё нет — пройдите регистрацию по нашей ссылке.
                 </p>
 
                 <div class="form-group">
@@ -275,7 +282,7 @@
                     >
                     <div class="error" id="id-error"></div>
                     <p class="form-hint">
-                        После проверки ID откроется форма матча: команды + дата и детальный прогноз от AI.
+                        После проверки ID откроется форма матча: команды + дата, а затем детальный прогноз от AI.
                     </p>
                 </div>
 
@@ -287,11 +294,12 @@
                 </div>
             </div>
 
-            <!-- ШАГ 2: МАТЧ + ДАТА + ПРОГНОЗ -->
+            <!-- ШАГ 2: МАТЧ + ДАТА + ПРОВЕРКА НА MELBET + ПРОГНОЗ -->
             <div class="step-two" id="step-two">
                 <h2 class="screen-title">Укажите матч и дату</h2>
                 <p class="screen-sub">
-                    Введите команды в формате «Реал Мадрид - Барселона» и выберите дату матча. AI найдёт и соберёт прогноз.
+                    Введите команды в формате «Реал Мадрид - Барселона» и выберите дату матча в календаре.
+                    Сначала проверяется наличие матча по линии Melbet, затем AI ищет и собирает прогноз по этому событию.
                 </p>
 
                 <div class="step-two-grid">
@@ -307,7 +315,7 @@
                             >
                             <div class="error" id="match-error"></div>
                             <p class="form-hint">
-                                Формат строго через дефис: «Хозяева - Гости». Можно использовать русские или латинские названия.
+                                Формат строго через дефис: «Хозяева - Гости». Названия можно вводить по-русски или на латинице.
                             </p>
                         </div>
 
@@ -319,27 +327,30 @@
                                 class="input"
                             >
                             <div class="error" id="date-error"></div>
+                            <p class="form-hint">
+                                Выберите дату в календаре. Матч будет проверен по линии Melbet на эту дату.
+                            </p>
                         </div>
 
                         <button class="btn btn-primary" id="analyze-btn">
-                            Найти прогноз
+                            Найти матч и прогноз
                         </button>
 
                         <p class="form-hint" style="margin-top: 10px;">
-                            AI анализирует открытые источники с прогнозами и статистикой, формирует структурированный разбор:
-                            исходы, тоталы, коэффициенты и риски.
+                            Если по этой дате и парам команд нет футбольного матча на линии Melbet, вы увидите сообщение,
+                            что такой игры в этот день нет. В остальных случаях AI выйдет в интернет и соберёт прогноз.
                         </p>
                     </div>
 
-                    <!-- ПРАВАЯ ЧАСТЬ: ПРОГНОЗ ОТ AI -->
+                    <!-- ПРАВАЯ ЧАСТЬ: ПРОГНОЗ / ОШИБКИ -->
                     <div class="result-card" id="result-card">
                         <div class="result-status">Прогноз от AI</div>
                         <div class="result-main">
-                            Заполните название команд и дату, затем нажмите «Найти прогноз».
+                            Заполните название команд и выберите дату, затем нажмите «Найти матч и прогноз».
                         </div>
                         <div class="result-meta">
-                            В ответ вы получите текст, похожий на профессиональные разборы: с указанием исходов (П1/Х/П2),
-                            тоталов, примерных коэффициентов и пояснением логики.
+                            В ответ вы получите структурированный разбор по матчу: исходы (П1/Х/П2), тоталы, примерные коэффициенты
+                            и пояснение логики. AI использует данные из открытых источников и линию букмекеров.
                         </div>
                     </div>
                 </div>
@@ -364,7 +375,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const analyzeBtn = document.getElementById('analyze-btn');
     const resultCard = document.getElementById('result-card');
 
-    // Валидация: только цифры для ID
+    // Валидация: только цифры для ID, максимум 9
     idInput.addEventListener('input', function () {
         this.value = this.value.replace(/[^0-9]/g, '').slice(0, 9);
     });
@@ -373,7 +384,6 @@ document.addEventListener('DOMContentLoaded', function () {
     confirmIdBtn.addEventListener('click', function () {
         idErrorEl.textContent = '';
         const value = idInput.value.trim();
-
         const isNineDigits = /^[0-9]{9}$/.test(value);
 
         if (!isNineDigits) {
@@ -381,12 +391,13 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        // TODO: здесь вы добавляете реальную проверку ID через backend
+        // TODO: здесь вы добавляете реальную проверку ID через ваш backend
+
         stepOne.style.display = 'none';
         stepTwo.style.display = 'block';
     });
 
-    // Нажатие "Найти прогноз"
+    // Шаг 2 — поиск матча и прогноз
     analyzeBtn.addEventListener('click', function () {
         matchErrorEl.textContent = '';
         dateErrorEl.textContent = '';
@@ -396,7 +407,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         let valid = true;
 
-        // Проверяем формат "Команда A - Команда B"
         const parts = matchTitleRaw.split('-').map(p => p.trim()).filter(Boolean);
         if (parts.length !== 2) {
             matchErrorEl.textContent = 'Введите команды в формате: Команда A - Команда B.';
@@ -404,7 +414,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         if (!matchDate) {
-            dateErrorEl.textContent = 'Выберите дату матча.';
+            dateErrorEl.textContent = 'Выберите дату матча в календаре.';
             valid = false;
         }
 
@@ -413,91 +423,123 @@ document.addEventListener('DOMContentLoaded', function () {
         const homeTeam = parts[0];
         const awayTeam = parts[1];
 
-        // Заглушка поиска прогноза — здесь будет запрос к вашему backend / AI
+        // Шаг 2.1 — проверка матча по линии Melbet (реально через backend)
         resultCard.innerHTML = `
-            <div class="result-status">Идёт поиск и анализ прогнозов…</div>
+            <div class="result-status">Проверка матча по линии Melbet…</div>
             <div class="result-main">
-                ${homeTeam} - ${awayTeam}, дата матча: ${matchDate}.
+                ${homeTeam} — ${awayTeam}, дата: ${matchDate}
             </div>
             <div class="result-meta">
-                AI анализирует открытые источники с прогнозами и статистикой по этому матчу,
-                формирует суммарный разбор по исходам и тоталам. Пожалуйста, подождите несколько секунд.
+                Идёт проверка наличия футбольного матча на выбранную дату по линии Melbet.
+                Пожалуйста, подождите несколько секунд.
             </div>
         `;
 
-        // Имитация ответа от AI
+        // В реальном приложении здесь делаете fetch на ваш API, который ходит на Melbet:
+        // fetch('/api/check-match', { method: 'POST', body: JSON.stringify({ homeTeam, awayTeam, date: matchDate }) })
+        //   .then(...) и т.д.
+        //
+        // Ниже — только имитация логики:
         setTimeout(function () {
-            // В реальном приложении сюда подставляется текст, который вернёт backend
+            const matchExistsOnMelbet = true; // TODO: заменить на реальный ответ backend
+
+            if (!matchExistsOnMelbet) {
+                resultCard.innerHTML = `
+                    <div class="result-status">Матч не найден на линии Melbet</div>
+                    <div class="result-main">
+                        ${homeTeam} — ${awayTeam}, дата: ${matchDate}
+                    </div>
+                    <div class="result-meta">
+                        По указанной дате на линии Melbet не найден футбольный матч с такими командами.
+                        Проверьте правильность написания и дату. Такой игры в этот день нет.
+                    </div>
+                `;
+                return;
+            }
+
+            // Шаг 2.2 — AI выходит в интернет, ищет прогноз и собирает разбор
             resultCard.innerHTML = `
-                <div class="result-status">Расширенный прогноз AI</div>
-
+                <div class="result-status">AI ищет прогноз и аналитику…</div>
                 <div class="result-main">
-                    ${homeTeam} — ${awayTeam}, матч от ${matchDate}
+                    ${homeTeam} — ${awayTeam}, дата: ${matchDate}
                 </div>
-
                 <div class="result-meta">
-                    <div class="result-block-title">1. Контекст матча</div>
-                    <ul class="result-list">
-                        <li>Матч между ${homeTeam} и ${awayTeam} привлекает повышенное внимание рынка:
-                            команды регулярно играют на верхних позициях и показывают результативный футбол.</li>
-                        <li>Перед игрой анализируются форма, статистика head-to-head, ожидаемые составы,
-                            возможная ротация и мотивация сторон.</li>
-                    </ul>
-
-                    <div class="result-block-title">2. Основной исход (П1 / Х / П2)</div>
-                    <ul class="result-list">
-                        <li><strong>Базовый вариант: П1 (победа ${homeTeam})</strong> при условии, что дома команда
-                            играет агрессивно и стабильно набирает очки.</li>
-                        <li>Пример диапазона коэффициента по линии на П1 в подобных матчах: ~1.70–2.10
-                            в зависимости от конкретного рынка и текущей формы соперников.</li>
-                        <li>Логика: ${homeTeam} чаще контролирует мяч, создаёт больше моментов и лучше использует стандартные положения,
-                            тогда как у ${awayTeam} возникают проблемы в обороне против топ-соперников на выезде.</li>
-                    </ul>
-
-                    <div class="result-block-title">3. Альтернативные исходы</div>
-                    <ul class="result-list">
-                        <li><strong>Более аккуратный вариант: 1Х</strong> — хозяева не проиграют; коэффициент обычно ниже, но риск тоже ниже,
-                            что подходит для консервативных стратегий.</li>
-                        <li><strong>Фора 0 на ${homeTeam}</strong> — ставка с возвратом при ничьей, когда есть опасения, что ${awayTeam}
-                            может зацепиться за результат за счёт контратак.</li>
-                    </ul>
-
-                    <div class="result-block-title">4. Тоталы</div>
-                    <ul class="result-list">
-                        <li><strong>Тотал больше 2.5</strong> — логичный вариант, если обе команды играют в атакующий футбол и статистически
-                            часто пробивают линию 3+ гола в очных встречах.</li>
-                        <li>Примерный диапазон коэффициентов на ТБ(2.5) в таких матчах: ~1.70–2.20
-                            в зависимости от ожиданий рынка и новостей по составам.</li>
-                        <li>Если предпочтительнее аккуратный подход, можно рассмотреть индивидуальный тотал
-                            ${homeTeam} больше 1.0 или 1.5 — ставка на то, что хозяева забьют как минимум один-два мяча.</li>
-                    </ul>
-
-                    <div class="result-block-title">5. Что можно рассматривать по линии</div>
-                    <ul class="result-list">
-                        <li>Основная идея: <strong>П1 или 1Х + ТБ(1.5)</strong> в комбинированных рынках, если коэффициент остаётся приемлемым.</li>
-                        <li>Для игроков с умеренным риском: фора 0 на ${homeTeam} или индивидуальный тотал хозяев больше 1.0
-                            с возможным возвратом при минимальном исходе.</li>
-                        <li>При агрессивном подходе: ТБ(2.5) или обе забьют (ОЗ), если статистика команд подтверждает высокий уровень результативности.</li>
-                    </ul>
-
-                    <div class="result-block-title">6. Риски и управление банком</div>
-                    <ul class="result-list">
-                        <li>На исход могут повлиять поздние новости по составам, травмы ключевых игроков и погодные условия.</li>
-                        <li>Рынок может сильно двигаться в день матча, поэтому важно следить за изменениями коэффициентов и не входить по заведомо
-                            “просаженным” значениям.</li>
-                        <li><strong>Рекомендуется не превышать 3–5% от игрового банка</strong> на одну идею и рассматривать данную аналитику
-                            как подсказку, а не гарантию выигрыша.</li>
-                    </ul>
-
-                    <div class="result-block-title">Важно</div>
-                    <p class="result-meta">
-                        Прогноз сформирован AI на основе анализа открытых источников с прогнозами и статистикой,
-                        а также типовой логики движения линии на подобные матчи. Это не является финансовой рекомендацией.
-                        Окончательное решение по ставкам всегда остаётся за вами.
-                    </p>
+                    AI формирует запрос по названию команд и дате, анализирует открытые источники с прогнозами и статистикой,
+                    включая профильные ресурсы с разбором матчей. Скоро появится структурированный прогноз.
                 </div>
             `;
-        }, 2000);
+
+            // Имитация ответа от AI
+            setTimeout(function () {
+                resultCard.innerHTML = `
+                    <div class="result-status">Расширенный прогноз AI</div>
+
+                    <div class="result-main">
+                        ${homeTeam} — ${awayTeam}, матч от ${matchDate}
+                    </div>
+
+                    <div class="result-meta">
+                        <div class="result-block-title">1. Контекст матча</div>
+                        <ul class="result-list">
+                            <li>Матч ${homeTeam} — ${awayTeam} относится к категории принципиальных: команды регулярно борются за высокие места и привлекают
+                                большой объём ставок со стороны игроков.</li>
+                            <li>При анализе учитываются форма команд, статистика очных встреч, серия домашних и выездных матчей,
+                                а также ориентировочные составы и возможная ротация.</li>
+                        </ul>
+
+                        <div class="result-block-title">2. Основной исход (П1 / Х / П2)</div>
+                        <ul class="result-list">
+                            <li><strong>Базовый вариант: П1 (победа ${homeTeam})</strong>, если хозяева стабильно набирают очки дома и создают больше моментов по xG.</li>
+                            <li>Примерный диапазон коэффициента по линии на П1 в подобных матчах: ~1.70–2.20
+                                в зависимости от конкретного состояния команд и движения рынка.</li>
+                            <li>Аргументация: ${homeTeam} лучше контролирует мяч, чаще бьёт по воротам и выглядит более сбалансированной по линиям,
+                                тогда как у ${awayTeam} есть провалы в обороне, особенно на выезде против сильных соперников.</li>
+                        </ul>
+
+                        <div class="result-block-title">3. Альтернативные исходы</div>
+                        <ul class="result-list">
+                            <li><strong>Более осторожный вариант: 1Х</strong> — хозяева не проиграют. Подходит для тех, кто снижает риск просадки банка.</li>
+                            <li><strong>Фора 0 на ${homeTeam}</strong> — ставка с возвратом при ничьей, если есть уважение к атакующему потенциалу ${awayTeam},
+                                но перевес по игре и мотивации всё равно на стороне хозяев.</li>
+                        </ul>
+
+                        <div class="result-block-title">4. Тоталы</div>
+                        <ul class="result-list">
+                            <li><strong>Тотал больше 2.5</strong> выглядит логичным, если обе команды играют в атакующей манере и регулярно пробивают
+                                линию 3+ голов в очных встречах и последних турах.</li>
+                            <li>Примерный диапазон коэффициентов на ТБ(2.5): ~1.70–2.20 в зависимости от ожиданий рынка и новостей по составам.</li>
+                            <li>Для более аккуратной стратегии можно рассмотреть индивидуальный тотал ${homeTeam} больше 1.0 или 1.5 —
+                                ставка на то, что хозяева забьют минимум один–два мяча.</li>
+                        </ul>
+
+                        <div class="result-block-title">5. Что можно рассматривать по линии</div>
+                        <ul class="result-list">
+                            <li>Основная идея: <strong>П1 или 1Х + тотал больше (комбинированные рынки)</strong>, если коэффициент остаётся приемлемым.</li>
+                            <li>Для умеренного риска подойдут фора 0 на ${homeTeam} или индивидуальный тотал хозяев больше 1.0
+                                с возможным возвратом при минимальном исходе.</li>
+                            <li>При агрессивном подходе можно смотреть в сторону ТБ(2.5) или “обе забьют”, если статистика подтверждает результативность обеих сторон.</li>
+                        </ul>
+
+                        <div class="result-block-title">6. Риски и управление банком</div>
+                        <ul class="result-list">
+                            <li>На исход сильное влияние оказывают поздние новости: травмы лидеров,
+                                изменения стартовых составов, погодные условия и мотивация в турнирной таблице.</li>
+                            <li>Рынок коэффициентов может заметно двигаться в день матча, особенно на топовые игры,
+                                поэтому важно не заходить по явно просевшему коэффициенту.</li>
+                            <li><strong>Рекомендуется не превышать 3–5% от игрового банка</strong> на одну идею и воспринимать прогноз как аналитическую подсказку,
+                                а не гарантию результата.</li>
+                        </ul>
+
+                        <div class="result-block-title">Важно</div>
+                        <p class="result-meta">
+                            Прогноз сформирован AI на основе анализа открытых источников с прогнозами и статистикой,
+                            а также логики движения линии на подобные матчи. Это не является финансовой рекомендацией.
+                            Окончательное решение по ставкам всегда остаётся за вами.
+                        </p>
+                    </div>
+                `;
+            }, 2000);
+        }, 1500);
     });
 });
 </script>
