@@ -69,7 +69,23 @@
       border-radius:14px;background:#fff;border:1px solid #e5e7eb;
       padding:10px 12px 12px;margin-bottom:var(--s4);
     }
-    .block-id{padding:8px 10px 10px}
+
+    /* КОМПАКТНЫЙ БЛОК ШАГА 2 */
+    .block-id{padding:4px 10px 6px;}
+    .block-id .steps{
+      font-size:13px;
+      line-height:1.25;
+      margin:0 0 4px;
+    }
+    .block-id .verify-row{
+      margin-top:0;
+      gap:6px;
+    }
+    .block-id .verify-status{
+      margin-top:4px;
+      min-height:0;
+    }
+
     .steps{font-size:13px;color:#4b5563;line-height:1.5}
     .steps b{color:#111827}
     .reg-row{margin-top:var(--s16);display:flex;flex-wrap:wrap;gap:var(--s12)}
@@ -324,7 +340,7 @@
 
       <div class="section-title">Шаг 2 — проверка ID</div>
       <div class="block block-id">
-        <div class="steps" style="margin-bottom:6px;">Введите ID аккаунта Melbet (до 9 цифр).</div>
+        <div class="steps">Введите ID аккаунта Melbet (до 9 цифр).</div>
         <div class="verify-row">
           <div class="verify-input-wrap">
             <input id="accountId" class="verify-input" type="text" inputmode="numeric" maxlength="9"
