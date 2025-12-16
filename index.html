@@ -2,185 +2,262 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Трансляции 10tka</title>
+  <title>Доступ к трансляциям</title>
   <style>
-    * {
-      box-sizing: border-box;
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
     }
 
     body {
-      margin: 0;
       min-height: 100vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #111827;
+      background: #f5f5f7;
+    }
+
+    .page {
+      flex: 1;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .left {
+      flex: 1.2;
+      padding: 40px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 24px;
+      background: #ffffff;
+    }
+
+    .right {
+      flex: 1;
+      background: linear-gradient(135deg, #2563eb 0%, #4f46e5 40%, #ec4899 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #f5f5f7;
-      background: radial-gradient(circle at top left, #1b1b3a 0, #050510 35%, #02040a 100%);
-      background-attachment: fixed;
+      padding: 24px;
+      color: #f9fafb;
     }
 
-    .noise {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .18;
-      background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-      mix-blend-mode: soft-light;
-      z-index: 0;
+    .right-inner {
+      max-width: 360px;
     }
 
-    .wrap {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 900px;
-      padding: 32px 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-    }
-
-    .card {
-      width: 100%;
-      max-width: 720px;
-      padding: 28px 24px 22px;
-      border-radius: 24px;
-      background: radial-gradient(circle at top left, rgba(255,255,255,.12), rgba(255,255,255,.02))
-                  border-box;
-      border: 1px solid rgba(255,255,255,0.16);
-      box-shadow:
-        0 24px 60px rgba(0, 0, 0, 0.9),
-        0 0 0 1px rgba(255,255,255,0.03);
-      backdrop-filter: blur(24px) saturate(150%);
+    .logo {
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: #4f46e5;
     }
 
     h1 {
-      margin: 0 0 4px;
-      font-size: 28px;
-      letter-spacing: .03em;
+      margin: 4px 0 8px;
+      font-size: 30px;
+      line-height: 1.2;
     }
 
     .sub {
       margin: 0;
       font-size: 14px;
-      color: rgba(245,245,247,.72);
-    }
-
-    .warning {
-      margin-top: 10px;
-      font-size: 13px;
-      color: #ffdf7b;
+      color: #4b5563;
     }
 
     .slow {
-      margin-top: 6px;
       font-size: 13px;
-      color: rgba(245,245,247,.7);
+      color: #6b7280;
+      margin-top: 10px;
     }
 
     .slow span {
-      color: #7cecff;
+      color: #16a34a;
+      font-weight: 600;
     }
 
-    .reg-block {
-      margin-top: 20px;
+    .section-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: #9ca3af;
+      margin-top: 18px;
+    }
+
+    .card {
+      margin-top: 8px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+
+    .steps {
+      font-size: 13px;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+
+    .steps b {
+      color: #111827;
+    }
+
+    .reg-row {
+      margin-top: 14px;
       display: flex;
       flex-wrap: wrap;
+      gap: 10px;
       align-items: center;
-      gap: 12px;
-      justify-content: space-between;
-    }
-
-    .reg-text {
-      font-size: 13px;
-      color: rgba(245,245,247,.8);
-      max-width: 330px;
     }
 
     .btn-primary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 12px 26px;
+      padding: 11px 24px;
       border-radius: 999px;
       border: 0;
       font-size: 14px;
       font-weight: 600;
-      letter-spacing: .06em;
-      text-transform: uppercase;
+      letter-spacing: .02em;
       cursor: pointer;
       text-decoration: none;
-      color: #050510;
-      background: linear-gradient(135deg, #ffd54a 0%, #ff9b2f 50%, #ff5f6d 100%);
-      box-shadow:
-        0 12px 30px rgba(255, 107, 76, 0.55),
-        0 0 0 1px rgba(255, 255, 255, 0.18);
-      transition: transform .13s ease-out, box-shadow .13s ease-out, filter .13s ease-out;
+      color: #ffffff;
+      background: linear-gradient(135deg, #2563eb 0%, #4f46e5 60%, #7c3aed 100%);
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
+      transition: transform .12s ease-out, box-shadow .12s ease-out, filter .12s ease-out;
       white-space: nowrap;
     }
 
     .btn-primary:hover {
       transform: translateY(-1px);
-      filter: brightness(1.05);
-      box-shadow:
-        0 18px 40px rgba(255, 107, 76, 0.7),
-        0 0 0 1px rgba(255, 255, 255, 0.22);
+      filter: brightness(1.03);
+      box-shadow: 0 16px 40px rgba(37, 99, 235, 0.5);
     }
 
     .btn-primary:active {
       transform: translateY(0);
-      box-shadow:
-        0 6px 16px rgba(0, 0, 0, 0.8),
-        0 0 0 1px rgba(255, 255, 255, 0.24);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.35);
     }
 
-    .badge {
+    .verify-card {
+      margin-top: 12px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .verify-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .verify-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .verify-input-wrap {
+      flex: 1 1 160px;
+      min-width: 0;
+    }
+
+    .verify-input {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #111827;
+      font-size: 13px;
+      outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+
+    .verify-input:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.35);
+    }
+
+    .verify-btn {
+      padding: 8px 18px;
+      border-radius: 999px;
+      border: 0;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: #111827;
+      color: #f9fafb;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(14, 199, 255, 0.12);
-      border: 1px solid rgba(14, 199, 255, 0.35);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: .15em;
-      color: #b7f3ff;
-      margin-bottom: 10px;
+      transition: background .12s ease-out, transform .12s ease-out, box-shadow .12s ease-out;
     }
 
-    .badge-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #0ec7ff;
-      box-shadow: 0 0 0 6px rgba(14,199,255,0.35);
+    .verify-btn:hover {
+      background: #020617;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.35);
     }
+
+    .verify-status {
+      font-size: 12px;
+      min-height: 16px;
+      color: #6b7280;
+    }
+
+    .verify-status.ok { color: #16a34a; }
+    .verify-status.err { color: #dc2626; }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(243,244,246,0.6);
+      border-top-color: #4f46e5;
+      animation: spin .7s linear infinite;
+      display: none;
+    }
+
+    .spinner.show { display: inline-block; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     .streams-card {
       margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(255,255,255,0.12);
+      padding: 14px 0 0;
+      border-top: 1px solid #e5e7eb;
     }
 
     .streams-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .streams-title span {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
+      margin-bottom: 8px;
+      color: #111827;
     }
 
     .streams-hint {
-      font-size: 11px;
-      color: rgba(245,245,247,0.6);
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 10px;
     }
 
     .streams {
@@ -188,159 +265,208 @@
       padding: 0;
       margin: 0;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 10px;
     }
 
     .streams a {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      padding: 9px 12px;
-      border-radius: 14px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 2px;
+      padding: 10px 12px;
+      border-radius: 12px;
       text-decoration: none;
       font-size: 13px;
-      color: rgba(245,245,247,0.96);
-      background: radial-gradient(circle at top left, rgba(255,255,255,.13), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,0.18);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.75);
-      transition: transform .12s ease-out, box-shadow .12s ease-out, background .12s ease-out;
+      color: #111827;
+      background: #ffffff;
+      border: 1px solid #e5e7eb;
+      transition: box-shadow .12s ease-out, transform .12s ease-out, border-color .12s ease-out, background .12s ease-out, opacity .12s ease-out;
     }
 
-    .streams a span {
-      opacity: .8;
-    }
-
-    .streams a small {
-      font-size: 11px;
-      opacity: .55;
-    }
-
-    .streams a::after {
-      content: "▶";
-      font-size: 11px;
-      opacity: .8;
-    }
+    .streams a span { font-weight: 500; }
+    .streams a small { font-size: 11px; color: #6b7280; }
 
     .streams a:hover {
+      border-color: #c7d2fe;
+      background: #f3f4ff;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.12);
       transform: translateY(-1px);
-      background: radial-gradient(circle at top left, rgba(255,255,255,.2), rgba(255,255,255,.05));
-      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.9);
     }
+
+    .streams.locked a { opacity: .45; cursor: default; box-shadow: none; transform: none; }
 
     .note {
       margin-top: 10px;
-      font-size: 11px;
-      color: rgba(245,245,247,0.6);
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    @media (max-width: 900px) {
+      .page { flex-direction: column; }
+      .left {
+        padding: 24px 20px 28px;
+        order: 2;
+      }
+      .right {
+        order: 1;
+        min-height: 200px;
+      }
     }
 
     @media (max-width: 600px) {
-      .card {
-        padding: 22px 18px 18px;
-        border-radius: 20px;
-      }
-
-      h1 {
-        font-size: 22px;
-      }
-
-      .reg-block {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .btn-primary {
-        width: 100%;
-        justify-content: center;
-      }
+      h1 { font-size: 24px; }
+      .reg-row { flex-direction: column; align-items: stretch; }
+      .btn-primary { width: 100%; justify-content: center; text-align: center; }
+      .verify-row { flex-direction: column; align-items: stretch; }
+      .verify-btn { width: 100%; }
     }
   </style>
 </head>
 <body>
-<div class="noise"></div>
-
-<div class="wrap">
-  <div class="card">
-    <div class="badge">
-      <span class="badge-dot"></span>
-      LIVE TRANSFERS
-    </div>
-
-    <h1>Трансляции 10tka</h1>
-    <p class="sub">Смотри матчи в прямом эфире. Сначала зарегистрируйся в Melbet, чтобы открыть доступ ко всем трансляциям.</p>
-
-    <p class="warning">До регистрации при клике на трансляцию появится сообщение: «Сначала зарегистрируйтесь в Melbet».</p>
+<div class="page">
+  <div class="left">
+    <div class="logo">LIVE ACCESS</div>
+    <h1>Доступ к прямым трансляциям</h1>
+    <p class="sub">Зарегистрируйтесь в Melbet, укажите ID аккаунта и получите доступ ко всем трансляциям на этой странице.</p>
 
     <p class="slow">
       Из‑за большого количества зрителей трансляция может загружаться дольше обычного,
       <span>но обязательно загрузится</span> — просто подождите несколько секунд.
     </p>
 
-    <div class="reg-block">
-      <p class="reg-text">
-        1. Перейдите по кнопке ниже и зарегистрируйтесь в Melbet.<br>
-        2. Вернитесь на эту страницу и откройте нужную трансляцию.
-      </p>
-
-      <a id="regBtn"
-         class="btn-primary"
-         href="https://clck.ru/3Mo7a2"
-         target="_blank"
-         rel="noopener noreferrer">
-        Зарегистрироваться в Melbet
-      </a>
+    <div class="section-title">Шаг 1 — регистрация</div>
+    <div class="card">
+      <div class="steps">
+        <b>1.</b> Нажмите кнопку «Зарегистрироваться в Melbet».<br>
+        <b>2.</b> Заполните регистрационную форму и завершите регистрацию.<br>
+        <b>3.</b> Вернитесь на эту страницу.
+      </div>
+      <div class="reg-row">
+        <a id="regBtn"
+           class="btn-primary"
+           href="https://clck.ru/3Mo7a2"
+           target="_blank"
+           rel="noopener noreferrer">
+          Зарегистрироваться в Melbet
+        </a>
+      </div>
     </div>
 
-    <div class="streams-card">
-      <div class="streams-title">
-        <span>Доступные трансляции</span>
-        <span class="streams-hint">После регистрации нажимайте на любую</span>
+    <div class="section-title">Шаг 2 — проверка ID</div>
+    <div class="verify-card">
+      <div class="verify-title">Введите ID аккаунта Melbet</div>
+      <div class="verify-row">
+        <div class="verify-input-wrap">
+          <input id="accountId" class="verify-input" type="text" placeholder="Например: 12345678">
+        </div>
+        <button id="verifyBtn" class="verify-btn" type="button">
+          Проверить
+          <span id="verifySpinner" class="spinner"></span>
+        </button>
       </div>
+      <div id="verifyStatus" class="verify-status"></div>
+    </div>
 
-      <ul class="streams" id="streams">
-        <li><a href="https://playball10.com/p2p-reserv/10tka.php"   target="_blank"><span>Трансляция 1</span><small>HD • live</small></a></li>
-        <li><a href="https://playball10.com/p2p-reserv/10tka2.php"  target="_blank"><span>Трансляция 2</span><small>HD • live</small></a></li>
-        <li><a href="https://playball10.com/p2p-reserv/10tka3.php"  target="_blank"><span>Трансляция 3</span><small>HD • live</small></a></li>
-        <li><a href="https://playball10.com/p2p-reserv/10tka4.php"  target="_blank"><span>Трансляция 4</span><small>HD • live</small></a></li>
-        <li><a href="https://playball10.com/p2p-reserv/10tka5.php"  target="_blank"><span>Трансляция 5</span><small>HD • live</small></a></li>
-        <li><a href="https://playball10.com/p2p-reserv/10tka6.php"  target="_blank"><span>Трансляция 6</span><small>HD • live</small></a></li>
-        <li><a href="https://playball10.com/p2p-reserv/10tka7.php"  target="_blank"><span>Трансляция 7</span><small>HD • live</small></a></li>
-        <li><a href="https://playball10.com/p2p-reserv/10tka8.php"  target="_blank"><span>Трансляция 8</span><small>HD • live</small></a></li>
-        <li><a href="https://playball10.com/p2p-reserv/10tka9.php"  target="_blank"><span>Трансляция 9</span><small>HD • live</small></a></li>
-        <li><a href="https://playball10.com/p2p-reserv/10tka10.php" target="_blank"><span>Трансляция 10</span><small>HD • live</small></a></li>
+    <div class="section-title">Шаг 3 — выбор трансляции</div>
+    <div class="streams-card">
+      <div class="streams-title">Список трансляций</div>
+      <div class="streams-hint">Станут активными после регистрации и успешной проверки ID.</div>
+
+      <ul class="streams locked" id="streams">
+        <li><a href="https://playball10.com/p2p-reserv/10tka.php"   target="_blank"><span>Матч 1</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka2.php"  target="_blank"><span>Матч 2</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka3.php"  target="_blank"><span>Матч 3</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka4.php"  target="_blank"><span>Матч 4</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka5.php"  target="_blank"><span>Матч 5</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka6.php"  target="_blank"><span>Матч 6</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka7.php"  target="_blank"><span>Матч 7</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka8.php"  target="_blank"><span>Матч 8</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka9.php"  target="_blank"><span>Матч 9</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka10.php" target="_blank"><span>Матч 10</span><small>HD • live</small></a></li>
       </ul>
 
       <p class="note">
-        Если при открытии трансляция грузится дольше — не обновляйте страницу, поток догрузится автоматически.
+        Если при открытии видео долго крутится, просто подождите — поток догрузится без перезагрузки страницы.
+      </p>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="right-inner">
+      <h2 style="font-size:22px;margin:0 0 8px;">Прямой эфир без лишних шагов</h2>
+      <p style="font-size:14px;margin:0 0 16px;color:#e5e7eb;">
+        Один аккаунт — доступ ко всем матчам. Пройдите быструю регистрацию в Melbet, введите свой ID и выбирайте любой эфир из списка.
+      </p>
+      <p style="font-size:13px;margin:0;color:#e5e7eb;">
+        Нагрузка на сервера может быть высокой во время топовых матчей, поэтому загрузка иногда занимает чуть больше времени — это нормально.
       </p>
     </div>
   </div>
 </div>
 
 <script>
-  // Флаг регистрации (по умолчанию — нет)
   let isRegistered = false;
+  let isVerified   = false;
 
-  const regBtn  = document.getElementById('regBtn');
-  const streams = document.getElementById('streams');
+  const regBtn        = document.getElementById('regBtn');
+  const streams       = document.getElementById('streams');
+  const accountId     = document.getElementById('accountId');
+  const verifyBtn     = document.getElementById('verifyBtn');
+  const verifySpinner = document.getElementById('verifySpinner');
+  const verifyStatus  = document.getElementById('verifyStatus');
 
-  // При клике по кнопке регистрации ставим флаг
   regBtn.addEventListener('click', function () {
     isRegistered = true;
-    // При желании можно сохранить:
-    // localStorage.setItem('melbet_registered', '1');
   });
 
-  // Перехватываем клики по ссылкам трансляций
+  verifyBtn.addEventListener('click', function () {
+    const id = accountId.value.trim();
+
+    if (!isRegistered) {
+      verifyStatus.textContent = 'Сначала завершите регистрацию в Melbet по кнопке выше.';
+      verifyStatus.className = 'verify-status err';
+      return;
+    }
+
+    if (!id) {
+      verifyStatus.textContent = 'Введите ID аккаунта, чтобы пройти проверку.';
+      verifyStatus.className = 'verify-status err';
+      return;
+    }
+
+    verifyBtn.disabled = true;
+    verifySpinner.classList.add('show');
+    verifyStatus.textContent = 'Проверяем ID аккаунта...';
+    verifyStatus.className = 'verify-status';
+
+    setTimeout(function () {
+      isVerified = true;
+
+      verifySpinner.classList.remove('show');
+      verifyBtn.disabled = false;
+      verifyStatus.textContent = 'ID успешно проверен! Доступ к трансляциям открыт.';
+      verifyStatus.className = 'verify-status ok';
+
+      streams.classList.remove('locked');
+    }, 2300);
+  });
+
   streams.addEventListener('click', function (e) {
     const link = e.target.closest('a');
     if (!link) return;
 
     if (!isRegistered) {
       e.preventDefault();
-      alert('Сначала зарегистрируйтесь в Melbet по кнопке сверху, затем вернитесь и снова откройте трансляцию.');
+      alert('Сначала зарегистрируйтесь в Melbet, затем введите ID аккаунта и пройдите проверку.');
+      return;
+    }
+
+    if (!isVerified) {
+      e.preventDefault();
+      alert('Введите ID аккаунта Melbet, нажмите «Проверить» и дождитесь подтверждения, после этого откройте трансляцию.');
+      return;
     }
   });
 </script>
