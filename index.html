@@ -20,7 +20,6 @@
       background: linear-gradient(135deg, #020617 0%, #020617 40%, #111827 100%);
     }
 
-    /* Базовые размеры и шаг сетки */
     :root {
       --space-4: 4px;
       --space-8: 8px;
@@ -104,8 +103,6 @@
       align-items: flex-start;
     }
 
-    /* Левая колонка */
-
     .left {
       background: #f9fafb;
       border-radius: 18px;
@@ -162,7 +159,7 @@
       border-radius: 14px;
       background: #ffffff;
       border: 1px solid #e5e7eb;
-      padding: var(--space-12);
+      padding: 10px 12px 12px; /* FIX SPACING: меньше воздуха сверху */
       margin-bottom: var(--space-4);
     }
 
@@ -182,8 +179,6 @@
       flex-wrap: wrap;
       gap: var(--space-12);
     }
-
-    /* Кнопки и поля */
 
     .btn-primary {
       display: inline-flex;
@@ -302,8 +297,6 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* Трансляции */
-
     .streams-card {
       margin-top: var(--space-12);
       padding-top: var(--space-12);
@@ -406,8 +399,6 @@
       color: #6b7280;
     }
 
-    /* Правая колонка */
-
     .right {
       border-radius: 18px;
       padding: var(--space-16);
@@ -434,8 +425,6 @@
       font-size: 13px;
       color: #a5b4fc;
     }
-
-    /* Отзывы */
 
     .testimonials {
       margin-top: var(--space-16);
@@ -613,7 +602,7 @@
       align-items: center;
       justify-content: center;
       gap: var(--space-4);
-      transition: background .12s ease-out, transform .12s ease-out, box-shadow .12s ease-out;
+      transition: background .12s.ease-out, transform .12s ease-out, box-shadow .12s ease-out;
       min-height: 44px;
     }
 
@@ -673,8 +662,6 @@
       color: #cbd5f5;
     }
 
-    /* Адаптивность */
-
     @media (max-width: 992px) {
       .page { max-width: 1000px; }
       .content {
@@ -690,8 +677,6 @@
       .right { order: -1; }
       .page { margin-top: var(--space-20); }
     }
-
-    /* Телефоны */
 
     @media (max-width: 600px) {
       :root {
@@ -963,7 +948,6 @@
         </p>
       </div>
 
-      <!-- Динамические отзывы -->
       <div class="testimonials">
         <div class="testimonials-title">
           <span>Что говорят зрители</span>
@@ -1063,7 +1047,7 @@
   function randomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min; /* [web:176] */
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   function randomRating(min, max) {
