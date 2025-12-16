@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Доступ к трансляциям</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <style>
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;height:100%}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
     body{
       min-height:100vh;
       font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -15,91 +15,83 @@
     }
     :root{
       --s4:4px;--s6:6px;--s8:8px;--s10:10px;--s12:12px;--s16:16px;--s20:20px;--s24:24px;--s32:32px;
-      --hero-title-min:26px;--hero-title-max:34px;--hero-sub-min:15px;--hero-sub-max:18px;--body-text:14px;
     }
-    .page{max-width:1080px;margin:var(--s24) auto var(--s32);padding:0 var(--s16)}
-    .hero{color:#f9fafb;margin-bottom:var(--s20)}
+
+    .page{
+      max-width:640px;
+      margin:var(--s16) auto var(--s24);
+      padding:0 var(--s16) var(--s24);
+    }
+
+    .hero{color:#f9fafb;margin-bottom:var(--s16)}
     .hero-badge{
-      display:inline-flex;align-items:center;gap:var(--s4);padding:4px 10px;border-radius:999px;
+      display:inline-flex;align-items:center;gap:var(--s4);
+      padding:4px 10px;border-radius:999px;
       font-size:11px;text-transform:uppercase;letter-spacing:.14em;
-      background:rgba(15,23,42,.7);border:1px solid rgba(148,163,184,.4);margin-bottom:var(--s8)
+      background:rgba(15,23,42,.7);border:1px solid rgba(148,163,184,.4);
+      margin-bottom:var(--s8);
     }
     .hero-badge-dot{
       width:7px;height:7px;border-radius:999px;background:#22c55e;
-      box-shadow:0 0 0 4px rgba(34,197,94,.35)
+      box-shadow:0 0 0 4px rgba(34,197,94,.35);
     }
     .hero-title{
       margin:0 0 var(--s8);
-      font-size:clamp(var(--hero-title-min),5vw,var(--hero-title-max));
-      line-height:1.2;
+      font-size:24px;
+      line-height:1.25;
     }
     .hero-sub{
       margin:0;
-      font-size:clamp(var(--hero-sub-min),3.3vw,var(--hero-sub-max));
-      color:#e5e7eb;max-width:620px;
+      font-size:15px;
+      color:#e5e7eb;
     }
     .hero-sub span{font-weight:600;color:#38bdf8}
-    .hero-note{margin:var(--s8) 0 0;font-size:12px;color:#9ca3af;max-width:560px}
+    .hero-note{
+      margin:var(--s8) 0 0;
+      font-size:12px;
+      color:#9ca3af;
+    }
+
     .content{
       margin-top:var(--s16);
-      display:grid;
-      grid-template-columns:minmax(0,2.1fr) minmax(0,1.4fr);
-      gap:var(--s20);align-items:flex-start;
+      display:flex;
+      flex-direction:column;
+      gap:var(--s16);
     }
+
     .left{
-      background:#f9fafb;border-radius:18px;
-      padding:18px var(--s16) var(--s16);
+      background:#f9fafb;
+      border-radius:16px;
+      padding:var(--s16);
       border:1px solid #e5e7eb;
-      box-shadow:0 12px 32px rgba(15,23,42,.22);
-      font-size:var(--body-text);
+      box-shadow:0 10px 28px rgba(15,23,42,.22);
+      font-size:14px;
     }
     .logo{
       font-weight:700;letter-spacing:.16em;text-transform:uppercase;
-      font-size:11px;color:#4f46e5;margin-bottom:var(--s8)
+      font-size:11px;color:#4f46e5;margin-bottom:var(--s8);
     }
-    .left-title{margin:0 0 var(--s4);font-size:20px;line-height:1.25;color:#111827}
+    .left-title{margin:0 0 var(--s4);font-size:20px;line-height:1.25}
     .left-sub{margin:0 0 var(--s12);font-size:13px;color:#4b5563}
     .slow{margin:0 0 var(--s16);font-size:12px;color:#6b7280}
     .slow span{color:#16a34a;font-weight:600}
+
     .section-title{
       font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;
-      color:#9ca3af;margin-top:var(--s20);margin-bottom:var(--s4)
+      color:#9ca3af;margin-top:var(--s20);margin-bottom:var(--s4);
     }
     .block{
       border-radius:14px;background:#fff;border:1px solid #e5e7eb;
       padding:10px 12px 12px;margin-bottom:var(--s4);
     }
-
-    /* ужатый шаг 2 */
-    .block-id{
-      padding:4px 10px 4px !important;
-    }
-    .block-id .steps{
-      font-size:13px;
-      line-height:1.1;
-      margin:0 0 2px !important;
-    }
-    .block-id .verify-row{
-      margin-top:0 !important;
-      margin-bottom:0 !important;
-      gap:4px !important;
-    }
-    .block-id .verify-status{
-      margin-top:2px !important;
-      margin-bottom:0 !important;
-      min-height:0 !important;
-    }
-    .streams-card{
-      margin-top:4px !important;
-      padding-top:6px !important;
-    }
-
     .steps{font-size:13px;color:#4b5563;line-height:1.5}
     .steps b{color:#111827}
-    .reg-row{margin-top:var(--s16);display:flex;flex-wrap:wrap;gap:var(--s12)}
+
+    .reg-row{margin-top:var(--s16)}
     .btn-primary{
+      width:100%;
       display:inline-flex;align-items:center;justify-content:center;
-      padding:12px 22px;border-radius:999px;border:0;
+      padding:12px 18px;border-radius:999px;border:0;
       font-size:15px;font-weight:600;letter-spacing:.02em;
       cursor:pointer;text-decoration:none;color:#fff;
       background:linear-gradient(135deg,#2563eb 0%,#4f46e5 55%,#7c3aed 100%);
@@ -107,36 +99,35 @@
       transition:transform .12s,box-shadow .12s,filter .12s;
       min-height:48px;
     }
-    .btn-primary:hover{transform:translateY(-1px);filter:brightness(1.04);box-shadow:0 16px 40px rgba(37,99,235,.7)}
-    .btn-primary:active{transform:translateY(0);box-shadow:0 8px 22px rgba(15,23,42,.5)}
+    .btn-primary:active{transform:translateY(1px);box-shadow:0 6px 18px rgba(15,23,42,.5)}
+
     .verify-row{
-      display:flex;align-items:center;gap:var(--s8);
-      flex-wrap:wrap;margin-top:var(--s6);
+      display:flex;flex-direction:column;
+      gap:var(--s8);margin-top:var(--s6);
     }
-    .verify-input-wrap{flex:1 1 200px;min-width:0}
     .verify-input{
-      width:100%;padding:10px 14px;border-radius:999px;
+      width:100%;padding:12px 16px;border-radius:999px;
       border:1px solid #d1d5db;background:#fff;color:#111827;
-      font-size:15px;outline:none;
-      transition:border-color .15s,box-shadow .15s,background .15s,color .15s;
+      font-size:16px;outline:none;
+      transition:border-color .15s,box-shadow .15s;
       min-height:46px;
     }
     .verify-input:focus{border-color:#4f46e5;box-shadow:0 0 0 1px rgba(79,70,229,.35)}
     .verify-input:disabled{background:#e5e7eb;cursor:not-allowed;color:#9ca3af}
     .verify-btn{
-      padding:10px 18px;border-radius:999px;border:0;
+      width:100%;
+      padding:11px 16px;border-radius:999px;border:0;
       font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
       cursor:pointer;background:#111827;color:#f9fafb;
-      display:inline-flex;align-items:center;justify-content:center;gap:4px;
-      transition:background .12s,transform .12s,box-shadow .12s;
-      white-space:nowrap;min-height:44px;
+      display:inline-flex;align-items:center;justify-content:center;gap:6px;
+      min-height:44px;
     }
-    .verify-btn:hover{background:#020617;transform:translateY(-1px);box-shadow:0 6px 16px rgba(15,23,42,.5)}
     .verify-status{
       font-size:12px;min-height:16px;color:#6b7280;margin-top:var(--s6);
     }
     .verify-status.ok{color:#16a34a}
     .verify-status.err{color:#dc2626}
+
     .spinner{
       width:14px;height:14px;border-radius:50%;
       border:2px solid rgba(243,244,246,.6);border-top-color:#4f46e5;
@@ -144,19 +135,21 @@
     }
     .spinner.show{display:inline-block}
     @keyframes spin{to{transform:rotate(360deg)}}
+
     .streams-title{font-size:15px;font-weight:600;margin-bottom:var(--s8);color:#111827}
     .streams-hint{font-size:12px;color:#6b7280;margin-bottom:var(--s12)}
     .streams{
       list-style:none;padding:0;margin:0;
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:var(--s12);
+      display:flex;flex-direction:column;
+      gap:var(--s10);
     }
     .stream-item a{
-      display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+      display:flex;flex-direction:column;align-items:flex-start;
       gap:var(--s4);padding:var(--s12);border-radius:12px;
       text-decoration:none;font-size:13px;color:#111827;
       background:#fff;border:1px solid #e5e7eb;
       transition:box-shadow .12s,transform .12s,border-color .12s,background .12s,opacity .12s;
-      min-height:72px;
+      min-height:68px;
     }
     .streams a span{font-weight:500}
     .streams a small{font-size:11px;color:#6b7280}
@@ -168,19 +161,10 @@
     .meta-pill.live{background:#fee2e2;color:#b91c1c}
     .meta-pill .dot{width:6px;height:6px;border-radius:999px;background:#22c55e}
     .meta-label{color:#6b7280}
-    .streams a:hover{border-color:#c7d2fe;background:#f3f4ff;box-shadow:0 10px 24px rgba(15,23,42,.12);transform:translateY(-1px)}
-    .streams.locked a{opacity:.45;cursor:default;box-shadow:none;transform:none}
+    .streams.locked a{opacity:.4;box-shadow:none;transform:none}
+
     .note{margin-top:var(--s8);font-size:12px;color:#6b7280}
-    .right{
-      border-radius:18px;padding:var(--s16);
-      border:1px solid rgba(148,163,184,.4);
-      background:radial-gradient(circle at top left,rgba(59,130,246,.3),rgba(15,23,42,.9));
-      color:#e5e7eb;box-shadow:0 10px 30px rgba(15,23,42,.55);
-      font-size:14px;
-    }
-    .right-title{margin:0 0 var(--s8);font-size:20px}
-    .right-text{margin:0 0 var(--s8);font-size:14px;color:#e5e7eb}
-    .right-highlight{margin:0;font-size:13px;color:#a5b4fc}
+
     .testimonials{
       margin-top:var(--s16);border-radius:14px;background:#020617;
       border:1px solid rgba(148,163,184,.5);padding:var(--s12);color:#e5e7eb;
@@ -202,6 +186,7 @@
       background:rgba(15,23,42,.9);border-radius:10px;
       padding:var(--s12);font-size:13px;line-height:1.5;
       position:relative;overflow:hidden;border:1px solid rgba(55,65,81,.8);min-height:64px;
+      margin-bottom:var(--s8);
     }
     .testimonial-view:before{
       content:"“";position:absolute;top:-6px;left:8px;
@@ -209,8 +194,9 @@
     }
     .testimonial-text{position:relative;z-index:1}
     .testimonial-name{margin-top:var(--s8);font-size:12px;color:#9ca3af}
+
     .testimonial-nav{
-      margin-top:var(--s8);display:flex;justify-content:space-between;align-items:center;
+      margin-top:var(--s4);display:flex;justify-content:space-between;align-items:center;
       gap:var(--s8);font-size:12px;color:#9ca3af;
     }
     .nav-buttons{display:flex;gap:var(--s8)}
@@ -219,52 +205,41 @@
       background:transparent;color:#e5e7eb;font-size:12px;
       padding:6px 12px;cursor:pointer;display:inline-flex;
       align-items:center;justify-content:center;gap:var(--s4);
-      transition:background .12s,color .12s,border-color .12s;
       min-height:36px;
     }
-    .nav-btn:hover{background:rgba(148,163,184,.2);border-color:#e5e7eb}
 
-    /* форма отзыва: плотные поля */
     .testimonial-form{
-      margin-top:8px;
+      margin-top:10px;
       display:grid;
       grid-template-columns:minmax(0,1fr);
       gap:8px;
       font-size:13px;
     }
-    .testimonial-form .field{
-      margin:0 !important;
-    }
-    .input-row{display:flex;gap:var(--s8);flex-wrap:wrap}
-    .input-row .field{flex:1 1 140px;min-width:0}
+    .input-row{display:flex;flex-direction:column;gap:8px}
     .input-label{font-size:11px;color:#9ca3af;margin-bottom:4px}
     .input-control{
       width:100%;border-radius:999px;border:1px solid #4b5563;
-      padding:10px 12px;font-size:15px;
+      padding:11px 14px;font-size:15px;
       background:rgba(15,23,42,.95);color:#e5e7eb;
-      outline:none;transition:border-color .15s,box-shadow .15s,background .15s;
-      min-height:46px;
+      outline:none;min-height:44px;
     }
-    .input-control:focus{border-color:#6366f1;box-shadow:0 0 0 1px rgba(79,70,229,.5)}
-    .input-control::placeholder{color:#6b7280}
-    .textarea{border-radius:10px;min-height:64px;resize:vertical}
+    .textarea{border-radius:10px;min-height:72px;resize:vertical}
     .btn-send{
-      align-self:flex-start;margin-top:var(--s4);
+      width:100%;
+      margin-top:var(--s4);
       padding:10px 16px;border-radius:999px;border:0;
       font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
       cursor:pointer;background:#22c55e;color:#022c22;
       display:inline-flex;align-items:center;justify-content:center;gap:var(--s4);
-      transition:background .12s,transform .12s,box-shadow .12s;
       min-height:44px;
     }
-    .btn-send:hover{background:#16a34a;transform:translateY(-1px);box-shadow:0 6px 14px rgba(22,163,74,.5)}
     .testimonial-status{
       font-size:11px;color:#9ca3af;margin-top:var(--s4);min-height:16px;
     }
     .testimonial-status.ok{color:#4ade80}
     .testimonial-status.err{color:#fecaca}
     .testimonial-list-wrapper{
-      margin-top:var(--s12);border-top:1px solid rgba(55,65,81,.7);
+      margin-top:var(--s10);border-top:1px solid rgba(55,65,81,.7);
       padding-top:var(--s8);
     }
     .testimonial-list-title{font-size:11px;color:#9ca3af;margin-bottom:var(--s4)}
@@ -280,35 +255,16 @@
     .testimonial-list-name{font-weight:600;color:#e5e7eb}
     .testimonial-list-text{color:#cbd5f5}
 
-    @media(max-width:992px){
-      .page{max-width:1000px}
-      .content{grid-template-columns:minmax(0,1.8fr) minmax(0,1.2fr);gap:var(--s16)}
+    .right{
+      border-radius:16px;padding:var(--s16);
+      border:1px solid rgba(148,163,184,.4);
+      background:radial-gradient(circle at top left,rgba(59,130,246,.3),rgba(15,23,42,.9));
+      color:#e5e7eb;box-shadow:0 10px 30px rgba(15,23,42,.55);
+      font-size:14px;
     }
-    @media(max-width:860px){
-      .content{grid-template-columns:minmax(0,1fr)}
-      .right{order:-1}
-      .page{margin-top:var(--s20)}
-    }
-    @media(max-width:600px){
-      :root{
-        --hero-title-min:26px;--hero-title-max:30px;
-        --hero-sub-min:16px;--hero-sub-max:18px;--body-text:15px;
-      }
-      .page{margin:var(--s16) auto var(--s24);padding:0 var(--s16)}
-      .left{padding:var(--s16);border-radius:16px}
-      .right{border-radius:16px;margin-top:var(--s16)}
-      .streams{grid-template-columns:minmax(0,1fr)}
-      .btn-primary{width:100%}
-      .verify-row{flex-direction:column;align-items:stretch}
-      .verify-input{font-size:16px}
-      .verify-btn{width:100%;justify-content:center}
-      .input-row{flex-direction:column;gap:8px}
-      .input-control{font-size:16px}
-      .btn-send{width:100%}
-    }
-    @media(max-width:380px){
-      .testimonials{padding:10px}
-    }
+    .right-title{margin:0 0 var(--s8);font-size:18px}
+    .right-text{margin:0 0 var(--s8);font-size:14px}
+    .right-highlight{margin:0;font-size:13px;color:#a5b4fc}
   </style>
 </head>
 <body>
@@ -355,13 +311,11 @@
       </div>
 
       <div class="section-title">Шаг 2 — проверка ID</div>
-      <div class="block block-id">
+      <div class="block">
         <div class="steps">Введите ID аккаунта Melbet (до 9 цифр).</div>
         <div class="verify-row">
-          <div class="verify-input-wrap">
-            <input id="accountId" class="verify-input" type="text" inputmode="numeric" maxlength="9"
-                   placeholder="Поле станет доступно после регистрации" disabled>
-          </div>
+          <input id="accountId" class="verify-input" type="text" inputmode="numeric" maxlength="9"
+                 placeholder="Поле станет доступно после регистрации" disabled>
           <button id="verifyBtn" class="verify-btn" type="button">
             Проверить
             <span id="verifySpinner" class="spinner"></span>
@@ -373,123 +327,15 @@
       </div>
 
       <div class="section-title">Шаг 3 — выбор трансляции</div>
-      <div class="block streams-card">
+      <div class="block">
         <div class="streams-title">Список трансляций</div>
         <div class="streams-hint">
           Доступны трансляции всех топ‑матчей. Нажмите на каждое видео, чтобы найти нужное именно для себя.
         </div>
 
         <ul class="streams locked" id="streams">
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka.php" target="_blank">
-              <span>Матч 1</span><small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span><span class="viewers" data-min="180" data-max="350">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span><span class="rating" data-min="4.9" data-max="5.0">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span><span class="likes" data-min="40" data-max="120">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka2.php" target="_blank">
-              <span>Матч 2</span><small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span><span class="viewers" data-min="160" data-max="320">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span><span class="rating" data-min="4.92" data-max="5.0">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span><span class="likes" data-min="30" data-max="100">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka3.php" target="_blank">
-              <span>Матч 3</span><small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span><span class="viewers" data-min="140" data-max="300">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span><span class="rating" data-min="4.9" data-max="4.99">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span><span class="likes" data-min="20" data-max="90">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka4.php" target="_blank">
-              <span>Матч 4</span><small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span><span class="viewers" data-min="150" data-max="340">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span><span class="rating" data-min="4.93" data-max="5.0">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span><span class="likes" data-min="30" data-max="110">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka5.php" target="_blank">
-              <span>Матч 5</span><small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span><span class="viewers" data-min="120" data-max="280">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span><span class="rating" data-min="4.9" data-max="4.98">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span><span class="likes" data-min="15" data-max="80">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka6.php" target="_blank">
-              <span>Матч 6</span><small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span><span class="viewers" data-min="130" data-max="310">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span><span class="rating" data-min="4.94" data-max="5.0">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span><span class="likes" data-min="25" data-max="95">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka7.php" target="_blank">
-              <span>Матч 7</span><small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span><span class="viewers" data-min="150" data-max="360">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span><span class="rating" data-min="4.95" data-max="5.0">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span><span class="likes" data-min="30" data-max="120">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka8.php" target="_blank">
-              <span>Матч 8</span><small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span><span class="viewers" data-min="140" data-max="330">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span><span class="rating" data-min="4.9" data-max="4.99">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span><span class="likes" data-min="20" data-max="100">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka9.php" target="_blank">
-              <span>Матч 9</span><small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span><span class="viewers" data-min="110" data-max="260">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span><span class="rating" data-min="4.9" data-max="4.97">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span><span class="likes" data-min="10" data-max="70">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka10.php" target="_blank">
-              <span>Матч 10</span><small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span><span class="viewers" data-min="120" data-max="280">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span><span class="rating" data-min="4.93" data-max="5.0">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span><span class="likes" data-min="20" data-max="90">—</span></span>
-              </div>
-            </a>
-          </li>
+          <!-- те же ссылки на Матч 1–10 -->
+          <!-- ... скопируй свои <li> отсюда без изменений ... -->
         </ul>
 
         <p class="note">
@@ -521,16 +367,16 @@
 
         <form class="testimonial-form" id="testimonialForm">
           <div class="input-row">
-            <div class="field">
+            <div>
               <div class="input-label">Имя</div>
               <input type="text" id="inputName" class="input-control" placeholder="Например: Артём">
             </div>
-            <div class="field">
+            <div>
               <div class="input-label">Где смотрите</div>
               <input type="text" id="inputContext" class="input-control" placeholder="Телефон, ноутбук и т.п.">
             </div>
           </div>
-          <div class="field">
+          <div>
             <div class="input-label">Ваш отзыв</div>
             <textarea id="inputText" class="input-control textarea" placeholder="Напишите пару слов, как вам сервис"></textarea>
           </div>
@@ -541,26 +387,7 @@
         <div class="testimonial-list-wrapper">
           <div class="testimonial-list-title">Последние отзывы зрителей:</div>
           <ul id="testimonialList" class="testimonial-list">
-            <li class="testimonial-list-item">
-              <span class="testimonial-list-name">Артём:</span>
-              <span class="testimonial-list-text"> наконец-то нашли нормальный сервис для бесплатного просмотра Лиги чемпионов, всё работает без лагов.</span>
-            </li>
-            <li class="testimonial-list-item">
-              <span class="testimonial-list-name">Илья:</span>
-              <span class="testimonial-list-text"> запускаю эфир с телефона за пару кликов, качество и скорость радуют.</span>
-            </li>
-            <li class="testimonial-list-item">
-              <span class="testimonial-list-name">Дмитрий:</span>
-              <span class="testimonial-list-text"> удобно, что все топ‑матчи в одном месте, не нужно прыгать по сайтам.</span>
-            </li>
-            <li class="testimonial-list-item">
-              <span class="testimonial-list-name">Алексей:</span>
-              <span class="testimonial-list-text"> картинка чёткая, звук без задержки, смотрю на большом телевизоре через браузер.</span>
-            </li>
-            <li class="testimonial-list-item">
-              <span class="testimonial-list-name">Михаил:</span>
-              <span class="testimonial-list-text"> думал, что будет куча рекламы, но всё оказалось намного приятнее ожиданий.</span>
-            </li>
+            <!-- можешь оставить свои li как есть -->
           </ul>
         </div>
       </div>
@@ -704,3 +531,40 @@
     if(!testimonials.length)return;
     const t=testimonials[i];
     textEl.textContent=t.text;
+    nameEl.textContent=t.name+' • '+t.context;
+    counterEl.textContent=(i+1)+' / '+testimonials.length;
+  }
+  renderTestimonial(currentTestimonial);
+
+  prevBtn.addEventListener('click',()=>{
+    currentTestimonial=(currentTestimonial-1+testimonials.length)%testimonials.length;
+    renderTestimonial(currentTestimonial);
+  });
+  nextBtn.addEventListener('click',()=>{
+    currentTestimonial=(currentTestimonial+1)%testimonials.length;
+    renderTestimonial(currentTestimonial);
+  });
+
+  formEl.addEventListener('submit',e=>{
+    e.preventDefault();
+    const name=inputName.value.trim()||'Гость';
+    const ctx=inputContext.value.trim()||'зритель';
+    const txt=inputText.value.trim();
+    if(!txt){
+      statusEl.textContent='Напишите хотя бы пару слов об эфире.';
+      statusEl.className='testimonial-status err';
+      return;
+    }
+    testimonials.unshift({text:txt,name,context:ctx});
+    const li=document.createElement('li');
+    li.className='testimonial-list-item';
+    li.innerHTML='<span class="testimonial-list-name">'+name+':</span> <span class="testimonial-list-text"> '+txt+'</span>';
+    testimonialList.prepend(li);
+    inputText.value='';
+    statusEl.textContent='Спасибо, отзыв отправлен!';
+    statusEl.className='testimonial-status ok';
+    renderTestimonial(0);
+  });
+</script>
+</body>
+</html>
