@@ -21,17 +21,18 @@
     }
 
     :root {
+      /* Мобильные размеры по умолчанию (mobile-first) */
       --hero-title-min: 26px;
-      --hero-title-max: 34px;
-      --hero-sub-min: 15px;
+      --hero-title-max: 30px;
+      --hero-sub-min: 16px;
       --hero-sub-max: 18px;
-      --body-text: 14px;
+      --body-text: 15px;
     }
 
     .page {
-      max-width: 1080px;
-      margin: 24px auto 40px;
-      padding: 0 16px;
+      max-width: 480px;
+      margin: 16px auto 28px;
+      padding: 0 12px;
     }
 
     .hero {
@@ -64,15 +65,15 @@
 
     .hero-title {
       margin: 0 0 6px;
-      font-size: clamp(var(--hero-title-min), 5vw, var(--hero-title-max));
-      line-height: 1.2;
+      font-size: clamp(var(--hero-title-min), 7vw, var(--hero-title-max));
+      line-height: 1.25;
     }
 
     .hero-sub {
       margin: 0;
-      font-size: clamp(var(--hero-sub-min), 3.3vw, var(--hero-sub-max));
+      font-size: clamp(var(--hero-sub-min), 4.2vw, var(--hero-sub-max));
       color: #e5e7eb;
-      max-width: 620px;
+      max-width: 100%;
     }
 
     .hero-sub span {
@@ -87,18 +88,19 @@
       max-width: 560px;
     }
 
+    /* Макет: на мобильном одна колонка */
     .content {
       margin-top: 18px;
       display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
-      gap: 20px;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 16px;
       align-items: flex-start;
     }
 
     .left {
       background: #f9fafb;
-      border-radius: 18px;
-      padding: 18px 18px 18px;
+      border-radius: 16px;
+      padding: 16px 14px 14px;
       border: 1px solid #e5e7eb;
       box-shadow: 0 12px 32px rgba(15, 23, 42, 0.22);
       font-size: var(--body-text);
@@ -188,7 +190,8 @@
       background: linear-gradient(135deg, #2563eb 0%, #4f46e5 55%, #7c3aed 100%);
       box-shadow: 0 12px 30px rgba(37, 99, 235, 0.55);
       transition: transform .12s ease-out, box-shadow .12s ease-out, filter .12s ease-out;
-      min-height: 48px; /* комфортный tap-target */ /* [web:178][web:184] */
+      min-height: 48px; /* комфортный tap-target */ /* [web:27][web:30][web:39] */
+      width: 100%;
     }
 
     .btn-primary:hover {
@@ -204,9 +207,9 @@
 
     .verify-row {
       display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 8px;
       margin-top: 6px;
     }
 
@@ -222,7 +225,7 @@
       border: 1px solid #d1d5db;
       background: #ffffff;
       color: #111827;
-      font-size: 15px; /* >=16px на мобиле через медиазапрос ниже */ /* [web:170][web:176] */
+      font-size: 16px; /* >=16px, чтобы не было автозума на iOS */ /* [web:27] */
       outline: none;
       transition: border-color .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
       min-height: 46px;
@@ -243,7 +246,7 @@
       padding: 10px 18px;
       border-radius: 999px;
       border: 0;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
       letter-spacing: .14em;
       text-transform: uppercase;
@@ -256,7 +259,8 @@
       gap: 6px;
       transition: background .12s ease-out, transform .12s ease-out, box-shadow .12s ease-out;
       white-space: nowrap;
-      min-height: 44px;
+      min-height: 46px;
+      width: 100%;
     }
 
     .verify-btn:hover {
@@ -313,7 +317,7 @@
       padding: 0;
       margin: 0;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      grid-template-columns: minmax(0, 1fr);
       gap: 10px;
     }
 
@@ -392,13 +396,14 @@
     }
 
     .right {
-      border-radius: 18px;
-      padding: 18px 18px 16px;
+      border-radius: 16px;
+      padding: 16px 14px 14px;
       border: 1px solid rgba(148,163,184,0.4);
       background: radial-gradient(circle at top left, rgba(59,130,246,0.3), rgba(15,23,42,0.9));
       color: #e5e7eb;
       box-shadow: 0 10px 30px rgba(15,23,42,0.55);
-      font-size: 14px;
+      font-size: 15px;
+      order: 2; /* на мобиле справа блок идёт ниже */
     }
 
     .right-title {
@@ -424,12 +429,12 @@
       border-radius: 14px;
       background: #020617;
       border: 1px solid rgba(148,163,184,0.5);
-      padding: 12px 12px 12px;
+      padding: 10px 10px 11px;
       color: #e5e7eb;
     }
 
     .testimonials-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
       margin: 0 0 8px;
       display: flex;
@@ -535,8 +540,8 @@
 
     .input-row {
       display: flex;
+      flex-direction: column;
       gap: 8px;
-      flex-wrap: wrap;
     }
 
     .input-row .field {
@@ -555,7 +560,7 @@
       border-radius: 999px;
       border: 1px solid #4b5563;
       padding: 10px 12px;
-      font-size: 15px;
+      font-size: 16px;
       background: rgba(15,23,42,0.95);
       color: #e5e7eb;
       outline: none;
@@ -596,684 +601,11 @@
       justify-content: center;
       gap: 4px;
       transition: background .12s ease-out, transform .12s ease-out, box-shadow .12s ease-out;
-      min-height: 44px;
+      min-height: 46px;
+      width: 100%;
     }
 
     .btn-send:hover {
       background: #16a34a;
       transform: translateY(-1px);
-      box-shadow: 0 6px 14px rgba(22,163,74,0.5);
-    }
-
-    .testimonial-status {
-      font-size: 11px;
-      color: #9ca3af;
-      margin-top: 3px;
-      min-height: 16px;
-    }
-
-    .testimonial-status.ok { color: #4ade80; }
-    .testimonial-status.err { color: #fecaca; }
-
-    .testimonial-list-wrapper {
-      margin-top: 10px;
-      border-top: 1px solid rgba(55,65,81,0.7);
-      padding-top: 8px;
-    }
-
-    .testimonial-list-title {
-      font-size: 11px;
-      color: #9ca3af;
-      margin-bottom: 4px;
-    }
-
-    .testimonial-list {
-      max-height: 150px;
-      overflow-y: auto;
-      padding-right: 4px;
-      list-style: none;
-      margin: 0;
-    }
-
-    .testimonial-list-item {
-      font-size: 11px;
-      line-height: 1.4;
-      padding: 4px 0;
-      border-bottom: 1px dashed rgba(55,65,81,0.7);
-    }
-
-    .testimonial-list-item:last-child {
-      border-bottom: none;
-    }
-
-    .testimonial-list-name {
-      font-weight: 600;
-      color: #e5e7eb;
-    }
-
-    .testimonial-list-text {
-      color: #cbd5f5;
-    }
-
-    /* Адаптивность: планшеты */
-    @media (max-width: 992px) {
-      .page { max-width: 1000px; }
-      .content {
-        grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
-        gap: 18px;
-      }
-      .left { padding: 16px 14px 14px; }
-      .right { padding: 16px; }
-    }
-
-    /* Адаптивность: одна колонка */
-    @media (max-width: 860px) {
-      .content {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .right { order: -1; }
-      .page { margin-top: 18px; }
-    }
-
-    /* Крупная мобильная версия */
-    @media (max-width: 600px) {
-      :root {
-        --hero-title-min: 26px;
-        --hero-title-max: 30px;
-        --hero-sub-min: 16px;
-        --hero-sub-max: 18px;
-        --body-text: 15px;
-      }
-
-      .page {
-        margin: 16px auto 28px;
-        padding: 0 12px;
-      }
-
-      .hero-title {
-        text-align: left;
-      }
-
-      .hero-note {
-        font-size: 12px;
-      }
-
-      .left {
-        padding: 16px 14px 14px;
-        border-radius: 16px;
-        font-size: var(--body-text);
-      }
-
-      .right {
-        border-radius: 16px;
-        font-size: 15px;
-      }
-
-      .streams {
-        grid-template-columns: minmax(0, 1fr);
-      }
-
-      .btn-primary {
-        width: 100%;
-      }
-
-      .verify-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .verify-input {
-        font-size: 16px;
-      }
-
-      .verify-btn {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .input-row {
-        flex-direction: column;
-      }
-
-      .input-control {
-        font-size: 16px;
-      }
-
-      .btn-send {
-        width: 100%;
-      }
-    }
-
-    /* Очень маленькие телефоны */
-    @media (max-width: 380px) {
-      .hero-sub { max-width: 100%; }
-      .testimonials { padding: 10px 10px 11px; }
-      .testimonials-title { font-size: 14px; }
-      .btn-primary { font-size: 14px; }
-    }
-  </style>
-</head>
-<body>
-<div class="page">
-  <header class="hero">
-    <div class="hero-badge">
-      <span class="hero-badge-dot"></span>
-      БЕСПЛАТНЫЙ ДОСТУП К ЭФИРУ
-    </div>
-    <h1 class="hero-title">
-      Крутой бесплатный сервис трансляций топ‑матчей Лиги чемпионов
-      и других крупных турниров
-    </h1>
-    <p class="hero-sub">
-      Смотрите топовые игры <span>без абонентской платы</span>: один аккаунт Melbet открывает доступ ко всем трансляциям на этой странице.
-    </p>
-    <p class="hero-note">
-      Во время пиковых матчей нагрузка на сервера выше — иногда трансляция запускается чуть дольше, но поток обязательно догружается без перезагрузки.
-    </p>
-  </header>
-
-  <main class="content">
-    <section class="left">
-      <div class="logo">LIVE ACCESS</div>
-      <h2 class="left-title">Доступ к прямым трансляциям</h2>
-      <p class="left-sub">Пройдите быструю регистрацию в Melbet, укажите ID аккаунта и выбирайте любой эфир из списка топ‑матчей.</p>
-
-      <p class="slow">
-        Если видео долго грузится, <span>просто подождите несколько секунд</span> — поток запустится автоматически.
-      </p>
-
-      <div class="section-title">Шаг 1 — регистрация</div>
-      <div class="block">
-        <div class="steps">
-          <b>1.</b> Нажмите кнопку «Зарегистрироваться в Melbet».<br>
-          <b>2.</b> Завершите регистрацию на официальном сайте.<br>
-          <b>3.</b> Вернитесь на эту страницу.
-        </div>
-        <div class="reg-row">
-          <a id="regBtn"
-             class="btn-primary"
-             href="https://clck.ru/3Mo7a2"
-             target="_blank"
-             rel="noopener noreferrer">
-            Зарегистрироваться в Melbet
-          </a>
-        </div>
-      </div>
-
-      <div class="section-title">Шаг 2 — проверка ID</div>
-      <div class="block">
-        <div class="steps" style="margin-bottom:6px;">Введите ID аккаунта Melbet (до 9 цифр).</div>
-        <div class="verify-row">
-          <div class="verify-input-wrap">
-            <input id="accountId"
-                   class="verify-input"
-                   type="text"
-                   inputmode="numeric"
-                   maxlength="9"
-                   placeholder="Поле станет доступно после регистрации"
-                   disabled>
-          </div>
-          <button id="verifyBtn" class="verify-btn" type="button">
-            Проверить
-            <span id="verifySpinner" class="spinner"></span>
-          </button>
-        </div>
-        <div id="verifyStatus" class="verify-status">
-          Сначала зарегистрируйтесь по кнопке выше.
-        </div>
-      </div>
-
-      <div class="section-title">Шаг 3 — выбор трансляции</div>
-      <div class="block streams-card">
-        <div class="streams-title">Список трансляций</div>
-        <div class="streams-hint">
-          Доступны трансляции всех топ‑матчей. Нажмите на каждое видео, чтобы найти нужное именно для себя.
-        </div>
-
-        <ul class="streams locked" id="streams">
-          <!-- 10 матчей -->
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka.php" target="_blank">
-              <span>Матч 1</span>
-              <small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span> В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="180" data-max="350">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.9" data-max="5.0">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="40" data-max="120">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka2.php" target="_blank">
-              <span>Матч 2</span>
-              <small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span> В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="160" data-max="320">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.92" data-max="5.0">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="30" data-max="100">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka3.php" target="_blank">
-              <span>Матч 3</span>
-              <small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span> В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="140" data-max="300">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.9" data-max="4.99">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="20" data-max="90">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka4.php" target="_blank">
-              <span>Матч 4</span>
-              <small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span> В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="150" data-max="340">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.93" data-max="5.0">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="30" data-max="110">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka5.php" target="_blank">
-              <span>Матч 5</span>
-              <small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span> В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="120" data-max="280">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.9" data-max="4.98">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="15" data-max="80">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka6.php" target="_blank">
-              <span>Матч 6</span>
-              <small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span> В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="130" data-max="310">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.94" data-max="5.0">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="25" data-max="95">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka7.php" target="_blank">
-              <span>Матч 7</span>
-              <small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span> В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="150" data-max="360">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.95" data-max="5.0">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="30" data-max="120">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka8.php" target="_blank">
-              <span>Матч 8</span>
-              <small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span> В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="140" data-max="330">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.9" data-max="4.99">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="20" data-max="100">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka9.php" target="_blank">
-              <span>Матч 9</span>
-              <small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span> В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="110" data-max="260">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.9" data-max="4.97">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="10" data-max="70">—</span></span>
-              </div>
-            </a>
-          </li>
-          <li class="stream-item">
-            <a href="https://playball10.com/p2p-reserv/10tka10.php" target="_blank">
-              <span>Матч 10</span>
-              <small>HD • live</small>
-              <div class="stream-meta">
-                <span class="meta-pill live"><span class="dot"></span> В эфире</span>
-                <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="120" data-max="280">—</span></span>
-                <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.93" data-max="5.0">—</span></span>
-                <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="20" data-max="90">—</span></span>
-              </div>
-            </a>
-          </li>
-        </ul>
-
-        <p class="note">
-          Если при открытии видео долго крутится, просто подождите — поток догрузится без перезагрузки страницы.
-        </p>
-      </div>
-
-      <!-- Динамические отзывы -->
-      <div class="testimonials">
-        <div class="testimonials-title">
-          <span>Что говорят зрители</span>
-          <span class="testimonials-badge">
-            живые отзывы
-            <span class="reviews-count">104 отзыва</span>
-          </span>
-        </div>
-
-        <div class="testimonial-view">
-          <div id="testimonialText" class="testimonial-text"></div>
-          <div id="testimonialName" class="testimonial-name"></div>
-        </div>
-
-        <div class="testimonial-nav">
-          <span id="testimonialCounter">1 / 3</span>
-          <div class="nav-buttons">
-            <button type="button" class="nav-btn" id="prevTestimonial">← Назад</button>
-            <button type="button" class="nav-btn" id="nextTestimonial">Вперёд →</button>
-          </div>
-        </div>
-
-        <form class="testimonial-form" id="testimonialForm">
-          <div class="input-row">
-            <div class="field">
-              <div class="input-label">Имя</div>
-              <input type="text" id="inputName" class="input-control" placeholder="Например: Артём">
-            </div>
-            <div class="field">
-              <div class="input-label">Где смотрите</div>
-              <input type="text" id="inputContext" class="input-control" placeholder="Телефон, ноутбук и т.п.">
-            </div>
-          </div>
-          <div class="field">
-            <div class="input-label">Ваш отзыв</div>
-            <textarea id="inputText" class="input-control textarea" placeholder="Напишите пару слов, как вам сервис"></textarea>
-          </div>
-          <button type="submit" class="btn-send">Оставить отзыв</button>
-          <div id="testimonialStatus" class="testimonial-status"></div>
-        </form>
-
-        <div class="testimonial-list-wrapper">
-          <div class="testimonial-list-title">Последние отзывы зрителей:</div>
-          <ul id="testimonialList" class="testimonial-list">
-            <li class="testimonial-list-item">
-              <span class="testimonial-list-name">Артём:</span>
-              <span class="testimonial-list-text"> наконец-то нашли нормальный сервис для бесплатного просмотра Лиги чемпионов, всё работает без лагов.</span>
-            </li>
-            <li class="testimonial-list-item">
-              <span class="testimonial-list-name">Илья:</span>
-              <span class="testimonial-list-text"> запускаю эфир с телефона за пару кликов, качество и скорость радуют.</span>
-            </li>
-            <li class="testimonial-list-item">
-              <span class="testimonial-list-name">Дмитрий:</span>
-              <span class="testimonial-list-text"> удобно, что все топ‑матчи в одном месте, не нужно прыгать по сайтам.</span>
-            </li>
-            <li class="testimonial-list-item">
-              <span class="testimonial-list-name">Алексей:</span>
-              <span class="testimonial-list-text"> картинка чёткая, звук без задержки, смотрю на большом телевизоре через браузер.</span>
-            </li>
-            <li class="testimonial-list-item">
-              <span class="testimonial-list-name">Михаил:</span>
-              <span class="testimonial-list-text"> думал, что будет куча рекламы, но всё оказалось намного приятнее ожиданий.</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <aside class="right">
-      <h3 class="right-title">Почему это удобно</h3>
-      <p class="right-text">
-        Один аккаунт — доступ ко всем топ‑матчам: Лига чемпионов, европейские чемпионаты и другие крупные турниры.
-      </p>
-      <p class="right-text">
-        Регистрация проходит на официальном сайте Melbet, а эта страница даёт быстрый доступ только к трансляциям.
-      </p>
-      <p class="right-highlight">
-        Сначала регистрация и ID, затем — любой матч в пару кликов.
-      </p>
-    </aside>
-  </main>
-</div>
-
-<script>
-  let isRegistered = false;
-  let isVerified   = false;
-  let hasTriedOnce = false;
-
-  const regBtn        = document.getElementById('regBtn');
-  const streams       = document.getElementById('streams');
-  const accountId     = document.getElementById('accountId');
-  const verifyBtn     = document.getElementById('verifyBtn');
-  const verifySpinner = document.getElementById('verifySpinner');
-  const verifyStatus  = document.getElementById('verifyStatus');
-
-  function randomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min; /* [web:176] */
-  }
-
-  function randomRating(min, max) {
-    const value = Math.random() * (max - min) + min;
-    return value.toFixed(2);
-  }
-
-  function updateStats() {
-    const viewerSpans = document.querySelectorAll('.viewers');
-    const ratingSpans = document.querySelectorAll('.rating');
-    const likeSpans   = document.querySelectorAll('.likes');
-
-    viewerSpans.forEach(span => {
-      const min = Number(span.dataset.min || 100);
-      const max = Number(span.dataset.max || 400);
-      span.textContent = randomInt(min, max) + ' чел.';
-    });
-
-    ratingSpans.forEach(span => {
-      const min = Number(span.dataset.min || 4.9);
-      const max = Number(span.dataset.max || 5.0);
-      span.textContent = randomRating(min, max);
-    });
-
-    likeSpans.forEach(span => {
-      const min = Number(span.dataset.min || 20);
-      const max = Number(span.dataset.max || 150);
-      span.textContent = randomInt(min, max);
-    });
-  }
-
-  if (document.querySelector('.viewers')) {
-    updateStats();
-    setInterval(updateStats, 10000);
-  }
-
-  accountId.addEventListener('input', function () {
-    this.value = this.value.replace(/\D/g, '').slice(0, 9);
-  });
-
-  regBtn.addEventListener('click', function () {
-    isRegistered = true;
-    accountId.disabled = false;
-    accountId.placeholder = 'Например: 123456789';
-    accountId.focus();
-    verifyStatus.textContent = 'Введите ID аккаунта и нажмите «Проверить».';
-    verifyStatus.className = 'verify-status';
-  });
-
-  verifyBtn.addEventListener('click', function () {
-    const id = accountId.value.trim();
-
-    if (!isRegistered) {
-      verifyStatus.textContent = 'Сначала завершите регистрацию в Melbet по кнопке выше.';
-      verifyStatus.className = 'verify-status err';
-      return;
-    }
-
-    if (!id) {
-      verifyStatus.textContent = 'Введите ID аккаунта, чтобы пройти проверку.';
-      verifyStatus.className = 'verify-status err';
-      return;
-    }
-
-    verifyBtn.disabled = true;
-    verifySpinner.classList.add('show');
-    verifyStatus.textContent = 'Проверяем ID аккаунта...';
-    verifyStatus.className = 'verify-status';
-
-    setTimeout(function () {
-      verifySpinner.classList.remove('show');
-      verifyBtn.disabled = false;
-
-      if (!hasTriedOnce) {
-        hasTriedOnce = true;
-        verifyStatus.textContent = 'ID не найдено, попробуйте через 5 секунд.';
-        verifyStatus.className = 'verify-status err';
-
-        verifyBtn.disabled = true;
-        setTimeout(function () {
-          verifyBtn.disabled = false;
-        }, 5000);
-      } else {
-        isVerified = true;
-        verifyStatus.textContent = 'ID успешно проверен! Доступ к трансляциям открыт.';
-        verifyStatus.className = 'verify-status ok';
-        streams.classList.remove('locked');
-      }
-    }, 2300);
-  });
-
-  streams.addEventListener('click', function (e) {
-    const link = e.target.closest('a');
-    if (!link) return;
-
-    if (!isRegistered) {
-      e.preventDefault();
-      alert('Сначала зарегистрируйтесь в Melbet, затем введите ID аккаунта и пройдите проверку.');
-      return;
-    }
-
-    if (!isVerified) {
-      e.preventDefault();
-      alert('Введите ID аккаунта Melbet, нажмите «Проверить» и дождитесь подтверждения, после этого откройте трансляцию.');
-      return;
-    }
-  });
-
-  const testimonials = [
-    {
-      text: 'Наконец-то нашли нормальный сервис для бесплатного просмотра Лиги чемпионов. Всё работает без лагов, спасибо вам!',
-      name: 'Артём',
-      context: 'смотрит с ноутбука'
-    },
-    {
-      text: 'С телефона открыл трансляцию за пару кликов. Картинка чёткая, задержка минимальная — лучше, чем многие платные сервисы.',
-      name: 'Илья',
-      context: 'мобильный пользователь'
-    },
-    {
-      text: 'Удобно, что все топ‑матчи в одном месте. Зарегистрировался один раз в Melbet и просто выбираю нужный эфир.',
-      name: 'Дмитрий',
-      context: 'фанат ЛЧ'
-    }
-  ];
-
-  let currentTestimonial = 0;
-  const textEl    = document.getElementById('testimonialText');
-  const nameEl    = document.getElementById('testimonialName');
-  const counterEl = document.getElementById('testimonialCounter');
-  const prevBtn   = document.getElementById('prevTestimonial');
-  const nextBtn   = document.getElementById('nextTestimonial');
-  const formEl    = document.getElementById('testimonialForm');
-  const inputName    = document.getElementById('inputName');
-  const inputContext = document.getElementById('inputContext');
-  const inputText    = document.getElementById('inputText');
-  const statusEl     = document.getElementById('testimonialStatus');
-  const testimonialList = document.getElementById('testimonialList');
-
-  function renderTestimonial(index) {
-    if (!testimonials.length) return;
-    const t = testimonials[index];
-    textEl.textContent = t.text;
-    nameEl.textContent = t.context ? `${t.name}, ${t.context}` : t.name;
-    counterEl.textContent = (index + 1) + ' / ' + testimonials.length;
-  }
-
-  function showNext() {
-    if (!testimonials.length) return;
-    currentTestimonial = (currentTestimonial + 1) % testimonials.length;
-    renderTestimonial(currentTestimonial);
-  }
-
-  function showPrev() {
-    if (!testimonials.length) return;
-    currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
-    renderTestimonial(currentTestimonial);
-  }
-
-  prevBtn.addEventListener('click', function () {
-    showPrev();
-    resetRotationTimer();
-  });
-
-  nextBtn.addEventListener('click', function () {
-    showNext();
-    resetRotationTimer();
-  });
-
-  formEl.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const name    = inputName.value.trim() || 'Гость';
-    const context = inputContext.value.trim();
-    const text    = inputText.value.trim();
-
-    if (!text) {
-      statusEl.textContent = 'Напишите хотя бы пару слов в отзыве.';
-      statusEl.className = 'testimonial-status err';
-      return;
-    }
-
-    const newTest = { text, name, context };
-    testimonials.push(newTest);
-    currentTestimonial = testimonials.length - 1;
-    renderTestimonial(currentTestimonial);
-    statusEl.textContent = 'Отзыв добавлен! Спасибо.';
-    statusEl.className = 'testimonial-status ok';
-    inputText.value = '';
-
-    const li = document.createElement('li');
-    li.className = 'testimonial-list-item';
-    li.innerHTML =
-      '<span class="testimonial-list-name">' +
-      (context ? `${name} (${context})` : name) +
-      ':</span> ' +
-      '<span class="testimonial-list-text"> ' +
-      text +
-      '</span>';
-    testimonialList.prepend(li);
-
-    resetRotationTimer();
-  });
-
-  let rotationTimer = null;
-  function startRotation() {
-    rotationTimer = setInterval(showNext, 7000);
-  }
-  function resetRotationTimer() {
-    if (rotationTimer) clearInterval(rotationTimer);
-    startRotation();
-  }
-
-  renderTestimonial(currentTestimonial);
-  startRotation();
-</script>
-</body>
-</html>
+      box-shadow
