@@ -14,41 +14,84 @@
 
     body {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: #111827;
-      background: radial-gradient(circle at top, #1d4ed8 0, #020617 45%, #020617 100%);
-      padding: 16px;
+      background: linear-gradient(135deg, #020617 0%, #020617 40%, #111827 100%);
     }
 
-    .card-wrapper {
-      width: 100%;
-      max-width: 420px;
-      margin: 0 auto;
+    .page {
+      max-width: 1080px;
+      margin: 24px auto 40px;
+      padding: 0 16px;
     }
 
-    .card {
-      background: #ffffff;
-      border-radius: 24px;
-      padding: 22px 20px 20px;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.45);
-      position: relative;
-      overflow: hidden;
+    .hero {
+      text-align: left;
+      color: #f9fafb;
+      margin-bottom: 20px;
     }
 
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, rgba(79,70,229,0.16), transparent 55%);
-      pointer-events: none;
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      background: rgba(15,23,42,0.7);
+      border: 1px solid rgba(148,163,184,0.4);
+      margin-bottom: 8px;
     }
 
-    .card-inner {
-      position: relative;
-      z-index: 1;
+    .hero-badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34,197,94,0.35);
+    }
+
+    .hero-title {
+      margin: 0 0 6px;
+      font-size: 30px;
+      line-height: 1.2;
+    }
+
+    .hero-sub {
+      margin: 0;
+      font-size: 14px;
+      color: #e5e7eb;
+      max-width: 620px;
+    }
+
+    .hero-sub span {
+      font-weight: 600;
+      color: #38bdf8;
+    }
+
+    .hero-note {
+      margin: 6px 0 0;
+      font-size: 12px;
+      color: #9ca3af;
+      max-width: 560px;
+    }
+
+    .content {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .left {
+      background: #f9fafb;
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.22);
     }
 
     .logo {
@@ -57,16 +100,17 @@
       text-transform: uppercase;
       font-size: 11px;
       color: #4f46e5;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
-    h1 {
+    .left-title {
       margin: 0 0 4px;
-      font-size: 22px;
+      font-size: 20px;
       line-height: 1.25;
+      color: #111827;
     }
 
-    .sub {
+    .left-sub {
       margin: 0 0 10px;
       font-size: 13px;
       color: #4b5563;
@@ -94,8 +138,8 @@
     }
 
     .block {
-      border-radius: 16px;
-      background: #f9fafb;
+      border-radius: 14px;
+      background: #ffffff;
       border: 1px solid #e5e7eb;
       padding: 12px 12px;
       margin-bottom: 4px;
@@ -114,15 +158,15 @@
     .reg-row {
       margin-top: 10px;
       display: flex;
-      gap: 10px;
       flex-wrap: wrap;
+      gap: 10px;
     }
 
     .btn-primary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 9px 18px;
+      padding: 9px 20px;
       border-radius: 999px;
       border: 0;
       font-size: 13px;
@@ -132,23 +176,20 @@
       text-decoration: none;
       color: #ffffff;
       background: linear-gradient(135deg, #2563eb 0%, #4f46e5 55%, #7c3aed 100%);
-      box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45);
+      box-shadow: 0 12px 30px rgba(37, 99, 235, 0.55);
       transition: transform .12s ease-out, box-shadow .12s ease-out, filter .12s ease-out;
       white-space: nowrap;
-      flex: 1;
-      justify-content: center;
-      text-align: center;
     }
 
     .btn-primary:hover {
       transform: translateY(-1px);
       filter: brightness(1.04);
-      box-shadow: 0 14px 32px rgba(37, 99, 235, 0.6);
+      box-shadow: 0 16px 40px rgba(37, 99, 235, 0.7);
     }
 
     .btn-primary:active {
       transform: translateY(0);
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.4);
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.5);
     }
 
     .verify-row {
@@ -156,10 +197,11 @@
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
+      margin-top: 4px;
     }
 
     .verify-input-wrap {
-      flex: 1 1 140px;
+      flex: 1 1 160px;
       min-width: 0;
     }
 
@@ -187,7 +229,7 @@
     }
 
     .verify-btn {
-      padding: 7px 14px;
+      padding: 7px 16px;
       border-radius: 999px;
       border: 0;
       font-size: 10px;
@@ -208,7 +250,7 @@
     .verify-btn:hover {
       background: #020617;
       transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.45);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.5);
     }
 
     .verify-status {
@@ -236,7 +278,7 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .streams-card {
-      margin-top: 8px;
+      margin-top: 6px;
       padding-top: 8px;
       border-top: 1px solid #e5e7eb;
     }
@@ -251,7 +293,7 @@
     .streams-hint {
       font-size: 11px;
       color: #6b7280;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .streams {
@@ -259,8 +301,8 @@
       padding: 0;
       margin: 0;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 6px;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 8px;
     }
 
     .streams a {
@@ -269,7 +311,7 @@
       align-items: flex-start;
       justify-content: center;
       gap: 1px;
-      padding: 7px 8px;
+      padding: 8px 9px;
       border-radius: 10px;
       text-decoration: none;
       font-size: 12px;
@@ -285,7 +327,7 @@
     .streams a:hover {
       border-color: #c7d2fe;
       background: #f3f4ff;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
       transform: translateY(-1px);
     }
 
@@ -302,35 +344,83 @@
       color: #6b7280;
     }
 
-    .small-tip {
-      margin-top: 6px;
-      font-size: 11px;
-      color: #9ca3af;
-      text-align: center;
+    .right {
+      border-radius: 18px;
+      padding: 16px 16px 14px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: radial-gradient(circle at top left, rgba(59,130,246,0.3), rgba(15,23,42,0.9));
+      color: #e5e7eb;
+      box-shadow: 0 10px 30px rgba(15,23,42,0.55);
     }
 
-    @media (max-width: 420px) {
-      .card {
-        padding: 18px 14px 16px;
-        border-radius: 18px;
+    .right-title {
+      margin: 0 0 6px;
+      font-size: 18px;
+    }
+
+    .right-text {
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: #e5e7eb;
+    }
+
+    .right-highlight {
+      margin: 0;
+      font-size: 12px;
+      color: #a5b4fc;
+    }
+
+    @media (max-width: 860px) {
+      .content {
+        grid-template-columns: minmax(0, 1fr);
       }
-      h1 { font-size: 20px; }
-      .streams {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .right {
+        order: -1;
       }
+      .page {
+        margin-top: 18px;
+      }
+      .hero {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-title { font-size: 24px; }
+      .left { padding: 14px 12px 12px; }
+      .btn-primary { width: 100%; justify-content: center; text-align: center; }
+      .verify-row { flex-direction: column; align-items: stretch; }
+      .verify-btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
-<div class="card-wrapper">
-  <div class="card">
-    <div class="card-inner">
+<div class="page">
+  <header class="hero">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      БЕСПЛАТНЫЙ ДОСТУП К ЭФИРУ
+    </div>
+    <h1 class="hero-title">
+      Крутой бесплатный сервис трансляций топ‑матчей Лиги чемпионов
+      и других крупных турниров
+    </h1>
+    <p class="hero-sub">
+      Смотрите топовые игры <span>без абонентской платы</span>: один аккаунт Melbet открывает доступ ко всем трансляциям на этой странице.
+    </p>
+    <p class="hero-note">
+      Во время пиковых матчей нагрузка на сервера выше — иногда трансляция запускается чуть дольше, но поток обязательно догружается без перезагрузки.
+    </p>
+  </header>
+
+  <main class="content">
+    <section class="left">
       <div class="logo">LIVE ACCESS</div>
-      <h1>Доступ к прямым трансляциям</h1>
-      <p class="sub">Один аккаунт Melbet — и все топ‑матчи в прямом эфире на этой странице.</p>
+      <h2 class="left-title">Доступ к прямым трансляциям</h2>
+      <p class="left-sub">Пройдите быструю регистрацию в Melbet, укажите ID аккаунта и выбирайте любой эфир из списка топ‑матчей.</p>
+
       <p class="slow">
-        Во время топовых игр трансляция может загружаться чуть дольше обычного,
-        <span>но обязательно запустится</span> — просто подождите несколько секунд.
+        Если видео долго грузится, <span>просто подождите несколько секунд</span> — поток запустится автоматически.
       </p>
 
       <div class="section-title">Шаг 1 — регистрация</div>
@@ -338,7 +428,7 @@
         <div class="steps">
           <b>1.</b> Нажмите кнопку «Зарегистрироваться в Melbet».<br>
           <b>2.</b> Завершите регистрацию на официальном сайте.<br>
-          <b>3.</b> Вернитесь и откройте доступ к матчам.
+          <b>3.</b> Вернитесь на эту страницу.
         </div>
         <div class="reg-row">
           <a id="regBtn"
@@ -398,12 +488,21 @@
           Если при открытии видео долго крутится, просто подождите — поток догрузится без перезагрузки страницы.
         </p>
       </div>
+    </section>
 
-      <div class="small-tip">
-        Всё по центру, без лишних шагов: регистрация → ID → выбор матча.
-      </div>
-    </div>
-  </div>
+    <aside class="right">
+      <h3 class="right-title">Почему это удобно</h3>
+      <p class="right-text">
+        Один аккаунт — доступ ко всем топ‑матчам: Лига чемпионов, европейские чемпионаты и другие крупные турниры.
+      </p>
+      <p class="right-text">
+        Регистрация проходит на официальном сайте Melbet, а эта страница даёт быстрый доступ только к трансляциям.
+      </p>
+      <p class="right-highlight">
+        Сначала регистрация и ID, затем — любой матч в пару кликов.
+      </p>
+    </aside>
+  </main>
 </div>
 
 <script>
@@ -418,7 +517,7 @@
   const verifySpinner = document.getElementById('verifySpinner');
   const verifyStatus  = document.getElementById('verifyStatus');
 
-  // Ограничение поля только цифрами и максимум 9 символов
+  // Только цифры и максимум 9 символов
   accountId.addEventListener('input', function () {
     this.value = this.value.replace(/\D/g, '').slice(0, 9);
   });
@@ -458,6 +557,7 @@
       verifyBtn.disabled = false;
 
       if (!hasTriedOnce) {
+        // Первая проверка — всегда "не найдено"
         hasTriedOnce = true;
         verifyStatus.textContent = 'ID не найдено, попробуйте через 5 секунд.';
         verifyStatus.className = 'verify-status err';
@@ -467,6 +567,7 @@
           verifyBtn.disabled = false;
         }, 5000);
       } else {
+        // Вторая и последующие проверки — успех
         isVerified = true;
         verifyStatus.textContent = 'ID успешно проверен! Доступ к трансляциям открыт.';
         verifyStatus.className = 'verify-status ok';
