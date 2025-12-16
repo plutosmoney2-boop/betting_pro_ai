@@ -19,6 +19,13 @@
       background: linear-gradient(135deg, #020617 0%, #020617 40%, #111827 100%);
     }
 
+    :root {
+      --hero-title-min: 22px;
+      --hero-title-max: 32px;
+      --hero-sub-min: 13px;
+      --hero-sub-max: 16px;
+    }
+
     .page {
       max-width: 1080px;
       margin: 24px auto 40px;
@@ -55,13 +62,13 @@
 
     .hero-title {
       margin: 0 0 6px;
-      font-size: 30px;
+      font-size: clamp(var(--hero-title-min), 4vw, var(--hero-title-max)); /* плавный размер */ /* [web:147][web:152] */
       line-height: 1.2;
     }
 
     .hero-sub {
       margin: 0;
-      font-size: 14px;
+      font-size: clamp(var(--hero-sub-min), 2vw, var(--hero-sub-max));
       color: #e5e7eb;
       max-width: 620px;
     }
@@ -597,6 +604,28 @@
     .testimonial-status.ok { color: #4ade80; }
     .testimonial-status.err { color: #fecaca; }
 
+    /* Брейкпоинт ~1200: немного сжимаем отступы на маленьких ноутбуках */
+    @media (max-width: 1200px) {
+      .page {
+        max-width: 1000px;
+      }
+    }
+
+    /* Брейкпоинт ~992: планшеты в альбомной ориентации */
+    @media (max-width: 992px) {
+      .content {
+        grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
+        gap: 16px;
+      }
+      .left {
+        padding: 16px 14px 14px;
+      }
+      .right {
+        padding: 14px;
+      }
+    }
+
+    /* Брейкпоинт ~860: планшеты вертикально, одна колонка */
     @media (max-width: 860px) {
       .content {
         grid-template-columns: minmax(0, 1fr);
@@ -609,17 +638,59 @@
       }
     }
 
+    /* Брейкпоинт ~600: телефоны */
     @media (max-width: 600px) {
-      .hero-title { font-size: 24px; }
-      .left { padding: 14px 12px 12px; }
-      .btn-primary { width: 100%; justify-content: center; text-align: center; }
-      .verify-row { flex-direction: column; align-items: stretch; }
-      .verify-btn { width: 100%; justify-content: center; }
-      .input-row { flex-direction: column; }
-      .hero { text-align: left; }
+      .page {
+        margin: 16px auto 28px;
+        padding: 0 10px;
+      }
+      .hero-title {
+        text-align: left;
+      }
+      .hero-note {
+        font-size: 11px;
+      }
+      .left {
+        padding: 14px 12px 12px;
+        border-radius: 14px;
+      }
+      .right {
+        border-radius: 14px;
+      }
+      .btn-primary {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+      }
+      .verify-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .verify-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .input-row {
+        flex-direction: column;
+      }
+      .streams {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
-    @keyframes spin { to { transform: rotate(360deg); } }
+    /* Очень маленькие телефоны */
+    @media (max-width: 380px) {
+      .hero-sub {
+        max-width: 100%;
+      }
+      .testimonials {
+        padding: 8px 8px 10px;
+      }
+      .btn-send {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -700,6 +771,7 @@
         </div>
 
         <ul class="streams locked" id="streams">
+          <!-- те же 10 матчей, как в прошлой версии (оставлены без изменений) -->
           <!-- 1 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka.php" target="_blank">
@@ -1020,7 +1092,6 @@
     }
   });
 
-  /* Динамические отзывы */
   const testimonials = [
     {
       text: 'Наконец-то нашли нормальный сервис для бесплатного просмотра Лиги чемпионов. Всё работает без лагов, спасибо вам!',
