@@ -675,73 +675,146 @@ grid-template-columns: minmax(0, 1fr);
 .page { margin-top: 18px; }
 }
 
-/* Крупная мобильная версия */
+/* Крупная мобильная версия – НОВЫЙ АДАПТИВ */
 @media (max-width: 600px) {
-:root {
---hero-title-min: 26px;
---hero-title-max: 30px;
---hero-sub-min: 16px;
---hero-sub-max: 18px;
---body-text: 15px;
-}
+  :root {
+    --hero-title-min: 24px;
+    --hero-title-max: 28px;
+    --hero-sub-min: 15px;
+    --hero-sub-max: 17px;
+    --body-text: 15px;
+  }
 
-.page {
-margin: 16px auto 28px;
-padding: 0 12px;
-}
+  body {
+    font-size: 15px;
+  }
 
-.hero-title {
-text-align: left;
-}
+  .page {
+    margin: 14px auto 26px;
+    padding: 0 10px;
+  }
 
-.hero-note {
-font-size: 12px;
-}
+  .hero {
+    margin-bottom: 16px;
+  }
 
-.left {
-padding: 16px 14px 14px;
-border-radius: 16px;
-font-size: var(--body-text);
-}
+  .hero-badge {
+    font-size: 10px;
+    padding: 4px 9px;
+  }
 
-.right {
-border-radius: 16px;
-font-size: 15px;
-}
+  .hero-title {
+    text-align: left;
+    line-height: 1.25;
+  }
 
-.streams {
-grid-template-columns: minmax(0, 1fr);
-}
+  .hero-sub {
+    max-width: 100%;
+  }
 
-.btn-primary {
-width: 100%;
-}
+  .hero-note {
+    font-size: 12px;
+  }
 
-.verify-row {
-flex-direction: column;
-align-items: stretch;
-}
+  .content {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
 
-.verify-input {
-font-size: 16px;
-}
+  .left {
+    padding: 14px 12px 12px;
+    border-radius: 14px;
+    font-size: var(--body-text);
+  }
 
-.verify-btn {
-width: 100%;
-justify-content: center;
-}
+  .right {
+    order: -1;
+    border-radius: 14px;
+    font-size: 14px;
+    padding: 14px 12px 12px;
+  }
 
-.input-row {
-flex-direction: column;
-}
+  .left-title {
+    font-size: 18px;
+  }
 
-.input-control {
-font-size: 16px;
-}
+  .right-title {
+    font-size: 18px;
+  }
 
-.btn-send {
-width: 100%;
-}
+  .streams {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .btn-primary {
+    width: 100%;
+    font-size: 15px;
+    min-height: 50px;
+  }
+
+  .verify-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .verify-input {
+    font-size: 16px;
+  }
+
+  .verify-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 46px;
+  }
+
+  .testimonials {
+    padding: 10px 10px 11px;
+  }
+
+  .testimonials-title {
+    font-size: 14px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .testimonial-view {
+    font-size: 13px;
+    min-height: 72px;
+  }
+
+  .testimonial-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .nav-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .nav-btn {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .testimonial-form {
+    font-size: 14px;
+  }
+
+  .input-row {
+    flex-direction: column;
+  }
+
+  .input-control {
+    font-size: 16px;
+    min-height: 46px;
+  }
+
+  .btn-send {
+    width: 100%;
+    min-height: 46px;
+  }
 }
 
 /* Очень маленькие телефоны */
@@ -831,7 +904,6 @@ disabled>
 </div>
 
 <ul class="streams locked" id="streams">
-<!-- 10 матчей -->
 <li class="stream-item">
 <a href="https://playball10.com/p2p-reserv/10tka.php" target="_blank">
 <span>Матч 1</span>
@@ -959,7 +1031,6 @@ disabled>
 </p>
 </div>
 
-<!-- Динамические отзывы -->
 <div class="testimonials">
 <div class="testimonials-title">
 <span>Что говорят зрители</span>
