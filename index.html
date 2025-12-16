@@ -13,258 +13,314 @@
       color:#111827;
       background:linear-gradient(135deg,#020617 0%,#020617 40%,#111827 100%);
     }
-    :root{
-      --s4:4px;--s6:6px;--s8:8px;--s10:10px;--s12:12px;--s16:16px;--s20:20px;--s24:24px;--s32:32px;
-    }
-
     .page{
-      max-width:640px;
-      margin:var(--s16) auto var(--s24);
-      padding:0 var(--s16) var(--s24);
+      width:100%;
+      max-width:1080px;
+      margin:24px auto 40px;
+      padding:0 16px;
     }
 
-    .hero{color:#f9fafb;margin-bottom:var(--s16)}
+    .hero{
+      text-align:left;
+      color:#f9fafb;
+      margin-bottom:20px;
+    }
     .hero-badge{
-      display:inline-flex;align-items:center;gap:var(--s4);
+      display:inline-flex;align-items:center;gap:6px;
       padding:4px 10px;border-radius:999px;
       font-size:11px;text-transform:uppercase;letter-spacing:.14em;
       background:rgba(15,23,42,.7);border:1px solid rgba(148,163,184,.4);
-      margin-bottom:var(--s8);
+      margin-bottom:8px;
     }
     .hero-badge-dot{
       width:7px;height:7px;border-radius:999px;background:#22c55e;
       box-shadow:0 0 0 4px rgba(34,197,94,.35);
     }
     .hero-title{
-      margin:0 0 var(--s8);
-      font-size:24px;
-      line-height:1.25;
+      margin:0 0 6px;
+      font-size:30px;
+      line-height:1.2;
     }
     .hero-sub{
       margin:0;
-      font-size:15px;
+      font-size:14px;
       color:#e5e7eb;
+      max-width:620px;
     }
     .hero-sub span{font-weight:600;color:#38bdf8}
     .hero-note{
-      margin:var(--s8) 0 0;
+      margin:6px 0 0;
       font-size:12px;
       color:#9ca3af;
+      max-width:560px;
     }
 
     .content{
-      margin-top:var(--s16);
-      display:flex;
-      flex-direction:column;
-      gap:var(--s16);
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:minmax(0,2.1fr) minmax(0,1.4fr);
+      gap:20px;
+      align-items:flex-start;
     }
 
     .left{
       background:#f9fafb;
-      border-radius:16px;
-      padding:var(--s16);
+      border-radius:18px;
+      padding:18px;
       border:1px solid #e5e7eb;
-      box-shadow:0 10px 28px rgba(15,23,42,.22);
-      font-size:14px;
+      box-shadow:0 12px 32px rgba(15,23,42,.22);
     }
     .logo{
       font-weight:700;letter-spacing:.16em;text-transform:uppercase;
-      font-size:11px;color:#4f46e5;margin-bottom:var(--s8);
+      font-size:11px;color:#4f46e5;margin-bottom:6px;
     }
-    .left-title{margin:0 0 var(--s4);font-size:20px;line-height:1.25}
-    .left-sub{margin:0 0 var(--s12);font-size:13px;color:#4b5563}
-    .slow{margin:0 0 var(--s16);font-size:12px;color:#6b7280}
+    .left-title{margin:0 0 4px;font-size:20px;line-height:1.25;color:#111827}
+    .left-sub{margin:0 0 10px;font-size:13px;color:#4b5563}
+    .slow{font-size:12px;color:#6b7280;margin:0 0 12px}
     .slow span{color:#16a34a;font-weight:600}
 
     .section-title{
       font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;
-      color:#9ca3af;margin-top:var(--s20);margin-bottom:var(--s4);
+      color:#9ca3af;margin-top:14px;margin-bottom:4px;
     }
     .block{
       border-radius:14px;background:#fff;border:1px solid #e5e7eb;
-      padding:10px 12px 12px;margin-bottom:var(--s4);
+      padding:12px;margin-bottom:4px;
     }
-    .steps{font-size:13px;color:#4b5563;line-height:1.5}
+    .steps{font-size:12px;color:#4b5563;line-height:1.5}
     .steps b{color:#111827}
 
-    .reg-row{margin-top:var(--s16)}
+    .reg-row{
+      margin-top:10px;
+      display:flex;flex-wrap:wrap;gap:10px;
+    }
     .btn-primary{
-      width:100%;
       display:inline-flex;align-items:center;justify-content:center;
-      padding:12px 18px;border-radius:999px;border:0;
-      font-size:15px;font-weight:600;letter-spacing:.02em;
+      padding:9px 20px;border-radius:999px;border:0;
+      font-size:13px;font-weight:600;letter-spacing:.02em;
       cursor:pointer;text-decoration:none;color:#fff;
       background:linear-gradient(135deg,#2563eb 0%,#4f46e5 55%,#7c3aed 100%);
       box-shadow:0 12px 30px rgba(37,99,235,.55);
       transition:transform .12s,box-shadow .12s,filter .12s;
-      min-height:48px;
     }
-    .btn-primary:active{transform:translateY(1px);box-shadow:0 6px 18px rgba(15,23,42,.5)}
+    .btn-primary:hover{
+      transform:translateY(-1px);
+      filter:brightness(1.04);
+      box-shadow:0 16px 40px rgba(37,99,235,.7);
+    }
+    .btn-primary:active{
+      transform:translateY(0);
+      box-shadow:0 8px 22px rgba(15,23,42,.5);
+    }
 
     .verify-row{
-      display:flex;flex-direction:column;
-      gap:var(--s8);margin-top:var(--s6);
+      display:flex;align-items:center;gap:8px;
+      flex-wrap:wrap;margin-top:4px;
     }
+    .verify-input-wrap{flex:1 1 160px;min-width:0}
     .verify-input{
-      width:100%;padding:12px 16px;border-radius:999px;
+      width:100%;padding:8px 11px;border-radius:999px;
       border:1px solid #d1d5db;background:#fff;color:#111827;
-      font-size:16px;outline:none;
-      transition:border-color .15s,box-shadow .15s;
-      min-height:46px;
+      font-size:13px;outline:none;
+      transition:border-color .15s,box-shadow .15s,background .15s,color .15s;
     }
     .verify-input:focus{border-color:#4f46e5;box-shadow:0 0 0 1px rgba(79,70,229,.35)}
     .verify-input:disabled{background:#e5e7eb;cursor:not-allowed;color:#9ca3af}
     .verify-btn{
-      width:100%;
-      padding:11px 16px;border-radius:999px;border:0;
-      font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+      padding:7px 16px;border-radius:999px;border:0;
+      font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
       cursor:pointer;background:#111827;color:#f9fafb;
       display:inline-flex;align-items:center;justify-content:center;gap:6px;
-      min-height:44px;
+      transition:background .12s,transform .12s,box-shadow .12s;
+      white-space:nowrap;
+    }
+    .verify-btn:hover{
+      background:#020617;
+      transform:translateY(-1px);
+      box-shadow:0 6px 16px rgba(15,23,42,.5);
     }
     .verify-status{
-      font-size:12px;min-height:16px;color:#6b7280;margin-top:var(--s6);
+      font-size:11px;min-height:16px;color:#6b7280;margin-top:4px;
     }
     .verify-status.ok{color:#16a34a}
     .verify-status.err{color:#dc2626}
 
     .spinner{
-      width:14px;height:14px;border-radius:50%;
+      width:13px;height:13px;border-radius:50%;
       border:2px solid rgba(243,244,246,.6);border-top-color:#4f46e5;
       animation:spin .7s linear infinite;display:none;
     }
     .spinner.show{display:inline-block}
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    .streams-title{font-size:15px;font-weight:600;margin-bottom:var(--s8);color:#111827}
-    .streams-hint{font-size:12px;color:#6b7280;margin-bottom:var(--s12)}
+    /* Блок трансляций из твоего примера */
+    .streams-card{
+      margin-top:6px;
+      padding-top:8px;
+      border-top:1px solid #e5e7eb;
+    }
+    .streams-title{
+      font-size:13px;font-weight:600;margin-bottom:4px;color:#111827;
+    }
+    .streams-hint{
+      font-size:11px;color:#6b7280;margin-bottom:8px;
+    }
     .streams{
       list-style:none;padding:0;margin:0;
-      display:flex;flex-direction:column;
-      gap:var(--s10);
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:8px;
     }
     .stream-item a{
-      display:flex;flex-direction:column;align-items:flex-start;
-      gap:var(--s4);padding:var(--s12);border-radius:12px;
-      text-decoration:none;font-size:13px;color:#111827;
+      display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+      gap:3px;padding:8px 9px;border-radius:10px;
+      text-decoration:none;font-size:12px;color:#111827;
       background:#fff;border:1px solid #e5e7eb;
       transition:box-shadow .12s,transform .12s,border-color .12s,background .12s,opacity .12s;
-      min-height:68px;
     }
     .streams a span{font-weight:500}
-    .streams a small{font-size:11px;color:#6b7280}
-    .stream-meta{display:flex;flex-wrap:wrap;gap:var(--s4);font-size:11px;color:#6b7280}
+    .streams a small{font-size:10px;color:#6b7280}
+    .stream-meta{
+      display:flex;flex-wrap:wrap;gap:6px;
+      font-size:11px;color:#6b7280;
+    }
     .meta-pill{
-      display:inline-flex;align-items:center;gap:var(--s4);
-      padding:3px 7px;border-radius:999px;background:#f3f4ff;color:#4b5563;
+      display:inline-flex;align-items:center;gap:4px;
+      padding:2px 6px;border-radius:999px;background:#f3f4ff;color:#4b5563;
     }
     .meta-pill.live{background:#fee2e2;color:#b91c1c}
-    .meta-pill .dot{width:6px;height:6px;border-radius:999px;background:#22c55e}
+    .meta-pill span.dot{
+      width:6px;height:6px;border-radius:999px;background:#22c55e;
+    }
     .meta-label{color:#6b7280}
-    .streams.locked a{opacity:.4;box-shadow:none;transform:none}
-
-    .note{margin-top:var(--s8);font-size:12px;color:#6b7280}
-
-    .testimonials{
-      margin-top:var(--s16);border-radius:14px;background:#020617;
-      border:1px solid rgba(148,163,184,.5);padding:var(--s12);color:#e5e7eb;
+    .streams a:hover{
+      border-color:#c7d2fe;background:#f3f4ff;
+      box-shadow:0 10px 24px rgba(15,23,42,.12);
+      transform:translateY(-1px);
     }
-    .testimonials-title{
-      font-size:15px;font-weight:600;margin:0 0 var(--s8);
-      display:flex;justify-content:space-between;align-items:center;gap:var(--s8);
+    .streams.locked a{
+      opacity:.45;
+      cursor:default;
+      box-shadow:none;
+      transform:none;
     }
-    .testimonials-badge{
-      display:inline-flex;align-items:center;gap:var(--s4);
-      font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:.14em;
-    }
-    .reviews-count{
-      padding:3px 7px;border-radius:999px;
-      background:rgba(34,197,94,.15);color:#bbf7d0;
-      font-weight:600;font-size:10px;
-    }
-    .testimonial-view{
-      background:rgba(15,23,42,.9);border-radius:10px;
-      padding:var(--s12);font-size:13px;line-height:1.5;
-      position:relative;overflow:hidden;border:1px solid rgba(55,65,81,.8);min-height:64px;
-      margin-bottom:var(--s8);
-    }
-    .testimonial-view:before{
-      content:"“";position:absolute;top:-6px;left:8px;
-      font-size:40px;color:rgba(148,163,184,.2);
-    }
-    .testimonial-text{position:relative;z-index:1}
-    .testimonial-name{margin-top:var(--s8);font-size:12px;color:#9ca3af}
-
-    .testimonial-nav{
-      margin-top:var(--s4);display:flex;justify-content:space-between;align-items:center;
-      gap:var(--s8);font-size:12px;color:#9ca3af;
-    }
-    .nav-buttons{display:flex;gap:var(--s8)}
-    .nav-btn{
-      border-radius:999px;border:1px solid rgba(148,163,184,.7);
-      background:transparent;color:#e5e7eb;font-size:12px;
-      padding:6px 12px;cursor:pointer;display:inline-flex;
-      align-items:center;justify-content:center;gap:var(--s4);
-      min-height:36px;
-    }
-
-    .testimonial-form{
-      margin-top:10px;
-      display:grid;
-      grid-template-columns:minmax(0,1fr);
-      gap:8px;
-      font-size:13px;
-    }
-    .input-row{display:flex;flex-direction:column;gap:8px}
-    .input-label{font-size:11px;color:#9ca3af;margin-bottom:4px}
-    .input-control{
-      width:100%;border-radius:999px;border:1px solid #4b5563;
-      padding:11px 14px;font-size:15px;
-      background:rgba(15,23,42,.95);color:#e5e7eb;
-      outline:none;min-height:44px;
-    }
-    .textarea{border-radius:10px;min-height:72px;resize:vertical}
-    .btn-send{
-      width:100%;
-      margin-top:var(--s4);
-      padding:10px 16px;border-radius:999px;border:0;
-      font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-      cursor:pointer;background:#22c55e;color:#022c22;
-      display:inline-flex;align-items:center;justify-content:center;gap:var(--s4);
-      min-height:44px;
-    }
-    .testimonial-status{
-      font-size:11px;color:#9ca3af;margin-top:var(--s4);min-height:16px;
-    }
-    .testimonial-status.ok{color:#4ade80}
-    .testimonial-status.err{color:#fecaca}
-    .testimonial-list-wrapper{
-      margin-top:var(--s10);border-top:1px solid rgba(55,65,81,.7);
-      padding-top:var(--s8);
-    }
-    .testimonial-list-title{font-size:11px;color:#9ca3af;margin-bottom:var(--s4)}
-    .testimonial-list{
-      max-height:150px;overflow-y:auto;padding-right:4px;
-      list-style:none;margin:0;
-    }
-    .testimonial-list-item{
-      font-size:11px;line-height:1.4;
-      padding:var(--s4) 0;border-bottom:1px dashed rgba(55,65,81,.7);
-    }
-    .testimonial-list-item:last-child{border-bottom:none}
-    .testimonial-list-name{font-weight:600;color:#e5e7eb}
-    .testimonial-list-text{color:#cbd5f5}
+    .note{margin-top:6px;font-size:11px;color:#6b7280}
 
     .right{
-      border-radius:16px;padding:var(--s16);
+      border-radius:18px;
+      padding:16px 16px 14px;
       border:1px solid rgba(148,163,184,.4);
       background:radial-gradient(circle at top left,rgba(59,130,246,.3),rgba(15,23,42,.9));
       color:#e5e7eb;box-shadow:0 10px 30px rgba(15,23,42,.55);
-      font-size:14px;
     }
-    .right-title{margin:0 0 var(--s8);font-size:18px}
-    .right-text{margin:0 0 var(--s8);font-size:14px}
-    .right-highlight{margin:0;font-size:13px;color:#a5b4fc}
+    .right-title{margin:0 0 6px;font-size:18px}
+    .right-text{margin:0 0 8px;font-size:13px;color:#e5e7eb}
+    .right-highlight{margin:0;font-size:12px;color:#a5b4fc}
+
+    /* Блок отзывов из примера */
+    .testimonials{
+      margin-top:14px;border-radius:14px;background:#020617;
+      border:1px solid rgba(148,163,184,.5);padding:10px 12px 12px;color:#e5e7eb;
+    }
+    .testimonials-title{
+      font-size:13px;font-weight:600;margin:0 0 6px;
+      display:flex;justify-content:space-between;align-items:center;gap:8px;
+    }
+    .testimonials-badge{
+      font-size:10px;color:#9ca3af;text-transform:uppercase;letter-spacing:.14em;
+    }
+    .testimonial-view{
+      background:rgba(15,23,42,.9);border-radius:10px;
+      padding:8px 9px 9px;font-size:12px;line-height:1.4;
+      position:relative;overflow:hidden;border:1px solid rgba(55,65,81,.8);min-height:54px;
+    }
+    .testimonial-view:before{
+      content:"“";position:absolute;top:-10px;left:6px;
+      font-size:40px;color:rgba(148,163,184,.2);
+    }
+    .testimonial-text{position:relative;z-index:1}
+    .testimonial-name{margin-top:4px;font-size:11px;color:#9ca3af}
+
+    .testimonial-nav{
+      margin-top:6px;display:flex;justify-content:space-between;align-items:center;
+      gap:8px;font-size:11px;color:#9ca3af;
+    }
+    .nav-buttons{display:flex;gap:4px}
+    .nav-btn{
+      border-radius:999px;border:1px solid rgba(148,163,184,.7);
+      background:transparent;color:#e5e7eb;font-size:11px;
+      padding:2px 8px;cursor:pointer;display:inline-flex;
+      align-items:center;justify-content:center;gap:4px;
+      transition:background .12s,color .12s,border-color .12s;
+    }
+    .nav-btn:hover{
+      background:rgba(148,163,184,.2);
+      border-color:#e5e7eb;
+    }
+
+    .testimonial-form{
+      margin-top:8px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr);
+      gap:6px;font-size:12px;
+    }
+    .input-row{
+      display:flex;gap:6px;flex-wrap:wrap;
+    }
+    .input-row .field{
+      flex:1 1 120px;min-width:0;
+    }
+    .input-label{
+      font-size:11px;color:#9ca3af;margin-bottom:2px;
+    }
+    .input-control{
+      width:100%;border-radius:999px;border:1px solid #4b5563;
+      padding:6px 9px;font-size:12px;
+      background:rgba(15,23,42,.95);color:#e5e7eb;
+      outline:none;
+      transition:border-color .15s,box-shadow .15s,background .15s;
+    }
+    .input-control:focus{
+      border-color:#6366f1;
+      box-shadow:0 0 0 1px rgba(79,70,229,.5);
+    }
+    .input-control::placeholder{color:#6b7280}
+    .input-control.textarea{
+      border-radius:10px;min-height:46px;resize:vertical;
+    }
+    .btn-send{
+      align-self:flex-start;margin-top:2px;
+      padding:6px 12px;border-radius:999px;border:0;
+      font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+      cursor:pointer;background:#22c55e;color:#022c22;
+      display:inline-flex;align-items:center;justify-content:center;gap:4px;
+      transition:background .12s,transform .12s,box-shadow .12s;
+    }
+    .btn-send:hover{
+      background:#16a34a;
+      transform:translateY(-1px);
+      box-shadow:0 6px 14px rgba(22,163,74,.5);
+    }
+    .testimonial-status{
+      font-size:11px;color:#9ca3af;margin-top:2px;min-height:14px;
+    }
+    .testimonial-status.ok{color:#4ade80}
+    .testimonial-status.err{color:#fecaca}
+
+    @media(max-width:860px){
+      .content{grid-template-columns:minmax(0,1fr)}
+      .right{order:-1}
+      .page{margin-top:18px}
+    }
+    @media(max-width:600px){
+      .hero-title{font-size:24px}
+      .left{padding:14px 12px 12px}
+      .btn-primary{width:100%;justify-content:center;text-align:center}
+      .verify-row{flex-direction:column;align-items:stretch}
+      .verify-btn{width:100%;justify-content:center}
+      .input-row{flex-direction:column}
+      .hero{text-align:left}
+    }
   </style>
 </head>
 <body>
@@ -312,10 +368,12 @@
 
       <div class="section-title">Шаг 2 — проверка ID</div>
       <div class="block">
-        <div class="steps">Введите ID аккаунта Melbet (до 9 цифр).</div>
+        <div class="steps" style="margin-bottom:6px;">Введите ID аккаунта Melbet (до 9 цифр).</div>
         <div class="verify-row">
-          <input id="accountId" class="verify-input" type="text" inputmode="numeric" maxlength="9"
-                 placeholder="Поле станет доступно после регистрации" disabled>
+          <div class="verify-input-wrap">
+            <input id="accountId" class="verify-input" type="text" inputmode="numeric" maxlength="9"
+                   placeholder="Поле станет доступно после регистрации" disabled>
+          </div>
           <button id="verifyBtn" class="verify-btn" type="button">
             Проверить
             <span id="verifySpinner" class="spinner"></span>
@@ -327,15 +385,40 @@
       </div>
 
       <div class="section-title">Шаг 3 — выбор трансляции</div>
-      <div class="block">
+      <div class="block streams-card">
         <div class="streams-title">Список трансляций</div>
         <div class="streams-hint">
           Доступны трансляции всех топ‑матчей. Нажмите на каждое видео, чтобы найти нужное именно для себя.
         </div>
 
         <ul class="streams locked" id="streams">
-          <!-- те же ссылки на Матч 1–10 -->
-          <!-- ... скопируй свои <li> отсюда без изменений ... -->
+          <!-- 1 -->
+          <li class="stream-item">
+            <a href="https://playball10.com/p2p-reserv/10tka.php" target="_blank">
+              <span>Матч 1</span>
+              <small>HD • live</small>
+              <div class="stream-meta">
+                <span class="meta-pill live"><span class="dot"></span> В эфире</span>
+                <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="180" data-max="350">—</span></span>
+                <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.9" data-max="5.0">—</span></span>
+                <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="40" data-max="120">—</span></span>
+              </div>
+            </a>
+          </li>
+          <!-- остальные матчи 2–10 по твоему коду -->
+          <li class="stream-item">
+            <a href="https://playball10.com/p2p-reserv/10tka2.php" target="_blank">
+              <span>Матч 2</span>
+              <small>HD • live</small>
+              <div class="stream-meta">
+                <span class="meta-pill live"><span class="dot"></span> В эфире</span>
+                <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="160" data-max="320">—</span></span>
+                <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.92" data-max="5.0">—</span></span>
+                <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="30" data-max="100">—</span></span>
+              </div>
+            </a>
+          </li>
+          <!-- ... 3–10 вставь от исходника ... -->
         </ul>
 
         <p class="note">
@@ -346,10 +429,7 @@
       <div class="testimonials">
         <div class="testimonials-title">
           <span>Что говорят зрители</span>
-          <span class="testimonials-badge">
-            живые отзывы
-            <span class="reviews-count">104 отзыва</span>
-          </span>
+          <span class="testimonials-badge">живые отзывы</span>
         </div>
 
         <div class="testimonial-view">
@@ -367,29 +447,22 @@
 
         <form class="testimonial-form" id="testimonialForm">
           <div class="input-row">
-            <div>
+            <div class="field">
               <div class="input-label">Имя</div>
               <input type="text" id="inputName" class="input-control" placeholder="Например: Артём">
             </div>
-            <div>
+            <div class="field">
               <div class="input-label">Где смотрите</div>
               <input type="text" id="inputContext" class="input-control" placeholder="Телефон, ноутбук и т.п.">
             </div>
           </div>
-          <div>
+          <div class="field">
             <div class="input-label">Ваш отзыв</div>
             <textarea id="inputText" class="input-control textarea" placeholder="Напишите пару слов, как вам сервис"></textarea>
           </div>
           <button type="submit" class="btn-send">Оставить отзыв</button>
           <div id="testimonialStatus" class="testimonial-status"></div>
         </form>
-
-        <div class="testimonial-list-wrapper">
-          <div class="testimonial-list-title">Последние отзывы зрителей:</div>
-          <ul id="testimonialList" class="testimonial-list">
-            <!-- можешь оставить свои li как есть -->
-          </ul>
-        </div>
       </div>
     </section>
 
@@ -422,24 +495,24 @@
     return Math.floor(Math.random()*(max-min+1))+min;
   }
   function randomRating(min,max){
-    const v=Math.random()*(max-min)+min;
-    return v.toFixed(2);
+    const value=Math.random()*(max-min)+min;
+    return value.toFixed(2);
   }
   function updateStats(){
-    document.querySelectorAll('.viewers').forEach(s=>{
-      const min=Number(s.dataset.min||100);
-      const max=Number(s.dataset.max||400);
-      s.textContent=randomInt(min,max)+' чел.';
+    document.querySelectorAll('.viewers').forEach(span=>{
+      const min=Number(span.dataset.min||100);
+      const max=Number(span.dataset.max||400);
+      span.textContent=randomInt(min,max)+' чел.';
     });
-    document.querySelectorAll('.rating').forEach(s=>{
-      const min=Number(s.dataset.min||4.9);
-      const max=Number(s.dataset.max||5.0);
-      s.textContent=randomRating(min,max);
+    document.querySelectorAll('.rating').forEach(span=>{
+      const min=Number(span.dataset.min||4.9);
+      const max=Number(span.dataset.max||5.0);
+      span.textContent=randomRating(min,max);
     });
-    document.querySelectorAll('.likes').forEach(s=>{
-      const min=Number(s.dataset.min||20);
-      const max=Number(s.dataset.max||150);
-      s.textContent=randomInt(min,max);
+    document.querySelectorAll('.likes').forEach(span=>{
+      const min=Number(span.dataset.min||20);
+      const max=Number(span.dataset.max||150);
+      span.textContent=randomInt(min,max);
     });
   }
   if(document.querySelector('.viewers')){
@@ -525,46 +598,63 @@
   const inputContext=document.getElementById('inputContext');
   const inputText=document.getElementById('inputText');
   const statusEl=document.getElementById('testimonialStatus');
-  const testimonialList=document.getElementById('testimonialList');
 
-  function renderTestimonial(i){
+  function renderTestimonial(index){
     if(!testimonials.length)return;
-    const t=testimonials[i];
+    const t=testimonials[index];
     textEl.textContent=t.text;
-    nameEl.textContent=t.name+' • '+t.context;
-    counterEl.textContent=(i+1)+' / '+testimonials.length;
+    nameEl.textContent=t.context?`${t.name}, ${t.context}`:t.name;
+    counterEl.textContent=(index+1)+' / '+testimonials.length;
   }
-  renderTestimonial(currentTestimonial);
-
-  prevBtn.addEventListener('click',()=>{
-    currentTestimonial=(currentTestimonial-1+testimonials.length)%testimonials.length;
-    renderTestimonial(currentTestimonial);
-  });
-  nextBtn.addEventListener('click',()=>{
+  function showNext(){
+    if(!testimonials.length)return;
     currentTestimonial=(currentTestimonial+1)%testimonials.length;
     renderTestimonial(currentTestimonial);
+  }
+  function showPrev(){
+    if(!testimonials.length)return;
+    currentTestimonial=(currentTestimonial-1+testimonials.length)%testimonials.length;
+    renderTestimonial(currentTestimonial);
+  }
+
+  prevBtn.addEventListener('click',function(){
+    showPrev();
+    resetRotationTimer();
+  });
+  nextBtn.addEventListener('click',function(){
+    showNext();
+    resetRotationTimer();
   });
 
-  formEl.addEventListener('submit',e=>{
+  formEl.addEventListener('submit',function(e){
     e.preventDefault();
     const name=inputName.value.trim()||'Гость';
-    const ctx=inputContext.value.trim()||'зритель';
-    const txt=inputText.value.trim();
-    if(!txt){
-      statusEl.textContent='Напишите хотя бы пару слов об эфире.';
+    const context=inputContext.value.trim();
+    const text=inputText.value.trim();
+    if(!text){
+      statusEl.textContent='Напишите хотя бы пару слов в отзыве.';
       statusEl.className='testimonial-status err';
       return;
     }
-    testimonials.unshift({text:txt,name,context:ctx});
-    const li=document.createElement('li');
-    li.className='testimonial-list-item';
-    li.innerHTML='<span class="testimonial-list-name">'+name+':</span> <span class="testimonial-list-text"> '+txt+'</span>';
-    testimonialList.prepend(li);
-    inputText.value='';
-    statusEl.textContent='Спасибо, отзыв отправлен!';
+    testimonials.push({text,name,context});
+    currentTestimonial=testimonials.length-1;
+    renderTestimonial(currentTestimonial);
+    statusEl.textContent='Отзыв добавлен! Спасибо.';
     statusEl.className='testimonial-status ok';
-    renderTestimonial(0);
+    inputText.value='';
+    resetRotationTimer();
   });
+
+  let rotationTimer=null;
+  function startRotation(){
+    rotationTimer=setInterval(showNext,7000);
+  }
+  function resetRotationTimer(){
+    if(rotationTimer)clearInterval(rotationTimer);
+    startRotation();
+  }
+  renderTestimonial(currentTestimonial);
+  startRotation();
 </script>
 </body>
 </html>
