@@ -1,131 +1,414 @@
-<ul class="streams locked" id="streams">
-  <li class="stream-item">
-    <a href="https://playball10.com/p2p-reserv/10tka.php" target="_blank" rel="noopener noreferrer">
-      <span>Трансляция 1</span>
-      <small>HD • live</small>
-      <div class="stream-meta">
-        <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-        <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="180" data-max="350">—</span></span>
-        <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.9" data-max="5.0">—</span></span>
-        <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="40" data-max="120">—</span></span>
-      </div>
-    </a>
-  </li>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Доступ к трансляциям</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      min-height:100vh;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:#111827;
+      background:linear-gradient(135deg,#020617 0%,#020617 40%,#111827 100%);
+    }
 
-  <li class="stream-item">
-    <a href="https://playball10.com/p2p-reserv/10tka2.php" target="_blank" rel="noopener noreferrer">
-      <span>Трансляция 2</span>
-      <small>HD • live</small>
-      <div class="stream-meta">
-        <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-        <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="160" data-max="320">—</span></span>
-        <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.92" data-max="5.0">—</span></span>
-        <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="30" data-max="100">—</span></span>
-      </div>
-    </a>
-  </li>
+    .page{
+      width:100%;
+      max-width:1080px;
+      margin:24px auto 40px;
+      padding:0 16px;
+    }
 
-  <li class="stream-item">
-    <a href="https://playball10.com/p2p-reserv/10tka3.php" target="_blank" rel="noopener noreferrer">
-      <span>Трансляция 3</span>
-      <small>HD • live</small>
-      <div class="stream-meta">
-        <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-        <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="140" data-max="300">—</span></span>
-        <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.9" data-max="4.99">—</span></span>
-        <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="20" data-max="90">—</span></span>
-      </div>
-    </a>
-  </li>
+    .hero{
+      text-align:left;
+      color:#f9fafb;
+      margin-bottom:20px;
+    }
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:4px 10px;border-radius:999px;
+      font-size:11px;text-transform:uppercase;letter-spacing:.14em;
+      background:rgba(15,23,42,.7);border:1px solid rgba(148,163,184,.4);
+      margin-bottom:8px;
+    }
+    .hero-badge-dot{
+      width:7px;height:7px;border-radius:999px;background:#22c55e;
+      box-shadow:0 0 0 4px rgba(34,197,94,.35);
+    }
+    .hero-title{
+      margin:0 0 6px;
+      font-size:30px;
+      line-height:1.2;
+    }
+    .hero-sub{
+      margin:0;
+      font-size:14px;
+      color:#e5e7eb;
+      max-width:620px;
+    }
+    .hero-sub span{font-weight:600;color:#38bdf8}
+    .hero-note{
+      margin:6px 0 0;
+      font-size:12px;
+      color:#9ca3af;
+      max-width:560px;
+    }
 
-  <li class="stream-item">
-    <a href="https://playball10.com/p2p-reserv/10tka4.php" target="_blank" rel="noopener noreferrer">
-      <span>Трансляция 4</span>
-      <small>HD • live</small>
-      <div class="stream-meta">
-        <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-        <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="150" data-max="340">—</span></span>
-        <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.93" data-max="5.0">—</span></span>
-        <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="30" data-max="110">—</span></span>
-      </div>
-    </a>
-  </li>
+    .content{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:minmax(0,2.1fr) minmax(0,1.4fr);
+      gap:20px;
+      align-items:flex-start;
+    }
 
-  <li class="stream-item">
-    <a href="https://playball10.com/p2p-reserv/10tka5.php" target="_blank" rel="noopener noreferrer">
-      <span>Трансляция 5</span>
-      <small>HD • live</small>
-      <div class="stream-meta">
-        <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-        <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="120" data-max="280">—</span></span>
-        <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.9" data-max="4.98">—</span></span>
-        <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="15" data-max="80">—</span></span>
-      </div>
-    </a>
-  </li>
+    .left{
+      background:#f9fafb;
+      border-radius:18px;
+      padding:18px;
+      border:1px solid #e5e7eb;
+      box-shadow:0 12px 32px rgba(15,23,42,.22);
+    }
+    .logo{
+      font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+      font-size:11px;color:#4f46e5;margin-bottom:6px;
+    }
+    .left-title{margin:0 0 4px;font-size:20px;line-height:1.25;color:#111827}
+    .left-sub{margin:0 0 10px;font-size:13px;color:#4b5563}
+    .slow{font-size:12px;color:#6b7280;margin:0 0 12px}
+    .slow span{color:#16a34a;font-weight:600}
 
-  <li class="stream-item">
-    <a href="https://playball10.com/p2p-reserv/10tka6.php" target="_blank" rel="noopener noreferrer">
-      <span>Трансляция 6</span>
-      <small>HD • live</small>
-      <div class="stream-meta">
-        <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-        <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="130" data-max="310">—</span></span>
-        <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.94" data-max="5.0">—</span></span>
-        <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="25" data-max="95">—</span></span>
-      </div>
-    </a>
-  </li>
+    .section-title{
+      font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;
+      color:#9ca3af;margin-top:14px;margin-bottom:4px;
+    }
+    .block{
+      border-radius:14px;background:#fff;border:1px solid #e5e7eb;
+      padding:12px;margin-bottom:4px;
+    }
+    .steps{font-size:12px;color:#4b5563;line-height:1.5}
+    .steps b{color:#111827}
 
-  <li class="stream-item">
-    <a href="https://playball10.com/p2p-reserv/10tka7.php" target="_blank" rel="noopener noreferrer">
-      <span>Трансляция 7</span>
-      <small>HD • live</small>
-      <div class="stream-meta">
-        <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-        <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="150" data-max="360">—</span></span>
-        <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.95" data-max="5.0">—</span></span>
-        <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="30" data-max="120">—</span></span>
-      </div>
-    </a>
-  </li>
+    .reg-row{
+      margin-top:10px;
+      display:flex;flex-wrap:wrap;gap:10px;
+    }
+    .btn-primary{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:9px 20px;border-radius:999px;border:0;
+      font-size:13px;font-weight:600;letter-spacing:.02em;
+      cursor:pointer;text-decoration:none;color:#fff;
+      background:linear-gradient(135deg,#2563eb 0%,#4f46e5 55%,#7c3aed 100%);
+      box-shadow:0 12px 30px rgba(37,99,235,.55);
+      transition:transform .12s,box-shadow .12s,filter .12s;
+    }
+    .btn-primary:hover{
+      transform:translateY(-1px);
+      filter:brightness(1.04);
+      box-shadow:0 16px 40px rgba(37,99,235,.7);
+    }
+    .btn-primary:active{
+      transform:translateY(0);
+      box-shadow:0 8px 22px rgba(15,23,42,.5);
+    }
 
-  <li class="stream-item">
-    <a href="https://playball10.com/p2p-reserv/10tka8.php" target="_blank" rel="noopener noreferrer">
-      <span>Трансляция 8</span>
-      <small>HD • live</small>
-      <div class="stream-meta">
-        <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-        <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="140" data-max="330">—</span></span>
-        <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.9" data-max="4.99">—</span></span>
-        <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="20" data-max="100">—</span></span>
-      </div>
-    </a>
-  </li>
+    .verify-row{
+      display:flex;align-items:center;gap:8px;
+      flex-wrap:wrap;margin-top:4px;
+    }
+    .verify-input-wrap{flex:1 1 160px;min-width:0}
+    .verify-input{
+      width:100%;padding:8px 11px;border-radius:999px;
+      border:1px solid #d1d5db;background:#fff;color:#111827;
+      font-size:13px;outline:none;
+      transition:border-color .15s,box-shadow .15s,background .15s,color .15s;
+    }
+    .verify-input:focus{border-color:#4f46e5;box-shadow:0 0 0 1px rgba(79,70,229,.35)}
+    .verify-input:disabled{background:#e5e7eb;cursor:not-allowed;color:#9ca3af}
+    .verify-btn{
+      padding:7px 16px;border-radius:999px;border:0;
+      font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+      cursor:pointer;background:#111827;color:#f9fafb;
+      display:inline-flex;align-items:center;justify-content:center;gap:6px;
+      transition:background .12s,transform .12s,box-shadow .12s;
+      white-space:nowrap;
+    }
+    .verify-btn:hover{
+      background:#020617;
+      transform:translateY(-1px);
+      box-shadow:0 6px 16px rgba(15,23,42,.5);
+    }
+    .verify-status{
+      font-size:11px;min-height:16px;color:#6b7280;margin-top:4px;
+    }
+    .verify-status.ok{color:#16a34a}
+    .verify-status.err{color:#dc2626}
 
-  <li class="stream-item">
-    <a href="https://playball10.com/p2p-reserv/10tka9.php" target="_blank" rel="noopener noreferrer">
-      <span>Трансляция 9</span>
-      <small>HD • live</small>
-      <div class="stream-meta">
-        <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-        <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="110" data-max="260">—</span></span>
-        <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.9" data-max="4.97">—</span></span>
-        <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="10" data-max="70">—</span></span>
-      </div>
-    </a>
-  </li>
+    .spinner{
+      width:13px;height:13px;border-radius:50%;
+      border:2px solid rgba(243,244,246,.6);border-top-color:#4f46e5;
+      animation:spin .7s linear infinite;display:none;
+    }
+    .spinner.show{display:inline-block}
+    @keyframes spin{to{transform:rotate(360deg)}}
 
-  <li class="stream-item">
-    <a href="https://playball10.com/p2p-reserv/10tka10.php" target="_blank" rel="noopener noreferrer">
-      <span>Трансляция 10</span>
-      <small>HD • live</small>
-      <div class="stream-meta">
-        <span class="meta-pill live"><span class="dot"></span>В эфире</span>
-        <span class="meta-pill"><span class="meta-label">Смотрят:</span> <span class="viewers" data-min="120" data-max="280">—</span></span>
-        <span class="meta-pill"><span class="meta-label">★</span> <span class="rating" data-min="4.93" data-max="5.0">—</span></span>
-        <span class="meta-pill"><span class="meta-label">❤</span> <span class="likes" data-min="20" data-max="90">—</span></span>
+    /* Трансляции — простой список + карточки */
+    .streams-card{
+      margin-top:6px;
+      padding-top:8px;
+      border-top:1px solid #e5e7eb;
+    }
+    .streams-title{
+      font-size:13px;font-weight:600;margin-bottom:4px;color:#111827;
+    }
+    .streams-hint{
+      font-size:11px;color:#6b7280;margin-bottom:8px;
+    }
+    .streams{
+      list-style:none;padding:0;margin:0;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:8px;
+    }
+    .streams a{
+      display:flex;flex-direction:column;align-items:flex-start;
+      gap:3px;padding:8px 9px;border-radius:10px;
+      text-decoration:none;font-size:12px;color:#111827;
+      background:#fff;border:1px solid #e5e7eb;
+      transition:box-shadow .12s,transform .12s,border-color .12s,background .12s,opacity .12s;
+    }
+    .streams a span{font-weight:500}
+    .streams a small{font-size:10px;color:#6b7280}
+    .streams.locked a{
+      opacity:.45;
+      cursor:default;
+      box-shadow:none;
+      transform:none;
+    }
+    .streams a:hover{
+      border-color:#c7d2fe;background:#f3f4ff;
+      box-shadow:0 10px 24px rgba(15,23,42,.12);
+      transform:translateY(-1px);
+    }
+
+    .note{margin-top:6px;font-size:11px;color:#6b7280}
+
+    .right{
+      border-radius:18px;
+      padding:16px 16px 14px;
+      border:1px solid rgba(148,163,184,.4);
+      background:radial-gradient(circle at top left,rgba(59,130,246,.3),rgba(15,23,42,.9));
+      color:#e5e7eb;box-shadow:0 10px 30px rgba(15,23,42,.55);
+    }
+    .right-title{margin:0 0 6px;font-size:18px}
+    .right-text{margin:0 0 8px;font-size:13px;color:#e5e7eb}
+    .right-highlight{margin:0;font-size:12px;color:#a5b4fc}
+
+    @media(max-width:860px){
+      .content{grid-template-columns:minmax(0,1fr)}
+      .right{order:-1}
+      .page{margin-top:18px}
+    }
+    @media(max-width:600px){
+      .hero-title{font-size:24px}
+      .left{padding:14px 12px 12px}
+      .btn-primary{width:100%;justify-content:center;text-align:center}
+      .verify-row{flex-direction:column;align-items:stretch}
+      .verify-btn{width:100%;justify-content:center}
+      .hero{text-align:left}
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header class="hero">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      БЕСПЛАТНЫЙ ДОСТУП К ЭФИРУ
+    </div>
+    <h1 class="hero-title">
+      Крутой бесплатный сервис трансляций топ‑матчей Лиги чемпионов
+      и других крупных турниров
+    </h1>
+    <p class="hero-sub">
+      Смотрите топовые игры <span>без абонентской платы</span>: один аккаунт Melbet открывает доступ ко всем трансляциям на этой странице.
+    </p>
+    <p class="hero-note">
+      Во время пиковых матчей нагрузка на сервера выше — иногда трансляция запускается чуть дольше, но поток обязательно догружается без перезагрузки.
+    </p>
+  </header>
+
+  <main class="content">
+    <section class="left">
+      <div class="logo">LIVE ACCESS</div>
+      <h2 class="left-title">Доступ к прямым трансляциям</h2>
+      <p class="left-sub">Пройдите быструю регистрацию в Melbet, укажите ID аккаунта и выбирайте любую трансляцию ниже.</p>
+
+      <p class="slow">
+        Если видео долго грузится, <span>просто подождите несколько секунд</span> — поток запустится автоматически.
+      </p>
+
+      <div class="section-title">Шаг 1 — регистрация</div>
+      <div class="block">
+        <div class="steps">
+          <b>1.</b> Нажмите кнопку «Зарегистрироваться в Melbet».<br>
+          <b>2.</b> Завершите регистрацию на официальном сайте.<br>
+          <b>3.</b> Вернитесь на эту страницу.
+        </div>
+        <div class="reg-row">
+          <a id="regBtn" class="btn-primary" href="https://clck.ru/3Mo7a2" target="_blank" rel="noopener noreferrer">
+            Зарегистрироваться в Melbet
+          </a>
+        </div>
       </div>
-    </a>
-  </li>
-</ul>
+
+      <div class="section-title">Шаг 2 — проверка ID</div>
+      <div class="block">
+        <div class="steps" style="margin-bottom:6px;">Введите ID аккаунта Melbet (до 9 цифр).</div>
+        <div class="verify-row">
+          <div class="verify-input-wrap">
+            <input id="accountId" class="verify-input" type="text" inputmode="numeric" maxlength="9"
+                   placeholder="Поле станет доступно после регистрации" disabled>
+          </div>
+          <button id="verifyBtn" class="verify-btn" type="button">
+            Проверить
+            <span id="verifySpinner" class="spinner"></span>
+          </button>
+        </div>
+        <div id="verifyStatus" class="verify-status">
+          Сначала зарегистрируйтесь по кнопке выше.
+        </div>
+      </div>
+
+      <div class="section-title">Шаг 3 — трансляции</div>
+      <div class="block streams-card">
+        <div class="streams-title">Список трансляций</div>
+        <div class="streams-hint">
+          Выберите любую трансляцию — будет открыт полноэкранный плеер с матчем.
+        </div>
+
+        <ul class="streams locked" id="streams">
+          <li><a href="https://playball10.com/p2p-reserv/10tka.php" target="_blank" rel="noopener noreferrer">Трансляция 1</a></li>
+          <li><a href="https://playball10.com/p2p-reserv/10tka2.php" target="_blank" rel="noopener noreferrer">Трансляция 2</a></li>
+          <li><a href="https://playball10.com/p2p-reserv/10tka3.php" target="_blank" rel="noopener noreferrer">Трансляция 3</a></li>
+          <li><a href="https://playball10.com/p2p-reserv/10tka4.php" target="_blank" rel="noopener noreferrer">Трансляция 4</a></li>
+          <li><a href="https://playball10.com/p2p-reserv/10tka5.php" target="_blank" rel="noopener noreferrer">Трансляция 5</a></li>
+          <li><a href="https://playball10.com/p2p-reserv/10tka6.php" target="_blank" rel="noopener noreferrer">Трансляция 6</a></li>
+          <li><a href="https://playball10.com/p2p-reserv/10tka7.php" target="_blank" rel="noopener noreferrer">Трансляция 7</a></li>
+          <li><a href="https://playball10.com/p2p-reserv/10tka8.php" target="_blank" rel="noopener noreferrer">Трансляция 8</a></li>
+          <li><a href="https://playball10.com/p2p-reserv/10tka9.php" target="_blank" rel="noopener noreferrer">Трансляция 9</a></li>
+          <li><a href="https://playball10.com/p2p-reserv/10tka10.php" target="_blank" rel="noopener noreferrer">Трансляция 10</a></li>
+        </ul>
+
+        <p class="note">
+          Если при открытии видео долго крутится, просто подождите — поток догрузится без перезагрузки страницы.
+        </p>
+      </div>
+    </section>
+
+    <aside class="right">
+      <h3 class="right-title">Почему это удобно</h3>
+      <p class="right-text">
+        Один аккаунт — доступ ко всем топ‑матчам: Лига чемпионов, европейские чемпионаты и другие крупные турниры.
+      </p>
+      <p class="right-text">
+        Регистрация проходит на официальном сайте Melbet, а эта страница даёт быстрый доступ только к трансляциям.
+      </p>
+      <p class="right-highlight">
+        Сначала регистрация и ID, затем — любой матч в пару кликов.
+      </p>
+    </aside>
+  </main>
+</div>
+
+<script>
+  let isRegistered = false;
+  let isVerified   = false;
+  let hasTriedOnce = false;
+
+  const regBtn        = document.getElementById('regBtn');
+  const streams       = document.getElementById('streams');
+  const accountId     = document.getElementById('accountId');
+  const verifyBtn     = document.getElementById('verifyBtn');
+  const verifySpinner = document.getElementById('verifySpinner');
+  const verifyStatus  = document.getElementById('verifyStatus');
+
+  // только цифры в ID
+  accountId.addEventListener('input', function () {
+    this.value = this.value.replace(/\D/g, '').slice(0, 9);
+  });
+
+  // клик по регистрации
+  regBtn.addEventListener('click', function () {
+    isRegistered = true;
+    accountId.disabled = false;
+    accountId.placeholder = 'Например: 123456789';
+    verifyStatus.textContent = 'Введите ID аккаунта и нажмите «Проверить».';
+    verifyStatus.className = 'verify-status';
+  });
+
+  // проверка ID (имитация)
+  verifyBtn.addEventListener('click', function () {
+    const id = accountId.value.trim();
+
+    if (!isRegistered) {
+      verifyStatus.textContent = 'Сначала завершите регистрацию в Melbet по кнопке выше.';
+      verifyStatus.className = 'verify-status err';
+      return;
+    }
+
+    if (!id) {
+      verifyStatus.textContent = 'Введите ID аккаунта, чтобы пройти проверку.';
+      verifyStatus.className = 'verify-status err';
+      return;
+    }
+
+    verifyBtn.disabled = true;
+    verifySpinner.classList.add('show');
+    verifyStatus.textContent = 'Проверяем ID аккаунта...';
+    verifyStatus.className = 'verify-status';
+
+    setTimeout(function () {
+      verifySpinner.classList.remove('show');
+      verifyBtn.disabled = false;
+
+      if (!hasTriedOnce) {
+        hasTriedOnce = true;
+        verifyStatus.textContent = 'ID не найдено, попробуйте ещё раз через 5 секунд.';
+        verifyStatus.className = 'verify-status err';
+        verifyBtn.disabled = true;
+        setTimeout(function () {
+          verifyBtn.disabled = false;
+        }, 5000);
+      } else {
+        isVerified = true;
+        verifyStatus.textContent = 'ID успешно проверен! Доступ к трансляциям открыт.';
+        verifyStatus.className = 'verify-status ok';
+        streams.classList.remove('locked');
+      }
+    }, 2000);
+  });
+
+  // защита ссылок на трансляции
+  streams.addEventListener('click', function (e) {
+    const link = e.target.closest('a');
+    if (!link) return;
+
+    if (!isRegistered) {
+      e.preventDefault();
+      alert('Сначала зарегистрируйтесь в Melbet, затем введите ID аккаунта и пройдите проверку.');
+      return;
+    }
+
+    if (!isVerified) {
+      e.preventDefault();
+      alert('Введите ID аккаунта Melbet, нажмите «Проверить» и дождитесь подтверждения, после этого можете открыть трансляцию.');
+      return;
+    }
+    // если всё ок — ссылка откроется в новой вкладке сама
+  });
+</script>
+</body>
+</html>
