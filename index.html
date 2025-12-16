@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Доступ к трансляциям</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <style>
     * { box-sizing: border-box; }
 
@@ -17,6 +18,14 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       color: #111827;
       background: linear-gradient(135deg, #020617 0%, #020617 40%, #111827 100%);
+    }
+
+    :root {
+      --hero-title-min: 26px;
+      --hero-title-max: 34px;
+      --hero-sub-min: 15px;
+      --hero-sub-max: 18px;
+      --body-text: 14px;
     }
 
     .page {
@@ -55,13 +64,13 @@
 
     .hero-title {
       margin: 0 0 6px;
-      font-size: 30px;
+      font-size: clamp(var(--hero-title-min), 5vw, var(--hero-title-max));
       line-height: 1.2;
     }
 
     .hero-sub {
       margin: 0;
-      font-size: 14px;
+      font-size: clamp(var(--hero-sub-min), 3.3vw, var(--hero-sub-max));
       color: #e5e7eb;
       max-width: 620px;
     }
@@ -92,6 +101,7 @@
       padding: 18px 18px 18px;
       border: 1px solid #e5e7eb;
       box-shadow: 0 12px 32px rgba(15, 23, 42, 0.22);
+      font-size: var(--body-text);
     }
 
     .logo {
@@ -146,7 +156,7 @@
     }
 
     .steps {
-      font-size: 12px;
+      font-size: 13px;
       color: #4b5563;
       line-height: 1.5;
     }
@@ -156,7 +166,7 @@
     }
 
     .reg-row {
-      margin-top: 10px;
+      margin-top: 12px;
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -166,10 +176,10 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 9px 20px;
+      padding: 12px 22px;
       border-radius: 999px;
       border: 0;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 600;
       letter-spacing: .02em;
       cursor: pointer;
@@ -178,6 +188,7 @@
       background: linear-gradient(135deg, #2563eb 0%, #4f46e5 55%, #7c3aed 100%);
       box-shadow: 0 12px 30px rgba(37, 99, 235, 0.55);
       transition: transform .12s ease-out, box-shadow .12s ease-out, filter .12s ease-out;
+      min-height: 48px; /* комфортный tap-target */ /* [web:178][web:184] */
     }
 
     .btn-primary:hover {
@@ -194,26 +205,27 @@
     .verify-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
     .verify-input-wrap {
-      flex: 1 1 160px;
+      flex: 1 1 200px;
       min-width: 0;
     }
 
     .verify-input {
       width: 100%;
-      padding: 8px 11px;
+      padding: 10px 14px;
       border-radius: 999px;
       border: 1px solid #d1d5db;
       background: #ffffff;
       color: #111827;
-      font-size: 13px;
+      font-size: 15px; /* >=16px на мобиле через медиазапрос ниже */ /* [web:170][web:176] */
       outline: none;
       transition: border-color .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
+      min-height: 46px;
     }
 
     .verify-input:focus {
@@ -228,12 +240,12 @@
     }
 
     .verify-btn {
-      padding: 7px 16px;
+      padding: 10px 18px;
       border-radius: 999px;
       border: 0;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 600;
-      letter-spacing: .12em;
+      letter-spacing: .14em;
       text-transform: uppercase;
       cursor: pointer;
       background: #111827;
@@ -244,6 +256,7 @@
       gap: 6px;
       transition: background .12s ease-out, transform .12s ease-out, box-shadow .12s ease-out;
       white-space: nowrap;
+      min-height: 44px;
     }
 
     .verify-btn:hover {
@@ -253,18 +266,18 @@
     }
 
     .verify-status {
-      font-size: 11px;
-      min-height: 16px;
+      font-size: 12px;
+      min-height: 18px;
       color: #6b7280;
-      margin-top: 4px;
+      margin-top: 6px;
     }
 
     .verify-status.ok { color: #16a34a; }
     .verify-status.err { color: #dc2626; }
 
     .spinner {
-      width: 13px;
-      height: 13px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       border: 2px solid rgba(243,244,246,0.6);
       border-top-color: #4f46e5;
@@ -277,22 +290,22 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .streams-card {
-      margin-top: 6px;
-      padding-top: 8px;
+      margin-top: 8px;
+      padding-top: 10px;
       border-top: 1px solid #e5e7eb;
     }
 
     .streams-title {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       color: #111827;
     }
 
     .streams-hint {
-      font-size: 11px;
+      font-size: 12px;
       color: #6b7280;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .streams {
@@ -300,8 +313,8 @@
       padding: 0;
       margin: 0;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 8px;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 10px;
     }
 
     .stream-item a {
@@ -309,19 +322,20 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      gap: 3px;
-      padding: 8px 9px;
-      border-radius: 10px;
+      gap: 4px;
+      padding: 10px 11px;
+      border-radius: 12px;
       text-decoration: none;
-      font-size: 12px;
+      font-size: 13px;
       color: #111827;
       background: #ffffff;
       border: 1px solid #e5e7eb;
       transition: box-shadow .12s ease-out, transform .12s ease-out, border-color .12s ease-out, background .12s ease-out, opacity .12s ease-out;
+      min-height: 70px;
     }
 
     .streams a span { font-weight: 500; }
-    .streams a small { font-size: 10px; color: #6b7280; }
+    .streams a small { font-size: 11px; color: #6b7280; }
 
     .stream-meta {
       display: flex;
@@ -335,7 +349,7 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 2px 6px;
+      padding: 3px 7px;
       border-radius: 999px;
       background: #f3f4ff;
       color: #4b5563;
@@ -372,51 +386,52 @@
     }
 
     .note {
-      margin-top: 6px;
-      font-size: 11px;
+      margin-top: 8px;
+      font-size: 12px;
       color: #6b7280;
     }
 
     .right {
       border-radius: 18px;
-      padding: 16px 16px 14px;
+      padding: 18px 18px 16px;
       border: 1px solid rgba(148,163,184,0.4);
       background: radial-gradient(circle at top left, rgba(59,130,246,0.3), rgba(15,23,42,0.9));
       color: #e5e7eb;
       box-shadow: 0 10px 30px rgba(15,23,42,0.55);
+      font-size: 14px;
     }
 
     .right-title {
-      margin: 0 0 6px;
-      font-size: 18px;
+      margin: 0 0 8px;
+      font-size: 20px;
     }
 
     .right-text {
-      margin: 0 0 8px;
-      font-size: 13px;
+      margin: 0 0 10px;
+      font-size: 14px;
       color: #e5e7eb;
     }
 
     .right-highlight {
       margin: 0;
-      font-size: 12px;
+      font-size: 13px;
       color: #a5b4fc;
     }
 
     /* Динамические отзывы */
     .testimonials {
-      margin-top: 14px;
+      margin-top: 16px;
       border-radius: 14px;
       background: #020617;
       border: 1px solid rgba(148,163,184,0.5);
-      padding: 10px 12px 12px;
+      padding: 12px 12px 12px;
       color: #e5e7eb;
     }
 
     .testimonials-title {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 600;
-      margin: 0 0 6px;
+      margin: 0 0 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -424,30 +439,42 @@
     }
 
     .testimonials-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-size: 10px;
       color: #9ca3af;
       text-transform: uppercase;
       letter-spacing: .14em;
     }
 
+    .reviews-count {
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(34,197,94,0.15);
+      color: #bbf7d0;
+      font-weight: 600;
+      font-size: 10px;
+    }
+
     .testimonial-view {
       background: rgba(15,23,42,0.9);
       border-radius: 10px;
-      padding: 8px 9px 9px;
-      font-size: 12px;
-      line-height: 1.4;
+      padding: 10px 11px 10px;
+      font-size: 13px;
+      line-height: 1.5;
       position: relative;
       overflow: hidden;
       border: 1px solid rgba(55,65,81,0.8);
-      min-height: 54px;
+      min-height: 64px;
     }
 
     .testimonial-view::before {
       content: "“";
       position: absolute;
-      top: -10px;
-      left: 6px;
-      font-size: 40px;
+      top: -8px;
+      left: 8px;
+      font-size: 42px;
       color: rgba(148,163,184,0.2);
     }
 
@@ -457,24 +484,24 @@
     }
 
     .testimonial-name {
-      margin-top: 4px;
-      font-size: 11px;
+      margin-top: 6px;
+      font-size: 12px;
       color: #9ca3af;
     }
 
     .testimonial-nav {
-      margin-top: 6px;
+      margin-top: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 8px;
-      font-size: 11px;
+      font-size: 12px;
       color: #9ca3af;
     }
 
     .nav-buttons {
       display: flex;
-      gap: 4px;
+      gap: 6px;
     }
 
     .nav-btn {
@@ -482,14 +509,15 @@
       border: 1px solid rgba(148,163,184,0.7);
       background: transparent;
       color: #e5e7eb;
-      font-size: 11px;
-      padding: 2px 8px;
+      font-size: 12px;
+      padding: 4px 10px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 4px;
       transition: background .12s ease-out, color .12s ease-out, border-color .12s ease-out;
+      min-height: 36px;
     }
 
     .nav-btn:hover {
@@ -498,40 +526,41 @@
     }
 
     .testimonial-form {
-      margin-top: 8px;
+      margin-top: 10px;
       display: grid;
       grid-template-columns: minmax(0, 1fr);
-      gap: 6px;
-      font-size: 12px;
+      gap: 8px;
+      font-size: 13px;
     }
 
     .input-row {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       flex-wrap: wrap;
     }
 
     .input-row .field {
-      flex: 1 1 120px;
+      flex: 1 1 140px;
       min-width: 0;
     }
 
     .input-label {
       font-size: 11px;
       color: #9ca3af;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
     .input-control {
       width: 100%;
       border-radius: 999px;
       border: 1px solid #4b5563;
-      padding: 6px 9px;
-      font-size: 12px;
+      padding: 10px 12px;
+      font-size: 15px;
       background: rgba(15,23,42,0.95);
       color: #e5e7eb;
       outline: none;
       transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+      min-height: 46px;
     }
 
     .input-control:focus {
@@ -545,19 +574,19 @@
 
     .input-control.textarea {
       border-radius: 10px;
-      min-height: 46px;
+      min-height: 64px;
       resize: vertical;
     }
 
     .btn-send {
       align-self: flex-start;
       margin-top: 2px;
-      padding: 6px 12px;
+      padding: 10px 16px;
       border-radius: 999px;
       border: 0;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
-      letter-spacing: .12em;
+      letter-spacing: .14em;
       text-transform: uppercase;
       cursor: pointer;
       background: #22c55e;
@@ -567,6 +596,7 @@
       justify-content: center;
       gap: 4px;
       transition: background .12s ease-out, transform .12s ease-out, box-shadow .12s ease-out;
+      min-height: 44px;
     }
 
     .btn-send:hover {
@@ -578,33 +608,148 @@
     .testimonial-status {
       font-size: 11px;
       color: #9ca3af;
-      margin-top: 2px;
-      min-height: 14px;
+      margin-top: 3px;
+      min-height: 16px;
     }
 
     .testimonial-status.ok { color: #4ade80; }
     .testimonial-status.err { color: #fecaca; }
 
+    .testimonial-list-wrapper {
+      margin-top: 10px;
+      border-top: 1px solid rgba(55,65,81,0.7);
+      padding-top: 8px;
+    }
+
+    .testimonial-list-title {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .testimonial-list {
+      max-height: 150px;
+      overflow-y: auto;
+      padding-right: 4px;
+      list-style: none;
+      margin: 0;
+    }
+
+    .testimonial-list-item {
+      font-size: 11px;
+      line-height: 1.4;
+      padding: 4px 0;
+      border-bottom: 1px dashed rgba(55,65,81,0.7);
+    }
+
+    .testimonial-list-item:last-child {
+      border-bottom: none;
+    }
+
+    .testimonial-list-name {
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    .testimonial-list-text {
+      color: #cbd5f5;
+    }
+
+    /* Адаптивность: планшеты */
+    @media (max-width: 992px) {
+      .page { max-width: 1000px; }
+      .content {
+        grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
+        gap: 18px;
+      }
+      .left { padding: 16px 14px 14px; }
+      .right { padding: 16px; }
+    }
+
+    /* Адаптивность: одна колонка */
     @media (max-width: 860px) {
       .content {
         grid-template-columns: minmax(0, 1fr);
       }
-      .right {
-        order: -1;
+      .right { order: -1; }
+      .page { margin-top: 18px; }
+    }
+
+    /* Крупная мобильная версия */
+    @media (max-width: 600px) {
+      :root {
+        --hero-title-min: 26px;
+        --hero-title-max: 30px;
+        --hero-sub-min: 16px;
+        --hero-sub-max: 18px;
+        --body-text: 15px;
       }
+
       .page {
-        margin-top: 18px;
+        margin: 16px auto 28px;
+        padding: 0 12px;
+      }
+
+      .hero-title {
+        text-align: left;
+      }
+
+      .hero-note {
+        font-size: 12px;
+      }
+
+      .left {
+        padding: 16px 14px 14px;
+        border-radius: 16px;
+        font-size: var(--body-text);
+      }
+
+      .right {
+        border-radius: 16px;
+        font-size: 15px;
+      }
+
+      .streams {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .btn-primary {
+        width: 100%;
+      }
+
+      .verify-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .verify-input {
+        font-size: 16px;
+      }
+
+      .verify-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .input-row {
+        flex-direction: column;
+      }
+
+      .input-control {
+        font-size: 16px;
+      }
+
+      .btn-send {
+        width: 100%;
       }
     }
 
-    @media (max-width: 600px) {
-      .hero-title { font-size: 24px; }
-      .left { padding: 14px 12px 12px; }
-      .btn-primary { width: 100%; justify-content: center; text-align: center; }
-      .verify-row { flex-direction: column; align-items: stretch; }
-      .verify-btn { width: 100%; justify-content: center; }
-      .input-row { flex-direction: column; }
-      .hero { text-align: left; }
+    /* Очень маленькие телефоны */
+    @media (max-width: 380px) {
+      .hero-sub { max-width: 100%; }
+      .testimonials { padding: 10px 10px 11px; }
+      .testimonials-title { font-size: 14px; }
+      .btn-primary { font-size: 14px; }
     }
   </style>
 </head>
@@ -686,7 +831,7 @@
         </div>
 
         <ul class="streams locked" id="streams">
-          <!-- 1 -->
+          <!-- 10 матчей -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka.php" target="_blank">
               <span>Матч 1</span>
@@ -699,7 +844,6 @@
               </div>
             </a>
           </li>
-          <!-- 2 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka2.php" target="_blank">
               <span>Матч 2</span>
@@ -712,7 +856,6 @@
               </div>
             </a>
           </li>
-          <!-- 3 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka3.php" target="_blank">
               <span>Матч 3</span>
@@ -725,7 +868,6 @@
               </div>
             </a>
           </li>
-          <!-- 4 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka4.php" target="_blank">
               <span>Матч 4</span>
@@ -738,7 +880,6 @@
               </div>
             </a>
           </li>
-          <!-- 5 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka5.php" target="_blank">
               <span>Матч 5</span>
@@ -751,7 +892,6 @@
               </div>
             </a>
           </li>
-          <!-- 6 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka6.php" target="_blank">
               <span>Матч 6</span>
@@ -764,7 +904,6 @@
               </div>
             </a>
           </li>
-          <!-- 7 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka7.php" target="_blank">
               <span>Матч 7</span>
@@ -777,7 +916,6 @@
               </div>
             </a>
           </li>
-          <!-- 8 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka8.php" target="_blank">
               <span>Матч 8</span>
@@ -790,7 +928,6 @@
               </div>
             </a>
           </li>
-          <!-- 9 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka9.php" target="_blank">
               <span>Матч 9</span>
@@ -803,7 +940,6 @@
               </div>
             </a>
           </li>
-          <!-- 10 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka10.php" target="_blank">
               <span>Матч 10</span>
@@ -827,7 +963,10 @@
       <div class="testimonials">
         <div class="testimonials-title">
           <span>Что говорят зрители</span>
-          <span class="testimonials-badge">живые отзывы</span>
+          <span class="testimonials-badge">
+            живые отзывы
+            <span class="reviews-count">104 отзыва</span>
+          </span>
         </div>
 
         <div class="testimonial-view">
@@ -861,6 +1000,32 @@
           <button type="submit" class="btn-send">Оставить отзыв</button>
           <div id="testimonialStatus" class="testimonial-status"></div>
         </form>
+
+        <div class="testimonial-list-wrapper">
+          <div class="testimonial-list-title">Последние отзывы зрителей:</div>
+          <ul id="testimonialList" class="testimonial-list">
+            <li class="testimonial-list-item">
+              <span class="testimonial-list-name">Артём:</span>
+              <span class="testimonial-list-text"> наконец-то нашли нормальный сервис для бесплатного просмотра Лиги чемпионов, всё работает без лагов.</span>
+            </li>
+            <li class="testimonial-list-item">
+              <span class="testimonial-list-name">Илья:</span>
+              <span class="testimonial-list-text"> запускаю эфир с телефона за пару кликов, качество и скорость радуют.</span>
+            </li>
+            <li class="testimonial-list-item">
+              <span class="testimonial-list-name">Дмитрий:</span>
+              <span class="testimonial-list-text"> удобно, что все топ‑матчи в одном месте, не нужно прыгать по сайтам.</span>
+            </li>
+            <li class="testimonial-list-item">
+              <span class="testimonial-list-name">Алексей:</span>
+              <span class="testimonial-list-text"> картинка чёткая, звук без задержки, смотрю на большом телевизоре через браузер.</span>
+            </li>
+            <li class="testimonial-list-item">
+              <span class="testimonial-list-name">Михаил:</span>
+              <span class="testimonial-list-text"> думал, что будет куча рекламы, но всё оказалось намного приятнее ожиданий.</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -894,11 +1059,11 @@
   function randomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min; /* [web:80][web:85] */
+    return Math.floor(Math.random() * (max - min + 1)) + min; /* [web:176] */
   }
 
   function randomRating(min, max) {
-    const value = Math.random() * (max - min) + min; /* [web:81][web:97] */
+    const value = Math.random() * (max - min) + min;
     return value.toFixed(2);
   }
 
@@ -1003,7 +1168,6 @@
     }
   });
 
-  /* Динамические отзывы */
   const testimonials = [
     {
       text: 'Наконец-то нашли нормальный сервис для бесплатного просмотра Лиги чемпионов. Всё работает без лагов, спасибо вам!',
@@ -1020,7 +1184,7 @@
       name: 'Дмитрий',
       context: 'фанат ЛЧ'
     }
-  ]; /* [web:108][web:112] */
+  ];
 
   let currentTestimonial = 0;
   const textEl    = document.getElementById('testimonialText');
@@ -1033,6 +1197,7 @@
   const inputContext = document.getElementById('inputContext');
   const inputText    = document.getElementById('inputText');
   const statusEl     = document.getElementById('testimonialStatus');
+  const testimonialList = document.getElementById('testimonialList');
 
   function renderTestimonial(index) {
     if (!testimonials.length) return;
@@ -1076,12 +1241,25 @@
       return;
     }
 
-    testimonials.push({ text, name, context });
+    const newTest = { text, name, context };
+    testimonials.push(newTest);
     currentTestimonial = testimonials.length - 1;
     renderTestimonial(currentTestimonial);
     statusEl.textContent = 'Отзыв добавлен! Спасибо.';
     statusEl.className = 'testimonial-status ok';
     inputText.value = '';
+
+    const li = document.createElement('li');
+    li.className = 'testimonial-list-item';
+    li.innerHTML =
+      '<span class="testimonial-list-name">' +
+      (context ? `${name} (${context})` : name) +
+      ':</span> ' +
+      '<span class="testimonial-list-text"> ' +
+      text +
+      '</span>';
+    testimonialList.prepend(li);
+
     resetRotationTimer();
   });
 
