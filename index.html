@@ -2,83 +2,345 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Трансляции</title>
+  <title>Трансляции 10tka</title>
   <style>
-    body { font-family: Arial, sans-serif; background:#000; color:#fff; }
-    .wrap { max-width:600px; margin:30px auto; }
-    .streams { list-style:none; padding:0; }
-    .streams li { margin:6px 0; }
-    .streams a {
-      display:inline-block;
-      padding:8px 14px;
-      background:#222;
-      color:#fff;
-      text-decoration:none;
-      border-radius:4px;
+    * {
+      box-sizing: border-box;
     }
-    .streams a:hover { background:#333; }
-    .main-link {
-      display:inline-block;
-      padding:10px 20px;
-      margin:15px 0;
-      background:#ffcc00;
-      color:#000;
-      text-decoration:none;
-      border-radius:6px;
-      font-weight:bold;
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #f5f5f7;
+      background: radial-gradient(circle at top left, #1b1b3a 0, #050510 35%, #02040a 100%);
+      background-attachment: fixed;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .18;
+      background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+      mix-blend-mode: soft-light;
+      z-index: 0;
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 900px;
+      padding: 32px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 720px;
+      padding: 28px 24px 22px;
+      border-radius: 24px;
+      background: radial-gradient(circle at top left, rgba(255,255,255,.12), rgba(255,255,255,.02))
+                  border-box;
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow:
+        0 24px 60px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(255,255,255,0.03);
+      backdrop-filter: blur(24px) saturate(150%);
+    }
+
+    h1 {
+      margin: 0 0 4px;
+      font-size: 28px;
+      letter-spacing: .03em;
+    }
+
+    .sub {
+      margin: 0;
+      font-size: 14px;
+      color: rgba(245,245,247,.72);
+    }
+
+    .warning {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #ffdf7b;
+    }
+
+    .slow {
+      margin-top: 6px;
+      font-size: 13px;
+      color: rgba(245,245,247,.7);
+    }
+
+    .slow span {
+      color: #7cecff;
+    }
+
+    .reg-block {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      justify-content: space-between;
+    }
+
+    .reg-text {
+      font-size: 13px;
+      color: rgba(245,245,247,.8);
+      max-width: 330px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 26px;
+      border-radius: 999px;
+      border: 0;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      color: #050510;
+      background: linear-gradient(135deg, #ffd54a 0%, #ff9b2f 50%, #ff5f6d 100%);
+      box-shadow:
+        0 12px 30px rgba(255, 107, 76, 0.55),
+        0 0 0 1px rgba(255, 255, 255, 0.18);
+      transition: transform .13s ease-out, box-shadow .13s ease-out, filter .13s ease-out;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+      box-shadow:
+        0 18px 40px rgba(255, 107, 76, 0.7),
+        0 0 0 1px rgba(255, 255, 255, 0.22);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow:
+        0 6px 16px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 255, 255, 0.24);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(14, 199, 255, 0.12);
+      border: 1px solid rgba(14, 199, 255, 0.35);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .15em;
+      color: #b7f3ff;
+      margin-bottom: 10px;
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #0ec7ff;
+      box-shadow: 0 0 0 6px rgba(14,199,255,0.35);
+    }
+
+    .streams-card {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .streams-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .streams-title span {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .streams-hint {
+      font-size: 11px;
+      color: rgba(245,245,247,0.6);
+    }
+
+    .streams {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+    }
+
+    .streams a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 9px 12px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-size: 13px;
+      color: rgba(245,245,247,0.96);
+      background: radial-gradient(circle at top left, rgba(255,255,255,.13), rgba(255,255,255,.03));
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.75);
+      transition: transform .12s ease-out, box-shadow .12s ease-out, background .12s ease-out;
+    }
+
+    .streams a span {
+      opacity: .8;
+    }
+
+    .streams a small {
+      font-size: 11px;
+      opacity: .55;
+    }
+
+    .streams a::after {
+      content: "▶";
+      font-size: 11px;
+      opacity: .8;
+    }
+
+    .streams a:hover {
+      transform: translateY(-1px);
+      background: radial-gradient(circle at top left, rgba(255,255,255,.2), rgba(255,255,255,.05));
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.9);
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 11px;
+      color: rgba(245,245,247,0.6);
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 22px 18px 18px;
+        border-radius: 20px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      .reg-block {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .btn-primary {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
 <body>
+<div class="noise"></div>
+
 <div class="wrap">
-  <h1>Трансляции</h1>
+  <div class="card">
+    <div class="badge">
+      <span class="badge-dot"></span>
+      LIVE TRANSFERS
+    </div>
 
-  <p>Сначала зарегистрируйтесь в Melbet по кнопке ниже, после этого трансляции станут доступны.</p>
+    <h1>Трансляции 10tka</h1>
+    <p class="sub">Смотри матчи в прямом эфире. Сначала зарегистрируйся в Melbet, чтобы открыть доступ ко всем трансляциям.</p>
 
-  <!-- КНОПКА РЕГИСТРАЦИИ MELBET -->
-  <a id="regBtn" class="main-link"
-     href="https://clck.ru/3Mo7a2"
-     target="_blank" rel="noopener noreferrer">
-    Зарегистрироваться в Melbet
-  </a>
+    <p class="warning">До регистрации при клике на трансляцию появится сообщение: «Сначала зарегистрируйтесь в Melbet».</p>
 
-  <h2>Список трансляций</h2>
-  <ul class="streams" id="streams">
-    <li><a href="https://playball10.com/p2p-reserv/10tka.php"   target="_blank">Трансляция 1</a></li>
-    <li><a href="https://playball10.com/p2p-reserv/10tka2.php"  target="_blank">Трансляция 2</a></li>
-    <li><a href="https://playball10.com/p2p-reserv/10tka3.php"  target="_blank">Трансляция 3</a></li>
-    <li><a href="https://playball10.com/p2p-reserv/10tka4.php"  target="_blank">Трансляция 4</a></li>
-    <li><a href="https://playball10.com/p2p-reserv/10tka5.php"  target="_blank">Трансляция 5</a></li>
-    <li><a href="https://playball10.com/p2p-reserv/10tka6.php"  target="_blank">Трансляция 6</a></li>
-    <li><a href="https://playball10.com/p2p-reserv/10tka7.php"  target="_blank">Трансляция 7</a></li>
-    <li><a href="https://playball10.com/p2p-reserv/10tka8.php"  target="_blank">Трансляция 8</a></li>
-    <li><a href="https://playball10.com/p2p-reserv/10tka9.php"  target="_blank">Трансляция 9</a></li>
-    <li><a href="https://playball10.com/p2p-reserv/10tka10.php" target="_blank">Трансляция 10</a></li>
-  </ul>
+    <p class="slow">
+      Из‑за большого количества зрителей трансляция может загружаться дольше обычного,
+      <span>но обязательно загрузится</span> — просто подождите несколько секунд.
+    </p>
+
+    <div class="reg-block">
+      <p class="reg-text">
+        1. Перейдите по кнопке ниже и зарегистрируйтесь в Melbet.<br>
+        2. Вернитесь на эту страницу и откройте нужную трансляцию.
+      </p>
+
+      <a id="regBtn"
+         class="btn-primary"
+         href="https://clck.ru/3Mo7a2"
+         target="_blank"
+         rel="noopener noreferrer">
+        Зарегистрироваться в Melbet
+      </a>
+    </div>
+
+    <div class="streams-card">
+      <div class="streams-title">
+        <span>Доступные трансляции</span>
+        <span class="streams-hint">После регистрации нажимайте на любую</span>
+      </div>
+
+      <ul class="streams" id="streams">
+        <li><a href="https://playball10.com/p2p-reserv/10tka.php"   target="_blank"><span>Трансляция 1</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka2.php"  target="_blank"><span>Трансляция 2</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka3.php"  target="_blank"><span>Трансляция 3</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka4.php"  target="_blank"><span>Трансляция 4</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka5.php"  target="_blank"><span>Трансляция 5</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka6.php"  target="_blank"><span>Трансляция 6</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka7.php"  target="_blank"><span>Трансляция 7</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka8.php"  target="_blank"><span>Трансляция 8</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka9.php"  target="_blank"><span>Трансляция 9</span><small>HD • live</small></a></li>
+        <li><a href="https://playball10.com/p2p-reserv/10tka10.php" target="_blank"><span>Трансляция 10</span><small>HD • live</small></a></li>
+      </ul>
+
+      <p class="note">
+        Если при открытии трансляция грузится дольше — не обновляйте страницу, поток догрузится автоматически.
+      </p>
+    </div>
+  </div>
 </div>
 
 <script>
-  // флаг: зарегистрировался ли пользователь (можно хранить в localStorage)
+  // Флаг регистрации (по умолчанию — нет)
   let isRegistered = false;
 
-  const regBtn   = document.getElementById('regBtn');
-  const streams  = document.getElementById('streams');
+  const regBtn  = document.getElementById('regBtn');
+  const streams = document.getElementById('streams');
 
-  // при клике по кнопке регистрации ставим флаг и даём открыть Melbet
+  // При клике по кнопке регистрации ставим флаг
   regBtn.addEventListener('click', function () {
     isRegistered = true;
-    // если хотите, можно сохранить:
+    // При желании можно сохранить:
     // localStorage.setItem('melbet_registered', '1');
   });
 
-  // перехватываем клики по ссылкам трансляций
+  // Перехватываем клики по ссылкам трансляций
   streams.addEventListener('click', function (e) {
     const link = e.target.closest('a');
     if (!link) return;
 
     if (!isRegistered) {
-      e.preventDefault(); // блокируем переход по ссылке
-      alert('Сначала зарегистрируйтесь в Melbet, затем обновите страницу и повторно откройте трансляцию.');
+      e.preventDefault();
+      alert('Сначала зарегистрируйтесь в Melbet по кнопке сверху, затем вернитесь и снова откройте трансляцию.');
     }
   });
 </script>
