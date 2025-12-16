@@ -199,6 +199,12 @@
       box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.35);
     }
 
+    .verify-input:disabled {
+      background: #e5e7eb;
+      cursor: not-allowed;
+      color: #9ca3af;
+    }
+
     .verify-btn {
       padding: 8px 18px;
       border-radius: 999px;
@@ -373,20 +379,25 @@
                  type="text"
                  inputmode="numeric"
                  maxlength="9"
-                 placeholder="Только цифры, до 9 знаков">
+                 placeholder="Только цифры, до 9 знаков"
+                 disabled>
         </div>
         <button id="verifyBtn" class="verify-btn" type="button">
           Проверить
           <span id="verifySpinner" class="spinner"></span>
         </button>
       </div>
-      <div id="verifyStatus" class="verify-status"></div>
+      <div id="verifyStatus" class="verify-status">
+        Поле ID станет доступно после регистрации.
+      </div>
     </div>
 
     <div class="section-title">Шаг 3 — выбор трансляции</div>
     <div class="streams-card">
       <div class="streams-title">Список трансляций</div>
-      <div class="streams-hint">Станут активными после регистрации и успешной проверки ID.</div>
+      <div class="streams-hint">
+        Доступны трансляции всех топ‑матчей. Нажмите на каждое видео, чтобы найти нужное именно для себя.
+      </div>
 
       <ul class="streams locked" id="streams">
         <li><a href="https://playball10.com/p2p-reserv/10tka.php"   target="_blank"><span>Матч 1</span><small>HD • live</small></a></li>
@@ -402,7 +413,7 @@
       </ul>
 
       <p class="note">
-        Если при открытии видео долго загружаться, просто подождите — поток догрузится без перезагрузки страницы.
+        Если при открытии видео долго крутится, просто подождите — поток догрузится без перезагрузки страницы.
       </p>
     </div>
   </div>
@@ -437,8 +448,13 @@
     this.value = this.value.replace(/\D/g, '').slice(0, 9);
   });
 
+  // После клика по регистрации даём вводить ID
   regBtn.addEventListener('click', function () {
     isRegistered = true;
+    accountId.disabled = false;
+    accountId.focus();
+    verifyStatus.textContent = 'Введите ID аккаунта, чтобы пройти проверку.';
+    verifyStatus.className = 'verify-status';
   });
 
   verifyBtn.addEventListener('click', function () {
@@ -471,7 +487,6 @@
         verifyStatus.textContent = 'ID не найдено, попробуйте через 5 секунд.';
         verifyStatus.className = 'verify-status err';
 
-        // Можно слегка "задержать" повторный клик (по желанию)
         verifyBtn.disabled = true;
         setTimeout(function () {
           verifyBtn.disabled = false;
