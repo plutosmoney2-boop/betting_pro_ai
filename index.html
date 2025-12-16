@@ -62,7 +62,7 @@
 
     .hero-title {
       margin: 0 0 6px;
-      font-size: clamp(var(--hero-title-min), 4vw, var(--hero-title-max)); /* плавный размер */ /* [web:147][web:152] */
+      font-size: clamp(var(--hero-title-min), 4vw, var(--hero-title-max));
       line-height: 1.2;
     }
 
@@ -604,59 +604,78 @@
     .testimonial-status.ok { color: #4ade80; }
     .testimonial-status.err { color: #fecaca; }
 
-    /* Брейкпоинт ~1200: немного сжимаем отступы на маленьких ноутбуках */
-    @media (max-width: 1200px) {
-      .page {
-        max-width: 1000px;
-      }
+    /* Список всех отзывов */
+    .testimonial-list-wrapper {
+      margin-top: 8px;
+      border-top: 1px solid rgba(55,65,81,0.7);
+      padding-top: 6px;
     }
 
-    /* Брейкпоинт ~992: планшеты в альбомной ориентации */
+    .testimonial-list-title {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+
+    .testimonial-list {
+      max-height: 140px;
+      overflow-y: auto;
+      padding-right: 4px;
+      list-style: none;
+      margin: 0;
+    }
+
+    .testimonial-list-item {
+      font-size: 11px;
+      line-height: 1.4;
+      padding: 4px 0;
+      border-bottom: 1px dashed rgba(55,65,81,0.7);
+    }
+
+    .testimonial-list-item:last-child {
+      border-bottom: none;
+    }
+
+    .testimonial-list-name {
+      font-weight: 600;
+      color: #e5e7eb;
+    }
+
+    .testimonial-list-text {
+      color: #cbd5f5;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 1200px) {
+      .page { max-width: 1000px; }
+    }
+
     @media (max-width: 992px) {
       .content {
         grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
         gap: 16px;
       }
-      .left {
-        padding: 16px 14px 14px;
-      }
-      .right {
-        padding: 14px;
-      }
+      .left { padding: 16px 14px 14px; }
+      .right { padding: 14px; }
     }
 
-    /* Брейкпоинт ~860: планшеты вертикально, одна колонка */
     @media (max-width: 860px) {
       .content {
         grid-template-columns: minmax(0, 1fr);
       }
-      .right {
-        order: -1;
-      }
-      .page {
-        margin-top: 18px;
-      }
+      .right { order: -1; }
+      .page { margin-top: 18px; }
     }
 
-    /* Брейкпоинт ~600: телефоны */
     @media (max-width: 600px) {
       .page {
         margin: 16px auto 28px;
         padding: 0 10px;
       }
-      .hero-title {
-        text-align: left;
-      }
-      .hero-note {
-        font-size: 11px;
-      }
-      .left {
-        padding: 14px 12px 12px;
-        border-radius: 14px;
-      }
-      .right {
-        border-radius: 14px;
-      }
+      .hero-title { text-align: left; }
+      .hero-note { font-size: 11px; }
+      .left { padding: 14px 12px 12px; border-radius: 14px; }
+      .right { border-radius: 14px; }
       .btn-primary {
         width: 100%;
         justify-content: center;
@@ -670,26 +689,14 @@
         width: 100%;
         justify-content: center;
       }
-      .input-row {
-        flex-direction: column;
-      }
-      .streams {
-        grid-template-columns: minmax(0, 1fr);
-      }
+      .input-row { flex-direction: column; }
+      .streams { grid-template-columns: minmax(0, 1fr); }
     }
 
-    /* Очень маленькие телефоны */
     @media (max-width: 380px) {
-      .hero-sub {
-        max-width: 100%;
-      }
-      .testimonials {
-        padding: 8px 8px 10px;
-      }
-      .btn-send {
-        width: 100%;
-        justify-content: center;
-      }
+      .hero-sub { max-width: 100%; }
+      .testimonials { padding: 8px 8px 10px; }
+      .btn-send { width: 100%; justify-content: center; }
     }
   </style>
 </head>
@@ -771,8 +778,7 @@
         </div>
 
         <ul class="streams locked" id="streams">
-          <!-- те же 10 матчей, как в прошлой версии (оставлены без изменений) -->
-          <!-- 1 -->
+          <!-- 10 матчей, как раньше -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka.php" target="_blank">
               <span>Матч 1</span>
@@ -785,7 +791,6 @@
               </div>
             </a>
           </li>
-          <!-- 2 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka2.php" target="_blank">
               <span>Матч 2</span>
@@ -798,7 +803,6 @@
               </div>
             </a>
           </li>
-          <!-- 3 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka3.php" target="_blank">
               <span>Матч 3</span>
@@ -811,7 +815,6 @@
               </div>
             </a>
           </li>
-          <!-- 4 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka4.php" target="_blank">
               <span>Матч 4</span>
@@ -824,7 +827,6 @@
               </div>
             </a>
           </li>
-          <!-- 5 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka5.php" target="_blank">
               <span>Матч 5</span>
@@ -837,7 +839,6 @@
               </div>
             </a>
           </li>
-          <!-- 6 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka6.php" target="_blank">
               <span>Матч 6</span>
@@ -850,7 +851,6 @@
               </div>
             </a>
           </li>
-          <!-- 7 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka7.php" target="_blank">
               <span>Матч 7</span>
@@ -863,7 +863,6 @@
               </div>
             </a>
           </li>
-          <!-- 8 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka8.php" target="_blank">
               <span>Матч 8</span>
@@ -876,7 +875,6 @@
               </div>
             </a>
           </li>
-          <!-- 9 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka9.php" target="_blank">
               <span>Матч 9</span>
@@ -889,7 +887,6 @@
               </div>
             </a>
           </li>
-          <!-- 10 -->
           <li class="stream-item">
             <a href="https://playball10.com/p2p-reserv/10tka10.php" target="_blank">
               <span>Матч 10</span>
@@ -950,6 +947,35 @@
           <button type="submit" class="btn-send">Оставить отзыв</button>
           <div id="testimonialStatus" class="testimonial-status"></div>
         </form>
+
+        <!-- Список 104 отзывов (сокращённый пример; можно дублировать и менять текст) -->
+        <div class="testimonial-list-wrapper">
+          <div class="testimonial-list-title">Последние отзывы зрителей:</div>
+          <ul id="testimonialList" class="testimonial-list">
+            <!-- Статические примеры; скрипт ниже может добавлять новые -->
+            <li class="testimonial-list-item">
+              <span class="testimonial-list-name">Артём:</span>
+              <span class="testimonial-list-text"> наконец-то нашли нормальный сервис для бесплатного просмотра Лиги чемпионов, всё работает без лагов.</span>
+            </li>
+            <li class="testimonial-list-item">
+              <span class="testimonial-list-name">Илья:</span>
+              <span class="testimonial-list-text"> запускаю эфир с телефона за пару кликов, качество и скорость радуют.</span>
+            </li>
+            <li class="testimonial-list-item">
+              <span class="testimonial-list-name">Дмитрий:</span>
+              <span class="testimonial-list-text"> удобно, что все топ‑матчи в одном месте, не нужно прыгать по сайтам.</span>
+            </li>
+            <li class="testimonial-list-item">
+              <span class="testimonial-list-name">Алексей:</span>
+              <span class="testimonial-list-text"> картинка чёткая, звук без задержки, смотрю на большом телевизоре через браузер.</span>
+            </li>
+            <li class="testimonial-list-item">
+              <span class="testimonial-list-name">Михаил:</span>
+              <span class="testimonial-list-text"> думал, что будет куча рекламы, но всё оказалось намного приятнее ожиданий.</span>
+            </li>
+            <!-- при желании можно руками добавить ещё блоки по этому же шаблону -->
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -1092,6 +1118,7 @@
     }
   });
 
+  /* Динамические отзывы (слайдер) */
   const testimonials = [
     {
       text: 'Наконец-то нашли нормальный сервис для бесплатного просмотра Лиги чемпионов. Всё работает без лагов, спасибо вам!',
@@ -1121,6 +1148,7 @@
   const inputContext = document.getElementById('inputContext');
   const inputText    = document.getElementById('inputText');
   const statusEl     = document.getElementById('testimonialStatus');
+  const testimonialList = document.getElementById('testimonialList');
 
   function renderTestimonial(index) {
     if (!testimonials.length) return;
@@ -1164,12 +1192,26 @@
       return;
     }
 
-    testimonials.push({ text, name, context });
+    const newTest = { text, name, context };
+    testimonials.push(newTest);
     currentTestimonial = testimonials.length - 1;
     renderTestimonial(currentTestimonial);
     statusEl.textContent = 'Отзыв добавлен! Спасибо.';
     statusEl.className = 'testimonial-status ok';
     inputText.value = '';
+
+    // Добавляем в список под слайдером
+    const li = document.createElement('li');
+    li.className = 'testimonial-list-item';
+    li.innerHTML =
+      '<span class="testimonial-list-name">' +
+      (context ? `${name} (${context})` : name) +
+      ':</span> ' +
+      '<span class="testimonial-list-text"> ' +
+      text +
+      '</span>';
+    testimonialList.prepend(li);
+
     resetRotationTimer();
   });
 
